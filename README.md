@@ -48,6 +48,7 @@ I'm Here! is a location based social media app that allows users to share the pl
 * Direct messaging functionality
 * Each user has a profile that shows their posts only 
 * View lists of friends
+* Filter posts by genre (i.e. entertainment, food, etc.)
 
 ### 2. Screen Archetypes
 
