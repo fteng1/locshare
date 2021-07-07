@@ -109,7 +109,6 @@ I'm Here! is a location based social media app that allows users to share the pl
 
 
 ## Wireframes
-[Add picture of your hand sketched wireframes in this section]
 <img src="https://i.imgur.com/RB59krc.jpg" width=600>
 
 ## Schema 
