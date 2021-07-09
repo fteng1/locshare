@@ -37,6 +37,7 @@ I'm Here! is a location based social media app that allows users to share the pl
 * Posts are stored in a database and thus saved between logins 
 * Zoom in and out of the map using pinch gestures
 * Users can like and comment on other users' posts
+* Each user has a profile that shows their posts only 
 * Animations and UI implementation
 
 **Optional Nice-to-have Stories**
@@ -46,7 +47,6 @@ I'm Here! is a location based social media app that allows users to share the pl
 * Ability to filter posts on map feed by date or location 
 * Browse public posts at a given location 
 * Direct messaging functionality
-* Each user has a profile that shows their posts only 
 * View lists of friends
 * Filter posts by genre (i.e. entertainment, food, etc.)
 
