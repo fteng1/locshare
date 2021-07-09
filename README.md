@@ -110,7 +110,8 @@ I'm Here! is a location based social media app that allows users to share the pl
 
 ## Wireframes
 ![Wireframes-1 2](https://user-images.githubusercontent.com/41344374/125110904-15303b80-e09a-11eb-90b7-db9ea852ec85.jpg)
-![Wireframes-2](https://user-images.githubusercontent.com/41344374/125110920-182b2c00-e09a-11eb-8aea-20cf782d113a.jpg)
+![Wireframes-2](https://user-images.githubusercontent.com/41344374/125111151-69d3b680-e09a-11eb-8180-e7b7da7cf712.jpg)
+
 
 ## Schema 
 
