@@ -36,12 +36,12 @@ I'm Here! is a location based social media app that allows users to share the pl
 * List of possible locations to post uses Google Maps SDK to suggest places of interest
 * Posts are stored in a database and thus saved between logins 
 * Zoom in and out of the map using pinch gestures
+* Users can like and comment on other users' posts
 * Animations and UI implementation
 
 **Optional Nice-to-have Stories**
 
 * Users can either make public posts or private posts (only to friends)
-* Users can favorite and comment/reply to other users' posts
 * Ability to add locations not in Google Maps SDK
 * Ability to filter posts on map feed by date or location 
 * Browse public posts at a given location 
@@ -112,10 +112,193 @@ I'm Here! is a location based social media app that allows users to share the pl
 ![](https://i.imgur.com/RB59krc.jpg)
 
 ## Schema 
-[This section will be completed in Unit 9]
+
 ### Models
-[Add table of models]
+User
+|Property|Type|Description|
+|--------|----|-----------|
+|username|String|Screen name displayed for user|
+|password|String|Password used to sign in|
+|description|String|Description of user displayed in profile|
+|numPosts|Number|Number of posts made by user|
+|profilePicture|File|Profile picture of user|
+|objectId|String|Unique identifier for user (default field)|
+
+Post 
+|Property|Type|Description|
+|--------|----|-----------|
+|location|Pointer to Location|Location that post is tied to|
+|photo|Array|Array of Files of photos attached to the post|
+|caption|String|Text caption of post|
+|author|Pointer to User|User that created the post|
+|createdAt|DateTime|Time at which post was created|
+|numLikes|Number|Number of users that liked the post|
+|numComments|Number|Number of users that commented on the post|
+|comments|Array|Array of Comments made on this post| 
+
+Location
+|Property|Type|Description|
+|--------|----|-----------|
+|name|String|Name of location|
+|latitude|Number|Geographic latitude of location|
+|longitude|Number|Geographic longitude of location|
+|numPosts|Number|Number of posts tied to this location|
+
+Comment
+|Property|Type|Description|
+|--------|----|-----------|
+|author|Pointer to User|User that made the comment|
+|text|String|Contents of the comment|
+|createdAt|DateTime|Time at which the comment was made|
+
 ### Networking
-- [Add list of network requests by screen ]
-- [Create basic snippets for each Parse network request]
-- [OPTIONAL: List endpoints if using existing API such as Yelp]
+* Login/Register screen 
+   * (Read/GET) Check if the inputted username and password match to an existing user
+  ```
+  NSString *username = self.usernameField.text;
+  NSString *password = self.passwordField.text;
+    
+    [PFUser logInWithUsernameInBackground:username password:password block:^(PFUser * user, NSError *  error) {
+        if (error != nil) {
+            NSLog(@"User log in failed: %@", error.localizedDescription);
+        } else {
+            NSLog(@"User logged in successfully");
+            // go to map feed page
+        }
+    }];
+  ```
+   * (Create/POST) Create a new user in the database when signing up
+  ```
+    // initialize a user object
+    PFUser *newUser = [PFUser user];
+    
+    // set user properties
+    newUser.username = self.usernameField.text;
+    newUser.password = self.passwordField.text;
+    
+    // call sign up function on the object
+    [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError * error) {
+        if (error != nil) {
+            NSLog(@"Error: %@", error.localizedDescription);
+        } else {
+            NSLog(@"User registered successfully");
+            // go to map feed page
+        }
+    }];
+
+  ```
+* Search screen
+   * (Read/GET) Query users with a username matching the search term
+   ```
+    // construct query
+    PFQuery *query = [PFQuery queryWithClassName:@"User"];
+    [query whereKey:@"username" equalTo:searchBar.text];
+
+    // fetch data asynchronously
+    [query findObjectsInBackgroundWithBlock:^(NSArray *users, NSError *error) {
+        if (users != nil) {
+            // display fetched users on screen
+        } else {
+            NSLog(@"%@", error.localizedDescription);
+        }
+    }];
+   ```
+* Profile screen 
+    * (Read/GET) Display profile information about user 
+    ```
+    // construct query
+    PFQuery *query = [PFQuery queryWithClassName:@"User"];
+    [query whereKey:@"objectId" equalTo:profile.user];
+
+    // fetch data asynchronously
+    [query findObjectsInBackgroundWithBlock:^(NSArray *users, NSError *error) {
+        if (users != nil) {
+            // display information about user on screen
+        } else {
+            NSLog(@"%@", error.localizedDescription);
+        }
+    }];
+   ```
+    * (Update/PUT) Change profile picture of user
+   ```
+    UIImage *editedImage = // selected image 
+    [self.user setValue:[Post getPFFileFromImage:editedImage] forKey:@"profilePicture"];
+    [self.user saveInBackground];
+   ```
+    * (Update/PUT) Change description of user
+   ```
+    NSString *newDesc = // new description
+    [self.user setValue:newDesc forKey:@"description"];
+    [self.user saveInBackground];
+   ```
+* Map feed screen - Stream
+    * (Read/GET) Query locations with posts that are in view of the current map display and show them on the map
+   ```
+    // construct query
+    PFQuery *query = [PFQuery queryWithClassName:@"Location"];
+    [query whereKey:@"longitude" greaterThan: // lower boundary of map on screen ];
+    [query whereKey:@"longitude" lessThan: // upper boundary of map on screen ];
+    [query whereKey:@"latitude" greaterThan: // lower boundary of map on screen ];
+    [query whereKey:@"latitude" lessThan: // upper boundary of map on screen ];
+
+    // fetch data asynchronously
+    [query findObjectsInBackgroundWithBlock:^(NSArray *users, NSError *error) {
+        if (users != nil) {
+            // display fetched locations on map
+        } else {
+            NSLog(@"%@", error.localizedDescription);
+        }
+    }];
+   ```
+* Location post screen - Stream
+    * (Read/GET) Query posts that are associated with the chosen location
+     ```
+    // construct query
+    PFQuery *query = [PFQuery queryWithClassName:@"Post"];
+    [query whereKey:@"location" equalTo: // selected location ];
+
+    // fetch data asynchronously
+    [query findObjectsInBackgroundWithBlock:^(NSArray *users, NSError *error) {
+        if (users != nil) {
+            // display fetched posts on screen
+        } else {
+            NSLog(@"%@", error.localizedDescription);
+        }
+    }];
+   ```
+* View post screen - Details
+    * (Create/POST) Make a comment on the post
+   ```
+    Comment *newComment = // Initialize comment's fields
+    [newComment saveInBackground];
+   ```
+    * (Update/PUT) Change the number of likes on a post by liking it
+   ```
+    [currentPost incrementKey:@"numLikes"];
+    [currentPost saveInBackground];
+   ```
+    * (Delete/DELETE) Unlike a post to remove a like 
+    ```
+    [currentPost decrementKey:@"numLikes"];
+    [currentPost saveInBackground];
+   ```
+    * (Delete/DELETE) Delete a comment from a post 
+   ```
+    [comment deleteInBackground];
+   ```
+* Make post screen - Creation
+    * (Create/POST) Make a new post with associated location, photos, and caption
+   ```
+    Post *newPost = // initialize post with inputted details
+    [Post postUserImage:newPost withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
+        if (error != nil) {
+            NSLog(@"Post share failed: %@", error.localizedDescription);
+        }
+        else {
+            NSLog(@"Post shared successfully");
+            PFUser *currentUser = [PFUser currentUser];
+            [currentUser incrementKey:@"numPosts"];
+            [currentUser saveInBackground];
+        }
+    }];
+   ```
