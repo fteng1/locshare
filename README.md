@@ -75,7 +75,7 @@ I'm Here! is a location based social media app that allows users to share the pl
     * Tapping on a specific post brings up the view post screen 
 * View post screen - Details
     * Shows the properties of a post, such as the location, photos, and text description of the post 
-    * If implemented, users will also be able to favorite and comment on posts on this screen 
+    * Users will also be able to favorite and comment on posts on this screen 
 * Make post screen - Creation
     * Asks the user to select a place of interest which can either be searched for or selected from a list of nearby locations
     * User has option to post pictures or add a text description to the post (or both)
@@ -109,7 +109,8 @@ I'm Here! is a location based social media app that allows users to share the pl
 
 
 ## Wireframes
-![](https://i.imgur.com/RB59krc.jpg)
+![Wireframes-1 2](https://user-images.githubusercontent.com/41344374/125110904-15303b80-e09a-11eb-90b7-db9ea852ec85.jpg)
+![Wireframes-2](https://user-images.githubusercontent.com/41344374/125110920-182b2c00-e09a-11eb-8aea-20cf782d113a.jpg)
 
 ## Schema 
 
