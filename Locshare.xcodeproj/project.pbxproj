@@ -3,19 +3,32 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		70571E0F269CA9AE00CE1842 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E0E269CA9AE00CE1842 /* AppDelegate.m */; };
 		70571E12269CA9AE00CE1842 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E11269CA9AE00CE1842 /* SceneDelegate.m */; };
-		70571E15269CA9AE00CE1842 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E14269CA9AE00CE1842 /* ViewController.m */; };
 		70571E18269CA9AE00CE1842 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70571E16269CA9AE00CE1842 /* Main.storyboard */; };
 		70571E1A269CA9AF00CE1842 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70571E19269CA9AF00CE1842 /* Assets.xcassets */; };
 		70571E1D269CA9AF00CE1842 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70571E1B269CA9AF00CE1842 /* LaunchScreen.storyboard */; };
 		70571E20269CA9AF00CE1842 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E1F269CA9AF00CE1842 /* main.m */; };
 		70571E2A269CA9AF00CE1842 /* LocshareTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E29269CA9AF00CE1842 /* LocshareTests.m */; };
 		70571E35269CA9AF00CE1842 /* LocshareUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E34269CA9AF00CE1842 /* LocshareUITests.m */; };
+		70571E47269CAF8F00CE1842 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E46269CAF8F00CE1842 /* LoginViewController.m */; };
+		70571E4A269CB03600CE1842 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E49269CB03600CE1842 /* Post.m */; };
+		70571E4D269CB3D000CE1842 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E4C269CB3D000CE1842 /* Location.m */; };
+		70571E50269CE24D00CE1842 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E4F269CE24D00CE1842 /* Comment.m */; };
+		70571E53269CE3CD00CE1842 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E52269CE3CD00CE1842 /* User.m */; };
+		70571E56269CE60D00CE1842 /* HomeFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E55269CE60D00CE1842 /* HomeFeedViewController.m */; };
+		70571E59269CE62500CE1842 /* PostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E58269CE62500CE1842 /* PostViewController.m */; };
+		70571E5C269CE64C00CE1842 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E5B269CE64C00CE1842 /* SearchViewController.m */; };
+		70571E5F269CE66F00CE1842 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E5E269CE66F00CE1842 /* ProfileViewController.m */; };
+		70571E62269CE67F00CE1842 /* LocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E61269CE67F00CE1842 /* LocationViewController.m */; };
+		70571E65269CE69200CE1842 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E64269CE69200CE1842 /* DetailsViewController.m */; };
+		A7C37B87B1356CCD753A958E /* Pods_LocshareTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB72C41EE9DADFD0AC0170F5 /* Pods_LocshareTests.framework */; };
+		C00D74ED1B04D45B2F772B3A /* Pods_Locshare_LocshareUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF243CCBA4B7B20A0370E822 /* Pods_Locshare_LocshareUITests.framework */; };
+		FBA41A05342A76C5688C32EE /* Pods_Locshare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD266C79FDA7AE06089B6621 /* Pods_Locshare.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,13 +49,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		077D0D99085DCAC57610B015 /* Pods-Locshare-LocshareUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Locshare-LocshareUITests.debug.xcconfig"; path = "Target Support Files/Pods-Locshare-LocshareUITests/Pods-Locshare-LocshareUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		10F1A5F7C8B583C69D074121 /* Pods-Locshare.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Locshare.debug.xcconfig"; path = "Target Support Files/Pods-Locshare/Pods-Locshare.debug.xcconfig"; sourceTree = "<group>"; };
+		3A2A390D29A55B8BC494ADFA /* Pods-Locshare.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Locshare.release.xcconfig"; path = "Target Support Files/Pods-Locshare/Pods-Locshare.release.xcconfig"; sourceTree = "<group>"; };
+		3E74B4E92CD0CD0E2DEC2DDC /* Pods-LocshareTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocshareTests.release.xcconfig"; path = "Target Support Files/Pods-LocshareTests/Pods-LocshareTests.release.xcconfig"; sourceTree = "<group>"; };
 		70571E0A269CA9AE00CE1842 /* Locshare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Locshare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		70571E0D269CA9AE00CE1842 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		70571E0E269CA9AE00CE1842 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		70571E10269CA9AE00CE1842 /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
 		70571E11269CA9AE00CE1842 /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
-		70571E13269CA9AE00CE1842 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		70571E14269CA9AE00CE1842 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		70571E17269CA9AE00CE1842 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		70571E19269CA9AF00CE1842 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		70571E1C269CA9AF00CE1842 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -54,6 +69,33 @@
 		70571E30269CA9AF00CE1842 /* LocshareUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LocshareUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		70571E34269CA9AF00CE1842 /* LocshareUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocshareUITests.m; sourceTree = "<group>"; };
 		70571E36269CA9AF00CE1842 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		70571E45269CAF8F00CE1842 /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		70571E46269CAF8F00CE1842 /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		70571E48269CB03600CE1842 /* Post.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Post.h; sourceTree = "<group>"; };
+		70571E49269CB03600CE1842 /* Post.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Post.m; sourceTree = "<group>"; };
+		70571E4B269CB3D000CE1842 /* Location.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
+		70571E4C269CB3D000CE1842 /* Location.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
+		70571E4E269CE24D00CE1842 /* Comment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
+		70571E4F269CE24D00CE1842 /* Comment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
+		70571E51269CE3CD00CE1842 /* User.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		70571E52269CE3CD00CE1842 /* User.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		70571E54269CE60D00CE1842 /* HomeFeedViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeFeedViewController.h; sourceTree = "<group>"; };
+		70571E55269CE60D00CE1842 /* HomeFeedViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeFeedViewController.m; sourceTree = "<group>"; };
+		70571E57269CE62500CE1842 /* PostViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PostViewController.h; sourceTree = "<group>"; };
+		70571E58269CE62500CE1842 /* PostViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PostViewController.m; sourceTree = "<group>"; };
+		70571E5A269CE64B00CE1842 /* SearchViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		70571E5B269CE64C00CE1842 /* SearchViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
+		70571E5D269CE66F00CE1842 /* ProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		70571E5E269CE66F00CE1842 /* ProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		70571E60269CE67E00CE1842 /* LocationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationViewController.h; sourceTree = "<group>"; };
+		70571E61269CE67F00CE1842 /* LocationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationViewController.m; sourceTree = "<group>"; };
+		70571E63269CE69200CE1842 /* DetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
+		70571E64269CE69200CE1842 /* DetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
+		7E8A0C260B8E046507FC86BA /* Pods-Locshare-LocshareUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Locshare-LocshareUITests.release.xcconfig"; path = "Target Support Files/Pods-Locshare-LocshareUITests/Pods-Locshare-LocshareUITests.release.xcconfig"; sourceTree = "<group>"; };
+		D92930AF93ECC1F7A2525ACC /* Pods-LocshareTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocshareTests.debug.xcconfig"; path = "Target Support Files/Pods-LocshareTests/Pods-LocshareTests.debug.xcconfig"; sourceTree = "<group>"; };
+		DD266C79FDA7AE06089B6621 /* Pods_Locshare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Locshare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EB72C41EE9DADFD0AC0170F5 /* Pods_LocshareTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LocshareTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF243CCBA4B7B20A0370E822 /* Pods_Locshare_LocshareUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Locshare_LocshareUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +103,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBA41A05342A76C5688C32EE /* Pods_Locshare.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,6 +111,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A7C37B87B1356CCD753A958E /* Pods_LocshareTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,12 +119,36 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C00D74ED1B04D45B2F772B3A /* Pods_Locshare_LocshareUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		08FB1A498003EA4353B0255A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				10F1A5F7C8B583C69D074121 /* Pods-Locshare.debug.xcconfig */,
+				3A2A390D29A55B8BC494ADFA /* Pods-Locshare.release.xcconfig */,
+				077D0D99085DCAC57610B015 /* Pods-Locshare-LocshareUITests.debug.xcconfig */,
+				7E8A0C260B8E046507FC86BA /* Pods-Locshare-LocshareUITests.release.xcconfig */,
+				D92930AF93ECC1F7A2525ACC /* Pods-LocshareTests.debug.xcconfig */,
+				3E74B4E92CD0CD0E2DEC2DDC /* Pods-LocshareTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		0CB6153984598E3D51D27070 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DD266C79FDA7AE06089B6621 /* Pods_Locshare.framework */,
+				FF243CCBA4B7B20A0370E822 /* Pods_Locshare_LocshareUITests.framework */,
+				EB72C41EE9DADFD0AC0170F5 /* Pods_LocshareTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		70571E01269CA9AE00CE1842 = {
 			isa = PBXGroup;
 			children = (
@@ -88,6 +156,8 @@
 				70571E28269CA9AF00CE1842 /* LocshareTests */,
 				70571E33269CA9AF00CE1842 /* LocshareUITests */,
 				70571E0B269CA9AE00CE1842 /* Products */,
+				08FB1A498003EA4353B0255A /* Pods */,
+				0CB6153984598E3D51D27070 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -104,12 +174,13 @@
 		70571E0C269CA9AE00CE1842 /* Locshare */ = {
 			isa = PBXGroup;
 			children = (
+				70571E44269CAA3600CE1842 /* Views */,
+				70571E43269CAA3000CE1842 /* View Controllers */,
+				70571E42269CAA2A00CE1842 /* Models */,
 				70571E0D269CA9AE00CE1842 /* AppDelegate.h */,
 				70571E0E269CA9AE00CE1842 /* AppDelegate.m */,
 				70571E10269CA9AE00CE1842 /* SceneDelegate.h */,
 				70571E11269CA9AE00CE1842 /* SceneDelegate.m */,
-				70571E13269CA9AE00CE1842 /* ViewController.h */,
-				70571E14269CA9AE00CE1842 /* ViewController.m */,
 				70571E16269CA9AE00CE1842 /* Main.storyboard */,
 				70571E19269CA9AF00CE1842 /* Assets.xcassets */,
 				70571E1B269CA9AF00CE1842 /* LaunchScreen.storyboard */,
@@ -137,6 +208,49 @@
 			path = LocshareUITests;
 			sourceTree = "<group>";
 		};
+		70571E42269CAA2A00CE1842 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				70571E48269CB03600CE1842 /* Post.h */,
+				70571E51269CE3CD00CE1842 /* User.h */,
+				70571E52269CE3CD00CE1842 /* User.m */,
+				70571E49269CB03600CE1842 /* Post.m */,
+				70571E4B269CB3D000CE1842 /* Location.h */,
+				70571E4C269CB3D000CE1842 /* Location.m */,
+				70571E4E269CE24D00CE1842 /* Comment.h */,
+				70571E4F269CE24D00CE1842 /* Comment.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		70571E43269CAA3000CE1842 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				70571E45269CAF8F00CE1842 /* LoginViewController.h */,
+				70571E5D269CE66F00CE1842 /* ProfileViewController.h */,
+				70571E5E269CE66F00CE1842 /* ProfileViewController.m */,
+				70571E60269CE67E00CE1842 /* LocationViewController.h */,
+				70571E61269CE67F00CE1842 /* LocationViewController.m */,
+				70571E63269CE69200CE1842 /* DetailsViewController.h */,
+				70571E64269CE69200CE1842 /* DetailsViewController.m */,
+				70571E46269CAF8F00CE1842 /* LoginViewController.m */,
+				70571E54269CE60D00CE1842 /* HomeFeedViewController.h */,
+				70571E55269CE60D00CE1842 /* HomeFeedViewController.m */,
+				70571E57269CE62500CE1842 /* PostViewController.h */,
+				70571E58269CE62500CE1842 /* PostViewController.m */,
+				70571E5A269CE64B00CE1842 /* SearchViewController.h */,
+				70571E5B269CE64C00CE1842 /* SearchViewController.m */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		70571E44269CAA3600CE1842 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -144,9 +258,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 70571E39269CA9AF00CE1842 /* Build configuration list for PBXNativeTarget "Locshare" */;
 			buildPhases = (
+				49E70F3E725201AD4B5A9822 /* [CP] Check Pods Manifest.lock */,
 				70571E06269CA9AE00CE1842 /* Sources */,
 				70571E07269CA9AE00CE1842 /* Frameworks */,
 				70571E08269CA9AE00CE1842 /* Resources */,
+				855B52783D6F820784ABAB29 /* [CP] Embed Pods Frameworks */,
+				5261224AEBE8CC6FB6CE63F4 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -161,6 +278,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 70571E3C269CA9AF00CE1842 /* Build configuration list for PBXNativeTarget "LocshareTests" */;
 			buildPhases = (
+				08C3B5A4B5BC668A04F73C30 /* [CP] Check Pods Manifest.lock */,
 				70571E21269CA9AF00CE1842 /* Sources */,
 				70571E22269CA9AF00CE1842 /* Frameworks */,
 				70571E23269CA9AF00CE1842 /* Resources */,
@@ -179,9 +297,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 70571E3F269CA9AF00CE1842 /* Build configuration list for PBXNativeTarget "LocshareUITests" */;
 			buildPhases = (
+				65F22676DD4FF755CEB70BEE /* [CP] Check Pods Manifest.lock */,
 				70571E2C269CA9AF00CE1842 /* Sources */,
 				70571E2D269CA9AF00CE1842 /* Frameworks */,
 				70571E2E269CA9AF00CE1842 /* Resources */,
+				5BD2C9D51263FDB06812E083 /* [CP] Embed Pods Frameworks */,
+				1D1763A46387025D69CE621A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -261,14 +382,161 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		08C3B5A4B5BC668A04F73C30 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-LocshareTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		1D1763A46387025D69CE621A /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Locshare-LocshareUITests/Pods-Locshare-LocshareUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Locshare-LocshareUITests/Pods-Locshare-LocshareUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Locshare-LocshareUITests/Pods-Locshare-LocshareUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		49E70F3E725201AD4B5A9822 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Locshare-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5261224AEBE8CC6FB6CE63F4 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Locshare/Pods-Locshare-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Locshare/Pods-Locshare-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Locshare/Pods-Locshare-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5BD2C9D51263FDB06812E083 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Locshare-LocshareUITests/Pods-Locshare-LocshareUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Locshare-LocshareUITests/Pods-Locshare-LocshareUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Locshare-LocshareUITests/Pods-Locshare-LocshareUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		65F22676DD4FF755CEB70BEE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Locshare-LocshareUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		855B52783D6F820784ABAB29 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Locshare/Pods-Locshare-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Locshare/Pods-Locshare-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Locshare/Pods-Locshare-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		70571E06269CA9AE00CE1842 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				70571E15269CA9AE00CE1842 /* ViewController.m in Sources */,
+				70571E53269CE3CD00CE1842 /* User.m in Sources */,
+				70571E56269CE60D00CE1842 /* HomeFeedViewController.m in Sources */,
+				70571E50269CE24D00CE1842 /* Comment.m in Sources */,
+				70571E4A269CB03600CE1842 /* Post.m in Sources */,
+				70571E59269CE62500CE1842 /* PostViewController.m in Sources */,
+				70571E47269CAF8F00CE1842 /* LoginViewController.m in Sources */,
 				70571E0F269CA9AE00CE1842 /* AppDelegate.m in Sources */,
+				70571E62269CE67F00CE1842 /* LocationViewController.m in Sources */,
 				70571E20269CA9AF00CE1842 /* main.m in Sources */,
+				70571E5C269CE64C00CE1842 /* SearchViewController.m in Sources */,
+				70571E4D269CB3D000CE1842 /* Location.m in Sources */,
+				70571E65269CE69200CE1842 /* DetailsViewController.m in Sources */,
+				70571E5F269CE66F00CE1842 /* ProfileViewController.m in Sources */,
 				70571E12269CA9AE00CE1842 /* SceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -438,6 +706,7 @@
 		};
 		70571E3A269CA9AF00CE1842 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 10F1A5F7C8B583C69D074121 /* Pods-Locshare.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -456,6 +725,7 @@
 		};
 		70571E3B269CA9AF00CE1842 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3A2A390D29A55B8BC494ADFA /* Pods-Locshare.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -474,6 +744,7 @@
 		};
 		70571E3D269CA9AF00CE1842 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D92930AF93ECC1F7A2525ACC /* Pods-LocshareTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -494,6 +765,7 @@
 		};
 		70571E3E269CA9AF00CE1842 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3E74B4E92CD0CD0E2DEC2DDC /* Pods-LocshareTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -514,6 +786,7 @@
 		};
 		70571E40269CA9AF00CE1842 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 077D0D99085DCAC57610B015 /* Pods-Locshare-LocshareUITests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LRC4C3ZCGF;
@@ -532,6 +805,7 @@
 		};
 		70571E41269CA9AF00CE1842 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7E8A0C260B8E046507FC86BA /* Pods-Locshare-LocshareUITests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LRC4C3ZCGF;

@@ -1,0 +1,6 @@
+framework module Pods_Locshare {
+  umbrella header "Pods-Locshare-umbrella.h"
+
+  export *
+  module * { export * }
+}

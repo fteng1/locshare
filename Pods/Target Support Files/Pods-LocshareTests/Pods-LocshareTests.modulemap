@@ -1,0 +1,6 @@
+framework module Pods_LocshareTests {
+  umbrella header "Pods-LocshareTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
