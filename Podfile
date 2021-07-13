@@ -9,6 +9,8 @@ target 'Locshare' do
   pod 'Parse'
   pod 'GoogleMaps'
   pod 'GooglePlaces'
+  pod 'DateTools'
+  pod 'UITextView+Placeholder'
 
   target 'LocshareTests' do
     inherit! :search_paths
