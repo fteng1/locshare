@@ -12,7 +12,7 @@
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="LoginViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" id="BYZ-38-t0r" customClass="LoginViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -27,12 +27,15 @@
                                 <rect key="frame" x="147" y="405" width="97" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="US5-C3-gI8">
                                 <rect key="frame" x="99" y="512" width="47" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Sign in"/>
+                                <connections>
+                                    <action selector="inSignInTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MZc-qZ-goA"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Locshare" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0LS-HQ-NG8">
                                 <rect key="frame" x="160" y="250" width="70" height="21"/>
@@ -45,13 +48,18 @@
                                 <rect key="frame" x="243" y="512" width="57" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Register"/>
+                                <connections>
+                                    <action selector="onRegisterTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Bhq-7g-vYj"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <connections>
-                        <segue destination="bpb-YL-bpO" kind="presentation" modalPresentationStyle="fullScreen" id="ybK-Mk-Bd7"/>
+                        <outlet property="passwordField" destination="2uX-Rs-NeM" id="POV-EA-l00"/>
+                        <outlet property="usernameField" destination="tRS-Xy-gbC" id="t5U-x5-1dA"/>
+                        <segue destination="bpb-YL-bpO" kind="presentation" identifier="loginSegue" modalPresentationStyle="fullScreen" id="ybK-Mk-Bd7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -61,8 +69,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="Hlz-Pl-Jyq">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="hHL-UN-Vds" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <tabBarController id="bpb-YL-bpO" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarController" id="bpb-YL-bpO" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Hut-Os-ngg">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -75,6 +82,7 @@
                         <segue destination="44J-Sg-vfE" kind="relationship" relationship="viewControllers" id="RA4-LW-U4S"/>
                     </connections>
                 </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hHL-UN-Vds" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2477" y="-1013"/>
         </scene>
@@ -487,7 +495,13 @@
                         <viewLayoutGuide key="safeArea" id="fiE-Ec-Ncu"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="302-at-7jT"/>
+                    <navigationItem key="navigationItem" id="302-at-7jT">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="gbl-4N-hHA">
+                            <connections>
+                                <action selector="onLogoutTap:" destination="0vV-1o-gEl" id="5Xb-np-XuW"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <segue destination="h8p-KT-O4t" kind="showDetail" id="AIQ-dv-1GL"/>
                     </connections>
