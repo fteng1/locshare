@@ -8,6 +8,7 @@ target 'Locshare' do
   # Pods for Locshare
   pod 'Parse'
   pod 'GoogleMaps'
+  pod 'GooglePlaces'
 
   target 'LocshareTests' do
     inherit! :search_paths

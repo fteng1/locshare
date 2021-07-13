@@ -5,6 +5,7 @@ PODS:
   - GoogleMaps/Base (5.1.0)
   - GoogleMaps/Maps (5.1.0):
     - GoogleMaps/Base
+  - GooglePlaces (5.0.0)
   - Parse (1.19.2):
     - Parse/Core (= 1.19.2)
   - Parse/Core (1.19.2):
@@ -12,19 +13,22 @@ PODS:
 
 DEPENDENCIES:
   - GoogleMaps
+  - GooglePlaces
   - Parse
 
 SPEC REPOS:
   trunk:
     - Bolts
     - GoogleMaps
+    - GooglePlaces
     - Parse
 
 SPEC CHECKSUMS:
   Bolts: 8c1e8aab2f603387b8b9924f57d1d64f43d3ffdc
   GoogleMaps: 086ae1dab659eaa7339bdb30fc88e2f44e7c597c
+  GooglePlaces: 5d87ca13ed98b7a937e0d8bc7026f718c7263271
   Parse: 081fb8755c3000fd11df817eec235def233d0af3
 
-PODFILE CHECKSUM: 0806112cf5b38c9502595ad653d168061d5f78b8
+PODFILE CHECKSUM: 86f3ac0f72ef919df5b13d5fa4c3350bf30b79e4
 
 COCOAPODS: 1.10.1
