@@ -9,6 +9,7 @@
 #import <UITextView_Placeholder/UITextView+Placeholder.h>
 #import "Post.h"
 #import "LocationAutocompleteCell.h"
+#import "Location.h"
 
 @interface PostViewController () <UIImagePickerControllerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 
@@ -87,18 +88,27 @@
 }
 
 - (IBAction)shareButton:(id)sender {
-    Post *newPost = [Post initPost:self.imagePickView.image withCaption:self.captionTextView.text withLocation:nil];
-    [Post makePost:newPost withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
+    [Location tagLocation:self.locationID completion:^(NSString *locID, NSError * _Nonnull error) {
         if (error != nil) {
-            NSLog(@"Post share failed: %@", error.localizedDescription);
+            NSLog(@"Location tag failed: %@", error.localizedDescription);
         }
         else {
-            NSLog(@"Post shared successfully");
-            PFUser *currentUser = [PFUser currentUser];
-            [currentUser incrementKey:@"numPosts"];
-            [currentUser saveInBackground];
+            // Make new post with the given location ID
+            Post *newPost = [Post initPost:self.imagePickView.image withCaption:self.captionTextView.text withLocation:locID];
+            [Post makePost:newPost withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
+                if (error != nil) {
+                    NSLog(@"Post share failed: %@", error.localizedDescription);
+                }
+                else {
+                    NSLog(@"Post shared successfully");
+                    PFUser *currentUser = [PFUser currentUser];
+                    [currentUser incrementKey:@"numPosts"];
+                    [currentUser saveInBackground];
+                }
+            }];
         }
     }];
+    
     [self performSegueWithIdentifier:@"afterPostSegue" sender:nil];
 }
 

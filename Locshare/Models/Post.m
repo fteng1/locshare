@@ -24,7 +24,7 @@
     return @"Post";
 }
 
-+ (Post *) initPost: ( UIImage * _Nullable )image withCaption: ( NSString * _Nullable )caption withLocation: (Location * _Nullable)loc {
++ (Post *) initPost: ( UIImage * _Nullable )image withCaption: ( NSString * _Nullable )caption withLocation: (NSString * _Nullable)locID {
     // Initialize fields
     Post *newPost = [Post new];
     newPost.photos = [[NSMutableArray alloc] init];
@@ -35,6 +35,7 @@
     newPost.numComments = @(0);
     newPost.authorUsername = [PFUser currentUser].username;
     newPost.comments = [[NSMutableArray alloc] init];
+    newPost.location = locID;
     return newPost;
 }
 

@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSNumber *numLikes;
 @property (nonatomic, strong) NSNumber *numComments;
 @property (nonatomic, strong) NSString *authorUsername;
-@property (nonatomic, strong) Location *location;
+@property (nonatomic, strong) NSString *location;
 @property (nonatomic, strong) NSMutableArray *comments;
 
 + (Post *) initPost: ( UIImage * _Nullable )image withCaption: ( NSString * _Nullable )caption withLocation: (Location * _Nullable)loc;
