@@ -106,6 +106,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Feed" id="xQQ-zM-gMN"/>
                     <connections>
+                        <outlet property="homeMapView" destination="7SV-rC-Uhw" id="9hM-3h-Pdz"/>
                         <segue destination="L79-Ro-h21" kind="presentation" modalPresentationStyle="fullScreen" id="iyg-Pk-zZM"/>
                     </connections>
                 </viewController>

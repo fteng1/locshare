@@ -6,16 +6,60 @@
 //
 
 #import "HomeFeedViewController.h"
+#import <GoogleMaps/GoogleMaps.h>
+#import <GooglePlaces/GooglePlaces.h>
 
-@interface HomeFeedViewController ()
+@interface HomeFeedViewController () <CLLocationManagerDelegate>
+@property (weak, nonatomic) IBOutlet GMSMapView *homeMapView;
 
 @end
+
+CLLocationManager *locationManager;
+CLLocation * _Nullable currentLocation;
+GMSPlacesClient *placesClient;
+float preciseLocationZoomLevel;
+float approximateLocationZoomLevel;
 
 @implementation HomeFeedViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    // Initialize the location manager.
+    locationManager = [[CLLocationManager alloc] init];
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    [locationManager requestWhenInUseAuthorization];
+    locationManager.distanceFilter = 50;
+    [locationManager startUpdatingLocation];
+    locationManager.delegate = self;
+
+    placesClient = [GMSPlacesClient sharedClient];
+    
+    // Get the current location using the location manager
+    locationManager = [[CLLocationManager alloc] init];
+    locationManager.delegate = self;
+    locationManager.distanceFilter = kCLDistanceFilterNone;
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+
+    // Ask user for permission to use location
+    [locationManager requestWhenInUseAuthorization];
+    [locationManager startUpdatingLocation];
+}
+
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
+    
+    // Get most updated position
+    CLLocation *currentLocation = [locations lastObject];
+
+    // Set camera of map to be at current position
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:currentLocation.coordinate.latitude longitude:currentLocation.coordinate.longitude zoom:10.0];
+    [self.homeMapView setCamera:camera];
+    self.homeMapView.settings.myLocationButton = YES;
+    self.homeMapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    
+    // Display current location on map
+    self.homeMapView.myLocationEnabled = YES;
 }
 
 /*
