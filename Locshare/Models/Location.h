@@ -6,10 +6,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <Parse/Parse.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Location : NSObject
+@interface Location : PFObject<PFSubclassing>
 
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSNumber *latitude;

@@ -6,10 +6,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <Parse/Parse.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface User : NSObject
+@interface User : PFObject<PFSubclassing>
 
 @property (nonatomic, strong) NSString *username;
 @property (nonatomic, strong) NSString *password;

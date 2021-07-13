@@ -9,4 +9,8 @@
 
 @implementation Comment
 
++ (nonnull NSString *)parseClassName {
+    return @"Comment";
+}
+
 @end

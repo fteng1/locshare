@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Comment : NSObject
+@interface Comment : PFObject<PFSubclassing>
 
 @property (nonatomic, strong) PFUser *author;
 @property (nonatomic, strong) NSString *userID;

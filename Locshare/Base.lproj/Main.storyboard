@@ -70,6 +70,7 @@
         <scene sceneID="Hlz-Pl-Jyq">
             <objects>
                 <tabBarController storyboardIdentifier="TabBarController" id="bpb-YL-bpO" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="yvF-GX-fO4"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Hut-Os-ngg">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -275,7 +276,7 @@
         <scene sceneID="pdK-U0-Hp1">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zpg-Fp-C0c" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Home" id="dFL-3X-YV3"/>
+                    <tabBarItem key="tabBarItem" title="Home" image="map" catalog="system" id="dFL-3X-YV3"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="hWO-RE-mvc">
                         <rect key="frame" x="0.0" y="44" width="390" height="44"/>
@@ -339,6 +340,34 @@
                                     <action selector="onPhotoLibraryTap:" destination="t7a-ai-1iy" eventType="touchUpInside" id="teL-dP-YGD"/>
                                 </connections>
                             </button>
+                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="qZr-bq-9WV">
+                                <rect key="frame" x="151" y="184" width="223" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LocationAutocompleteCell" id="mt9-J8-3i9" customClass="LocationAutocompleteCell">
+                                        <rect key="frame" x="0.0" y="24.333333969116211" width="223" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mt9-J8-3i9" id="Peh-i9-Hne">
+                                            <rect key="frame" x="0.0" y="0.0" width="223" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5sx-GS-3Gh">
+                                                    <rect key="frame" x="5" y="11" width="211" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <gestureRecognizers/>
+                                        <connections>
+                                            <outlet property="locationLabel" destination="5sx-GS-3Gh" id="Ag6-g4-JVx"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="e4Y-Zb-Imu"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -347,25 +376,26 @@
                         <barButtonItem key="rightBarButtonItem" title="Share" id="NOn-6X-4Hh">
                             <connections>
                                 <action selector="shareButton:" destination="t7a-ai-1iy" id="PaI-LC-edp"/>
-                                <segue destination="WC1-1V-sli" kind="presentation" identifier="afterPostSegue" modalPresentationStyle="fullScreen" id="BXc-LO-7WT"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="autocompleteTableView" destination="qZr-bq-9WV" id="efP-tD-aj2"/>
                         <outlet property="captionTextView" destination="oZA-dj-V8Y" id="XJa-id-MOG"/>
                         <outlet property="imagePickView" destination="v9x-Fm-WgI" id="w2l-jJ-SNE"/>
                         <outlet property="locationSearchBar" destination="0zq-jz-3KE" id="1FF-Vt-vA1"/>
+                        <segue destination="bpb-YL-bpO" kind="presentation" identifier="afterPostSegue" modalPresentationStyle="fullScreen" id="jvO-ql-lyu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n8u-bf-jbL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1451" y="604"/>
+            <point key="canvasLocation" x="1450.7692307692307" y="602.84360189573454"/>
         </scene>
         <!--Share-->
         <scene sceneID="P5f-aG-auw">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fuw-wG-5pH" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Share" id="VRg-f6-Fv2"/>
+                    <tabBarItem key="tabBarItem" title="Share" image="square.and.arrow.up" catalog="system" id="VRg-f6-Fv2"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="fOM-51-27e">
                         <rect key="frame" x="0.0" y="44" width="390" height="44"/>
@@ -442,7 +472,7 @@
         <scene sceneID="eye-f5-TQL">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7j1-UB-GXx" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Search" id="mU0-6O-UbQ"/>
+                    <tabBarItem key="tabBarItem" title="Search" image="magnifyingglass" catalog="system" id="mU0-6O-UbQ"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="cfc-lB-scM">
                         <rect key="frame" x="0.0" y="44" width="390" height="44"/>
@@ -539,7 +569,7 @@
         <scene sceneID="cCF-6T-JXR">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="44J-Sg-vfE" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Profile" id="gz7-Af-MQo"/>
+                    <tabBarItem key="tabBarItem" title="Profile" image="person" catalog="system" id="gz7-Af-MQo"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="man-xL-IN1">
                         <rect key="frame" x="0.0" y="44" width="390" height="44"/>
@@ -557,13 +587,16 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="AIQ-dv-1GL"/>
-        <segue reference="BXc-LO-7WT"/>
+        <segue reference="jvO-ql-lyu"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="camera" catalog="system" width="128" height="94"/>
         <image name="camera.metering.center.weighted" catalog="system" width="128" height="93"/>
+        <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="map" catalog="system" width="128" height="110"/>
+        <image name="person" catalog="system" width="128" height="117"/>
         <image name="photo.on.rectangle.angled" catalog="system" width="128" height="101"/>
+        <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

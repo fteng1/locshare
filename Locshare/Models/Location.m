@@ -9,4 +9,8 @@
 
 @implementation Location
 
++ (nonnull NSString *)parseClassName {
+    return @"Location";
+}
+
 @end

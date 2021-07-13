@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		70007451269E33A600F10FE1 /* LocationAutocompleteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70007450269E33A600F10FE1 /* LocationAutocompleteCell.m */; };
 		70571E0F269CA9AE00CE1842 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E0E269CA9AE00CE1842 /* AppDelegate.m */; };
 		70571E12269CA9AE00CE1842 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E11269CA9AE00CE1842 /* SceneDelegate.m */; };
 		70571E18269CA9AE00CE1842 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70571E16269CA9AE00CE1842 /* Main.storyboard */; };
@@ -54,6 +55,8 @@
 		10F1A5F7C8B583C69D074121 /* Pods-Locshare.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Locshare.debug.xcconfig"; path = "Target Support Files/Pods-Locshare/Pods-Locshare.debug.xcconfig"; sourceTree = "<group>"; };
 		3A2A390D29A55B8BC494ADFA /* Pods-Locshare.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Locshare.release.xcconfig"; path = "Target Support Files/Pods-Locshare/Pods-Locshare.release.xcconfig"; sourceTree = "<group>"; };
 		3E74B4E92CD0CD0E2DEC2DDC /* Pods-LocshareTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocshareTests.release.xcconfig"; path = "Target Support Files/Pods-LocshareTests/Pods-LocshareTests.release.xcconfig"; sourceTree = "<group>"; };
+		7000744F269E33A600F10FE1 /* LocationAutocompleteCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationAutocompleteCell.h; sourceTree = "<group>"; };
+		70007450269E33A600F10FE1 /* LocationAutocompleteCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationAutocompleteCell.m; sourceTree = "<group>"; };
 		70571E0A269CA9AE00CE1842 /* Locshare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Locshare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		70571E0D269CA9AE00CE1842 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		70571E0E269CA9AE00CE1842 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -250,6 +253,8 @@
 		70571E44269CAA3600CE1842 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7000744F269E33A600F10FE1 /* LocationAutocompleteCell.h */,
+				70007450269E33A600F10FE1 /* LocationAutocompleteCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -532,6 +537,7 @@
 				70571E56269CE60D00CE1842 /* HomeFeedViewController.m in Sources */,
 				70571E50269CE24D00CE1842 /* Comment.m in Sources */,
 				70571E4A269CB03600CE1842 /* Post.m in Sources */,
+				70007451269E33A600F10FE1 /* LocationAutocompleteCell.m in Sources */,
 				70571E59269CE62500CE1842 /* PostViewController.m in Sources */,
 				70571E47269CAF8F00CE1842 /* LoginViewController.m in Sources */,
 				70571E0F269CA9AE00CE1842 /* AppDelegate.m in Sources */,
