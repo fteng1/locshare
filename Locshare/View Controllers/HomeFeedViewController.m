@@ -11,7 +11,7 @@
 #import <Parse/Parse.h>
 #import "Location.h"
 
-@interface HomeFeedViewController () <CLLocationManagerDelegate>
+@interface HomeFeedViewController () <CLLocationManagerDelegate, GMSMapViewDelegate>
 @property (weak, nonatomic) IBOutlet GMSMapView *homeMapView;
 
 @end
@@ -50,6 +50,8 @@ float approximateLocationZoomLevel;
     // Set initial camera position of the MapView
     [self updateDefaultPosition];
     [self displayVisibleLocations];
+    
+    self.homeMapView.delegate = self;
 }
 
 - (void)updateDefaultPosition {
@@ -83,6 +85,7 @@ float approximateLocationZoomLevel;
     return window;
 }
 
+// Update currently shown regions on MapView to display locations that have posts
 - (void)displayVisibleLocations {
     // Get coordinates currently shown on MapView
     CGRect currentlyVisible = [self getVisibleRegion];
@@ -103,6 +106,11 @@ float approximateLocationZoomLevel;
             marker.map = self.homeMapView;
         }
     }];
+}
+
+// Show newly visible locations once map is moved
+- (void)mapView:(GMSMapView *)mapView willMove:(BOOL)gesture {
+    [self displayVisibleLocations];
 }
 
 /*
