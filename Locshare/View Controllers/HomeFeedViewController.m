@@ -8,6 +8,8 @@
 #import "HomeFeedViewController.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import <GooglePlaces/GooglePlaces.h>
+#import <Parse/Parse.h>
+#import "Location.h"
 
 @interface HomeFeedViewController () <CLLocationManagerDelegate>
 @property (weak, nonatomic) IBOutlet GMSMapView *homeMapView;
@@ -44,22 +46,63 @@ float approximateLocationZoomLevel;
     // Ask user for permission to use location
     [locationManager requestWhenInUseAuthorization];
     [locationManager startUpdatingLocation];
+    
+    // Set initial camera position of the MapView
+    [self updateDefaultPosition];
+    [self displayVisibleLocations];
 }
 
-
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
-    
+- (void)updateDefaultPosition {
     // Get most updated position
-    CLLocation *currentLocation = [locations lastObject];
-
-    // Set camera of map to be at current position
-    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:currentLocation.coordinate.latitude longitude:currentLocation.coordinate.longitude zoom:10.0];
-    [self.homeMapView setCamera:camera];
-    self.homeMapView.settings.myLocationButton = YES;
-    self.homeMapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    CLLocation *currentLocation = locationManager.location;
     
-    // Display current location on map
-    self.homeMapView.myLocationEnabled = YES;
+    if (currentLocation != nil) {
+        // Set camera of map to be at current position
+        GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:currentLocation.coordinate.latitude longitude:currentLocation.coordinate.longitude zoom:10.0];
+        [self.homeMapView setCamera:camera];
+        self.homeMapView.settings.myLocationButton = YES;
+        self.homeMapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        
+        // Display current location on map
+        self.homeMapView.myLocationEnabled = YES;
+    }
+    else {
+        // TODO: change default location if no current location
+    }
+}
+
+- (CGRect)getVisibleRegion {
+    // Find region currently visible in homeMapView
+    GMSVisibleRegion visRegion = self.homeMapView.projection.visibleRegion;
+    GMSCoordinateBounds *coordBounds = [[GMSCoordinateBounds alloc] initWithRegion:visRegion];
+    
+    // Get dimensions for the CGRect
+    CGFloat width = coordBounds.northEast.longitude - coordBounds.southWest.longitude;
+    CGFloat height = coordBounds.northEast.latitude - coordBounds.southWest.latitude;
+    CGRect window = CGRectMake(coordBounds.southWest.longitude, coordBounds.southWest.latitude, width, height);
+    return window;
+}
+
+- (void)displayVisibleLocations {
+    // Get coordinates currently shown on MapView
+    CGRect currentlyVisible = [self getVisibleRegion];
+    
+    // Retrieve locations that fall within the visible region on the map and have posts
+    PFQuery *query = [PFQuery queryWithClassName:@"Location"];
+    [query whereKey:@"longitude" greaterThanOrEqualTo:@(currentlyVisible.origin.x)];
+    [query whereKey:@"latitude" greaterThanOrEqualTo:@(currentlyVisible.origin.y)];
+    [query whereKey:@"longitude" lessThanOrEqualTo:@(currentlyVisible.origin
+     .x + currentlyVisible.size.width)];
+    [query whereKey:@"latitude" lessThanOrEqualTo:@(currentlyVisible.origin
+     .y + currentlyVisible.size.height)];
+    [query whereKey:@"numPosts" greaterThanOrEqualTo:@(0)];
+    
+    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable locations, NSError * _Nullable error) {
+        for (Location *loc in locations) {
+            GMSMarker *marker = [GMSMarker markerWithPosition:CLLocationCoordinate2DMake([loc.latitude doubleValue], [loc.longitude doubleValue])];
+            marker.map = self.homeMapView;
+        }
+    }];
 }
 
 /*

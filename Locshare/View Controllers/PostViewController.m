@@ -88,28 +88,33 @@
 }
 
 - (IBAction)shareButton:(id)sender {
-    [Location tagLocation:self.locationID completion:^(NSString *locID, NSError * _Nonnull error) {
-        if (error != nil) {
-            NSLog(@"Location tag failed: %@", error.localizedDescription);
-        }
-        else {
-            // Make new post with the given location ID
-            Post *newPost = [Post initPost:self.imagePickView.image withCaption:self.captionTextView.text withLocation:locID];
-            [Post makePost:newPost withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
-                if (error != nil) {
-                    NSLog(@"Post share failed: %@", error.localizedDescription);
-                }
-                else {
-                    NSLog(@"Post shared successfully");
-                    PFUser *currentUser = [PFUser currentUser];
-                    [currentUser incrementKey:@"numPosts"];
-                    [currentUser saveInBackground];
-                }
-            }];
-        }
-    }];
-    
-    [self performSegueWithIdentifier:@"afterPostSegue" sender:nil];
+    if (self.locationSearchBar.text.length != 0) {
+        [Location tagLocation:self.locationID completion:^(NSString *locID, NSError * _Nonnull error) {
+            if (error != nil) {
+                NSLog(@"Location tag failed: %@", error.localizedDescription);
+            }
+            else {
+                // Make new post with the given location ID
+                Post *newPost = [Post initPost:self.imagePickView.image withCaption:self.captionTextView.text withLocation:locID];
+                [Post makePost:newPost withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
+                    if (error != nil) {
+                        NSLog(@"Post share failed: %@", error.localizedDescription);
+                    }
+                    else {
+                        NSLog(@"Post shared successfully");
+                        PFUser *currentUser = [PFUser currentUser];
+                        [currentUser incrementKey:@"numPosts"];
+                        [currentUser saveInBackground];
+                    }
+                }];
+            }
+        }];
+        
+        [self performSegueWithIdentifier:@"afterPostSegue" sender:nil];
+    }
+    else {
+        // TODO: Popup telling users to input a valid location
+    }
 }
 
 - (void)getSuggestedLocations:(NSString *)searchQuery {
@@ -178,6 +183,11 @@
     self.locationSearchBar.text = self.autocompleteResults[indexPath.row][@"description"];
     self.locationID = self.autocompleteResults[indexPath.row][@"place_id"];
     self.autocompleteTableView.hidden = true;
+}
+
+- (IBAction)dismissKeyboard:(id)sender {
+    // after typing in the caption text view, tapping anywhere in the view dismisses the keyboard
+    [self.captionTextView resignFirstResponder];
 }
 
 /*

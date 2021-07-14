@@ -372,6 +372,10 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="e4Y-Zb-Imu"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <gestureRecognizers/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="aDD-3k-WWS" appends="YES" id="hjC-Zc-wfl"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" title="Post" id="bik-2M-fuD">
                         <barButtonItem key="rightBarButtonItem" title="Share" id="NOn-6X-4Hh">
@@ -389,6 +393,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n8u-bf-jbL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer cancelsTouchesInView="NO" id="aDD-3k-WWS">
+                    <connections>
+                        <action selector="dismissKeyboard:" destination="t7a-ai-1iy" id="Wdh-kN-IZO"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1450.7692307692307" y="602.84360189573454"/>
         </scene>
