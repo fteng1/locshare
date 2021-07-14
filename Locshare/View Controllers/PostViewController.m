@@ -10,8 +10,9 @@
 #import "Post.h"
 #import "LocationAutocompleteCell.h"
 #import "Location.h"
+#import <QBImagePickerController/QBImagePickerController.h>
 
-@interface PostViewController () <UIImagePickerControllerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
+@interface PostViewController () <QBImagePickerControllerDelegate, UIImagePickerControllerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 
 @property (weak, nonatomic) IBOutlet UISearchBar *locationSearchBar;
 @property (weak, nonatomic) IBOutlet UIImageView *imagePickView;
@@ -20,6 +21,8 @@
 
 @property (strong, nonatomic) NSArray *autocompleteResults;
 @property (strong, nonatomic) NSString *locationID;
+@property (strong, nonatomic) NSMutableArray *photosToUpload;
+@property (nonatomic, strong) PHImageRequestOptions *requestOptions;
 
 @end
 
@@ -33,38 +36,70 @@
     self.locationSearchBar.delegate = self;
     
     self.captionTextView.placeholder = @"Write a caption...";
+    self.photosToUpload = [[NSMutableArray alloc] init];
+    
+    // Options for making requests regarding PHImages
+    self.requestOptions = [[PHImageRequestOptions alloc] init];
+    self.requestOptions.resizeMode = PHImageRequestOptionsResizeModeExact;
+    self.requestOptions.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
+    // Makes calls to requestOptions synchronous
+    self.requestOptions.synchronous = YES;
 }
 
 - (IBAction)onCameraTap:(id)sender {
-    UIImagePickerController *imagePickerVC = [UIImagePickerController new];
-    imagePickerVC.delegate = self;
-    imagePickerVC.allowsEditing = YES;
+    UIImagePickerController *imagePicker = [UIImagePickerController new];
+    imagePicker.delegate = self;
+    imagePicker.allowsEditing = YES;
     
     // The Xcode simulator does not support taking pictures, so let's first check that the camera is indeed supported on the device before trying to present it.
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        imagePickerVC.sourceType = UIImagePickerControllerSourceTypeCamera;
+        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
     }
     else {
         NSLog(@"The camera is not available");
     }
-    [self presentViewController:imagePickerVC animated:YES completion:nil];
+    [self presentViewController:imagePicker animated:YES completion:nil];
 }
 
 // Choose a photo from the photo library
 - (IBAction)onPhotoLibraryTap:(id)sender {
-    UIImagePickerController *imagePickerVC = [UIImagePickerController new];
-    imagePickerVC.delegate = self;
-    imagePickerVC.allowsEditing = YES;
+    QBImagePickerController *imagePicker = [QBImagePickerController new];
+    imagePicker.delegate = self;
+    imagePicker.allowsMultipleSelection = YES;
+    imagePicker.maximumNumberOfSelection = 6;
+    imagePicker.showsNumberOfSelectedAssets = YES;
     
-    imagePickerVC.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    
-    [self presentViewController:imagePickerVC animated:YES completion:nil];
+    [self presentViewController:imagePicker animated:YES completion:nil];
 }
 
+// Use when multiple photos are selected from the photo library
+- (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didFinishPickingAssets:(NSArray *)assets {
+    // Remove any existing photos in array
+    [self.photosToUpload removeAllObjects];
+    
+    // Add each selected image into photosToUpload array
+    for (PHAsset *photo in assets) {
+        PHImageManager *manager = [PHImageManager defaultManager];
+        
+        // Convert asset from PHAsset to UIImage
+        [manager requestImageForAsset:photo targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeDefault options:self.requestOptions resultHandler:^void(UIImage *image, NSDictionary *info) {
+                // Add converted photo to photos array
+                [self.photosToUpload addObject:[self resizeImage:image withSize:CGSizeMake(400, 300)]];
+         }];
+    }
+    
+    self.imagePickView.image = [self.photosToUpload firstObject];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+// Use when camera is used to take photo, can only choose one photo
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<UIImagePickerControllerInfoKey,id> *)info {
+    // Remove any existing photos in array
+    [self.photosToUpload removeAllObjects];
+    
     // Get the image captured by the UIImagePickerController
-    UIImage *originalImage = info[UIImagePickerControllerOriginalImage];
     UIImage *editedImage = info[UIImagePickerControllerEditedImage];
+    [self.photosToUpload addObject:editedImage];
 
     // Do something with the images (based on your use case)
     self.imagePickView.image = [self resizeImage:editedImage withSize:CGSizeMake(400, 300)];
@@ -96,7 +131,7 @@
             }
             else {
                 // Make new post with the given location ID
-                Post *newPost = [Post initPost:self.imagePickView.image withCaption:self.captionTextView.text withLocation:locID];
+                Post *newPost = [Post initPost:self.photosToUpload withCaption:self.captionTextView.text withLocation:locID];
                 [Post makePost:newPost withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
                     if (error != nil) {
                         NSLog(@"Post share failed: %@", error.localizedDescription);

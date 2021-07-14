@@ -24,11 +24,15 @@
     return @"Post";
 }
 
-+ (Post *) initPost: ( UIImage * _Nullable )image withCaption: ( NSString * _Nullable )caption withLocation: (NSString * _Nullable)locID {
++ (Post *) initPost: ( NSArray * _Nullable )images withCaption: ( NSString * _Nullable )caption withLocation: (NSString * _Nullable)locID {
     // Initialize fields
     Post *newPost = [Post new];
     newPost.photos = [[NSMutableArray alloc] init];
-    [newPost.photos addObject:[self getPFFileFromImage:image]];
+    
+    for (UIImage *image in images)  {
+        [newPost.photos addObject:[self getPFFileFromImage:image]];
+    }
+    
     newPost.author = [PFUser currentUser];
     newPost.caption = caption;
     newPost.numLikes = @(0);

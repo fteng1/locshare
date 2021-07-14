@@ -1,7 +1,6 @@
 PODS:
   - Bolts/Tasks (1.9.1)
   - DateTools (2.0.0)
-  - ELCImagePickerController (0.2.0)
   - GoogleMaps (5.1.0):
     - GoogleMaps/Maps (= 5.1.0)
   - GoogleMaps/Base (5.1.0)
@@ -12,35 +11,36 @@ PODS:
     - Parse/Core (= 1.19.2)
   - Parse/Core (1.19.2):
     - Bolts/Tasks (= 1.9.1)
+  - QBImagePickerController (3.4.0)
   - "UITextView+Placeholder (1.4.0)"
 
 DEPENDENCIES:
   - DateTools
-  - ELCImagePickerController
   - GoogleMaps
   - GooglePlaces
   - Parse
+  - QBImagePickerController
   - "UITextView+Placeholder"
 
 SPEC REPOS:
   trunk:
     - Bolts
     - DateTools
-    - ELCImagePickerController
     - GoogleMaps
     - GooglePlaces
     - Parse
+    - QBImagePickerController
     - "UITextView+Placeholder"
 
 SPEC CHECKSUMS:
   Bolts: 8c1e8aab2f603387b8b9924f57d1d64f43d3ffdc
   DateTools: 933ac9c490f21f92127cf690ccd8c397e0126caf
-  ELCImagePickerController: b1b7084434a7d49f2cfc916bde1f3ba353d38de9
   GoogleMaps: 086ae1dab659eaa7339bdb30fc88e2f44e7c597c
   GooglePlaces: 5d87ca13ed98b7a937e0d8bc7026f718c7263271
   Parse: 081fb8755c3000fd11df817eec235def233d0af3
+  QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
   "UITextView+Placeholder": d7b0c400921f66523f3a85d74f774512e14f6502
 
-PODFILE CHECKSUM: afd046d13b8dcfea6a15fdfb03809ad42e470f07
+PODFILE CHECKSUM: a5f239d16c263d4de7fdcc1815a593c079f5da2e
 
 COCOAPODS: 1.10.1
