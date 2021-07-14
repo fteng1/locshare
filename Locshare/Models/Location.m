@@ -20,18 +20,22 @@
     return @"Location";
 }
 
+// Function to update Location object in Parse to reflect new post
 + (void)tagLocation:(NSString *)placeId completion:(void (^)(NSString *, NSError *))completion{
     PFQuery *query = [PFQuery queryWithClassName:@"Location"];
     [query whereKey:@"placeID" equalTo:placeId];
     
     [query findObjectsInBackgroundWithBlock:^(NSArray *place, NSError *error) {
         if (place != nil) {
+            // Check if Location with given placeID already exists in Parse
             if ([place count] != 0) {
+                // If already exists, increase number of posts by 1
                 Location *loc = place[0];
                 [loc incrementKey:@"numPosts"];
                 [loc saveInBackground];
             }
             else {
+                // If does not exist, create new Location
                 [Location initLocation:placeId];
             }
             completion(placeId, nil);

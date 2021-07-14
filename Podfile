@@ -11,6 +11,7 @@ target 'Locshare' do
   pod 'GooglePlaces'
   pod 'DateTools'
   pod 'UITextView+Placeholder'
+  pod 'ELCImagePickerController'
 
   target 'LocshareTests' do
     inherit! :search_paths
