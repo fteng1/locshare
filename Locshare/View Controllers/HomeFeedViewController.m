@@ -30,22 +30,15 @@ float approximateLocationZoomLevel;
     // Initialize the location manager.
     locationManager = [[CLLocationManager alloc] init];
     locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    
+    // Ask user for permission to use location
     [locationManager requestWhenInUseAuthorization];
     locationManager.distanceFilter = 50;
     [locationManager startUpdatingLocation];
     locationManager.delegate = self;
-
-    placesClient = [GMSPlacesClient sharedClient];
     
-    // Get the current location using the location manager
-    locationManager = [[CLLocationManager alloc] init];
-    locationManager.delegate = self;
-    locationManager.distanceFilter = kCLDistanceFilterNone;
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-
-    // Ask user for permission to use location
-    [locationManager requestWhenInUseAuthorization];
-    [locationManager startUpdatingLocation];
+    // Set up for Places API
+    placesClient = [GMSPlacesClient sharedClient];
     
     // Set initial camera position of the MapView
     [self updateDefaultPosition];
@@ -90,7 +83,7 @@ float approximateLocationZoomLevel;
     // Get coordinates currently shown on MapView
     CGRect currentlyVisible = [self getVisibleRegion];
     
-    // Retrieve locations that fall within the visible region on the map and have posts
+    // Set query to find locations that fall within the visible region on the map and have posts
     PFQuery *query = [PFQuery queryWithClassName:@"Location"];
     [query whereKey:@"longitude" greaterThanOrEqualTo:@(currentlyVisible.origin.x)];
     [query whereKey:@"latitude" greaterThanOrEqualTo:@(currentlyVisible.origin.y)];
@@ -100,6 +93,7 @@ float approximateLocationZoomLevel;
      .y + currentlyVisible.size.height)];
     [query whereKey:@"numPosts" greaterThanOrEqualTo:@(0)];
     
+    // Retrieve results from Parse using asynchronous call
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable locations, NSError * _Nullable error) {
         for (Location *loc in locations) {
             GMSMarker *marker = [GMSMarker markerWithPosition:CLLocationCoordinate2DMake([loc.latitude doubleValue], [loc.longitude doubleValue])];
@@ -112,15 +106,5 @@ float approximateLocationZoomLevel;
 - (void)mapView:(GMSMapView *)mapView willMove:(BOOL)gesture {
     [self displayVisibleLocations];
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

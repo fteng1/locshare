@@ -50,6 +50,7 @@
     [self presentViewController:imagePickerVC animated:YES completion:nil];
 }
 
+// Choose a photo from the photo library
 - (IBAction)onPhotoLibraryTap:(id)sender {
     UIImagePickerController *imagePickerVC = [UIImagePickerController new];
     imagePickerVC.delegate = self;
@@ -168,6 +169,7 @@
     [searchBar resignFirstResponder];
 }
 
+// Upon tapping search, display the suggested results from Place API
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     searchBar.showsCancelButton = NO;
     
@@ -180,6 +182,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Once a suggested location is selected, update text in search bar
     self.locationSearchBar.text = self.autocompleteResults[indexPath.row][@"description"];
     self.locationID = self.autocompleteResults[indexPath.row][@"place_id"];
     self.autocompleteTableView.hidden = true;
@@ -189,15 +192,5 @@
     // after typing in the caption text view, tapping anywhere in the view dismisses the keyboard
     [self.captionTextView resignFirstResponder];
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
