@@ -11,11 +11,12 @@
 #import "LocationAutocompleteCell.h"
 #import "Location.h"
 #import <QBImagePickerController/QBImagePickerController.h>
+#import "PhotoShareCell.h"
 
-@interface PostViewController () <QBImagePickerControllerDelegate, UIImagePickerControllerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
+@interface PostViewController () <QBImagePickerControllerDelegate, UIImagePickerControllerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UISearchBar *locationSearchBar;
-@property (weak, nonatomic) IBOutlet UIImageView *imagePickView;
+@property (weak, nonatomic) IBOutlet UICollectionView *pickedPhotosCollectionView;
 @property (weak, nonatomic) IBOutlet UITextView *captionTextView;
 @property (weak, nonatomic) IBOutlet UITableView *autocompleteTableView;
 
@@ -44,6 +45,14 @@
     self.requestOptions.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
     // Makes calls to requestOptions synchronous
     self.requestOptions.synchronous = YES;
+    
+    self.pickedPhotosCollectionView.delegate = self;
+    self.pickedPhotosCollectionView.dataSource = self;
+    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *) self.pickedPhotosCollectionView.collectionViewLayout;
+    layout.minimumInteritemSpacing = 1;
+    layout.minimumLineSpacing = 1;
+    
+    [self.pickedPhotosCollectionView reloadData];
 }
 
 - (IBAction)onCameraTap:(id)sender {
@@ -87,8 +96,8 @@
                 [self.photosToUpload addObject:[self resizeImage:image withSize:CGSizeMake(400, 300)]];
          }];
     }
+    [self.pickedPhotosCollectionView reloadData];
     
-    self.imagePickView.image = [self.photosToUpload firstObject];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -99,10 +108,9 @@
     
     // Get the image captured by the UIImagePickerController
     UIImage *editedImage = info[UIImagePickerControllerEditedImage];
+    editedImage = [self resizeImage:editedImage withSize:CGSizeMake(400, 300)];
     [self.photosToUpload addObject:editedImage];
-
-    // Do something with the images (based on your use case)
-    self.imagePickView.image = [self resizeImage:editedImage withSize:CGSizeMake(400, 300)];
+    [self.pickedPhotosCollectionView reloadData];
     
     // Dismiss UIImagePickerController to go back to your original view controller
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -228,4 +236,23 @@
     [self.captionTextView resignFirstResponder];
 }
 
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    NSInteger numItems = [self.photosToUpload count];
+    // Always display at least one item to show default image
+    if (numItems == 0) {
+        return 1;
+    }
+    else {
+        return numItems;
+    }
+}
+
+- (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    // Set image for given cell
+    PhotoShareCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PhotoShareCell" forIndexPath:indexPath];
+    if ([self.photosToUpload count] != 0) {
+        cell.photoImageView.image = self.photosToUpload[indexPath.item];
+    }
+    return cell;
+}
 @end
