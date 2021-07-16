@@ -73,6 +73,22 @@ NSString *gMapsAPIKey;
     }];
 }
 
+// Get details of a specified place given the place id
+- (void)getPlaceDetails:(NSString *)placeId completion:(void (^)(NSDictionary *, NSError *))completion{
+    // Construct URL
+    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/details/json?place_id=%@&key=%@", placeId, gMapsAPIKey]];
+    
+    // Make API request using URL
+    [self makeURLRequest:url completion:^(NSDictionary *dataDictionary, NSError * error) {
+        if (error == nil) {
+            completion(dataDictionary[@"result"], nil);
+        }
+        else {
+            completion(nil, error);
+        }
+    }];
+}
+
 // Handles the url request given a url parameter
 - (void)makeURLRequest:(NSURL *)url completion:(void (^)(NSDictionary *, NSError *))completion {
     NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];

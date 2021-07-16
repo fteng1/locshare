@@ -15,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)getSuggestedLocations:(NSString *)searchQuery completion:(void (^)(NSArray *, NSError *))completion;
 - (void)getNearbyLocations:(void (^)(NSArray *, NSError *))completion;
+- (void)makeURLRequest:(NSURL *)url completion:(void (^)(NSDictionary *, NSError *))completion;
+- (void)getPlaceDetails:(NSString *)placeId completion:(void (^)(NSDictionary *, NSError *))completion;
 
 @end
 

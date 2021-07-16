@@ -7,6 +7,7 @@
 
 #import "Location.h"
 #import <Parse/Parse.h>
+#import "LocationManager.h"
 
 @implementation Location
 
@@ -48,32 +49,15 @@
 
 // Create new location given the place ID
 + (void)initLocation:(NSString *)placeId {
-    // Get API key from Keys.plist
-    NSString *path = [[NSBundle mainBundle] pathForResource: @"Keys" ofType: @"plist"];
-    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: path];
-    
-    // Return suggested autocomplete locations from Places API
-    NSString *gMapsAPIKey = [dict objectForKey: @"google_api_key"];
-    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/details/json?place_id=%@&key=%@", placeId, gMapsAPIKey]];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
-    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (error != nil) {
-           NSLog(@"%@", [error localizedDescription]);
-        }
-        else {
-            // Create new Location instance from returned place details
-            NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-            NSDictionary *locInfo = dataDictionary[@"result"];
-            Location *newLoc = [Location new];
-            newLoc.name = locInfo[@"name"];
-            newLoc.latitude = locInfo[@"geometry"][@"location"][@"lat"];
-            newLoc.longitude = locInfo[@"geometry"][@"location"][@"lng"];
-            newLoc.numPosts = @(1);
-            newLoc.placeID = placeId;
-            [newLoc saveInBackground];
-        }
+    // Get details about location from place ID
+    [[LocationManager shared] getPlaceDetails:placeId completion:^(NSDictionary * _Nonnull locInfo, NSError * _Nonnull error) {
+        Location *newLoc = [Location new];
+        newLoc.name = locInfo[@"name"];
+        newLoc.latitude = locInfo[@"geometry"][@"location"][@"lat"];
+        newLoc.longitude = locInfo[@"geometry"][@"location"][@"lng"];
+        newLoc.numPosts = @(1);
+        newLoc.placeID = placeId;
+        [newLoc saveInBackground];
     }];
-    [task resume];
 }
 @end

@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSNumber *longitude;
 @property (nonatomic, strong) NSNumber *numPosts;
 @property (nonatomic, strong) NSString *placeID;
+@property (nonatomic, strong) NSMutableArray *postsByUser;
 
 + (void)tagLocation:(NSString *)placeId completion:(void (^)(NSString *, NSError *))completion;
 
