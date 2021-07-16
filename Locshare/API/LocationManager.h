@@ -13,6 +13,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)shared;
 
+- (void)getSuggestedLocations:(NSString *)searchQuery completion:(void (^)(NSArray *, NSError *))completion;
+- (void)getNearbyLocations:(void (^)(NSArray *, NSError *))completion;
+
 @end
 
 NS_ASSUME_NONNULL_END

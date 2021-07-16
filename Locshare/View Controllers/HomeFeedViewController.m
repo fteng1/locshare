@@ -18,8 +18,6 @@
 @end
 
 GMSPlacesClient *placesClient;
-float preciseLocationZoomLevel;
-float approximateLocationZoomLevel;
 
 @implementation HomeFeedViewController
 

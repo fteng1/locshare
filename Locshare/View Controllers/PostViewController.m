@@ -12,6 +12,7 @@
 #import "Location.h"
 #import <QBImagePickerController/QBImagePickerController.h>
 #import "PhotoShareCell.h"
+#import "LocationManager.h"
 
 @interface PostViewController () <QBImagePickerControllerDelegate, UIImagePickerControllerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
 
@@ -32,10 +33,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    // Initialize view controller
     self.autocompleteTableView.delegate = self;
     self.autocompleteTableView.dataSource = self;
     self.locationSearchBar.delegate = self;
-    
     self.captionTextView.placeholder = @"Write a caption...";
     self.photosToUpload = [[NSMutableArray alloc] init];
     
@@ -46,6 +47,7 @@
     // Makes calls to requestOptions synchronous
     self.requestOptions.synchronous = YES;
     
+    // Initialize CollectionView
     self.pickedPhotosCollectionView.delegate = self;
     self.pickedPhotosCollectionView.dataSource = self;
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *) self.pickedPhotosCollectionView.collectionViewLayout;
@@ -162,29 +164,12 @@
 }
 
 - (void)getSuggestedLocations:(NSString *)searchQuery {
-    // Get API key from Keys.plist
-    NSString *path = [[NSBundle mainBundle] pathForResource: @"Keys" ofType: @"plist"];
-    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: path];
-    
-    // Format searchQuery by replacing spaces with '+'
-    searchQuery = [searchQuery stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-    
-    // Return suggested autocomplete locations from Places API
-    NSString *gMapsAPIKey = [dict objectForKey: @"google_api_key"];
-    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/autocomplete/json?input=%@&key=%@", searchQuery, gMapsAPIKey]];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
-    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (error != nil) {
-           NSLog(@"%@", [error localizedDescription]);
-        }
-        else {
-            NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-            self.autocompleteResults = dataDictionary[@"predictions"];
+    [[LocationManager shared] getSuggestedLocations:searchQuery completion:^(NSArray * _Nonnull results, NSError * _Nonnull error) {
+        if (error == nil) {
+            self.autocompleteResults = results;
             [self.autocompleteTableView reloadData];
         }
     }];
-    [task resume];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -196,13 +181,26 @@
     
     // List name of suggested location in the cell
     NSDictionary *loc = self.autocompleteResults[indexPath.row];
-    cell.locationLabel.text = loc[@"description"];
+    if (loc[@"description"] != nil) {
+        cell.locationLabel.text = loc[@"description"];
+    }
+    else {
+        cell.locationLabel.text = loc[@"name"];
+    }
     return cell;
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
     // Let user cancel once a location is being searched
     searchBar.showsCancelButton = YES;
+    
+    // Initially show locations close to the user
+    self.autocompleteTableView.hidden = false;
+    [[LocationManager shared] getNearbyLocations:^(NSArray * _Nonnull nearby, NSError * _Nonnull error) {
+        self.autocompleteResults = nearby;
+        [self.autocompleteTableView reloadData];
+    }];
+
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
