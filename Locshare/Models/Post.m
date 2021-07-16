@@ -54,13 +54,12 @@
     if (!image) {
         return nil;
     }
-    
     NSData *imageData = UIImagePNGRepresentation(image);
+    
     // get image data and check if that is not nil
     if (!imageData) {
         return nil;
     }
-    
     return [PFFileObject fileObjectWithName:@"image.png" data:imageData];
 }
 

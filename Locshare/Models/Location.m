@@ -16,6 +16,7 @@
 @dynamic longitude;
 @dynamic numPosts;
 @dynamic placeID;
+@dynamic posts;
 
 + (nonnull NSString *)parseClassName {
     return @"Location";
@@ -57,6 +58,7 @@
         newLoc.longitude = locInfo[@"geometry"][@"location"][@"lng"];
         newLoc.numPosts = @(1);
         newLoc.placeID = placeId;
+        newLoc.posts = [[NSMutableArray alloc] init];
         [newLoc saveInBackground];
     }];
 }

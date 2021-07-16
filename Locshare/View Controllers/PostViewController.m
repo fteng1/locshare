@@ -133,6 +133,7 @@
     return newImage;
 }
 
+// Make post when share button is pressed
 - (IBAction)shareButton:(id)sender {
     if (self.locationSearchBar.text.length != 0) {
         [Location tagLocation:self.locationID completion:^(NSString *locID, NSError * _Nonnull error) {
@@ -159,7 +160,13 @@
         [self performSegueWithIdentifier:@"afterPostSegue" sender:nil];
     }
     else {
-        // TODO: Popup telling users to input a valid location
+        // Make alert for when no location is inputted
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Cannot Make Post" message:@"User must select a valid location to make a post" preferredStyle:(UIAlertControllerStyleAlert)];
+        // create an OK action
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}];
+        // add the OK action to the alert controller
+        [alert addAction:okAction];
+        [self presentViewController:alert animated:YES completion:^{}];
     }
 }
 
