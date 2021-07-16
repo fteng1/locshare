@@ -38,31 +38,43 @@ NSString *gMapsAPIKey;
     return self;
 }
 
+// Get suggested autocomplete locations from Places API
 - (void)getSuggestedLocations:(NSString *)searchQuery completion:(void (^)(NSArray *, NSError *))completion{
     // Format searchQuery by replacing spaces with '+'
     searchQuery = [searchQuery stringByReplacingOccurrencesOfString:@" " withString:@"+"];
     
+    // Construct URL and make request
     NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/autocomplete/json?input=%@&key=%@", searchQuery, gMapsAPIKey]];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
-    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (error != nil) {
-           NSLog(@"%@", [error localizedDescription]);
-            completion(nil, error);
-        }
-        else {
-            NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+    [self makeURLRequest:url completion:^(NSDictionary * dataDictionary, NSError * error) {
+        if (error == nil) {
             completion(dataDictionary[@"predictions"], nil);
         }
+        else {
+            completion(nil, error);
+        }
     }];
-    [task resume];
 }
 
+// Get recommended locations from Places API based on current location
 - (void)getNearbyLocations:(void (^)(NSArray *, NSError *))completion{
-    // Return suggested autocomplete locations from Places API
+    // Construct URL
     NSString *locationString = [NSString stringWithFormat:@"%f,%f", self.location.coordinate.latitude, self.location.coordinate.longitude];
     NSString *radiusString = @"1000";
     NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=%@&location=%@&radius=%@", gMapsAPIKey, locationString, radiusString]];
+    
+    // Make API request using URL
+    [self makeURLRequest:url completion:^(NSDictionary * dataDictionary, NSError * error) {
+        if (error == nil) {
+            completion(dataDictionary[@"results"], nil);
+        }
+        else {
+            completion(nil, error);
+        }
+    }];
+}
+
+// Handles the url request given a url parameter
+- (void)makeURLRequest:(NSURL *)url completion:(void (^)(NSDictionary *, NSError *))completion {
     NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -72,7 +84,7 @@ NSString *gMapsAPIKey;
         }
         else {
             NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-            completion(dataDictionary[@"results"], nil);
+            completion(dataDictionary, nil);
         }
     }];
     [task resume];
