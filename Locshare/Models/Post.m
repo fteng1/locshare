@@ -9,7 +9,6 @@
 
 @implementation Post
 
-@dynamic postID;
 @dynamic userID;
 @dynamic author;
 @dynamic caption;
@@ -32,7 +31,6 @@
     for (UIImage *image in images)  {
         [newPost.photos addObject:[self getPFFileFromImage:image]];
     }
-    
     newPost.author = [PFUser currentUser];
     newPost.caption = caption;
     newPost.numLikes = @(0);
@@ -43,8 +41,15 @@
     return newPost;
 }
 
-+ (void) makePost: (Post *)post withCompletion: (PFBooleanResultBlock  _Nullable)completion {
-    [post saveInBackgroundWithBlock: completion];
++ (void) makePost: (Post *)post completion:(void (^)(NSString *, NSError *))completion{
+    [post saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+        if (error == nil) {
+            completion(post.objectId, nil);
+        }
+        else {
+            completion(nil, error);
+        }
+    }];
     
 }
 

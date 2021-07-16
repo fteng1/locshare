@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSMutableArray *comments;
 
 + (Post *) initPost: ( NSArray * _Nullable )images withCaption: ( NSString * _Nullable )caption withLocation: (NSString * _Nullable)loc;
-+ (void) makePost: (Post *)post withCompletion: (PFBooleanResultBlock  _Nullable)completion;
++ (void) makePost: (Post *)post completion:(void (^)(NSString *, NSError *))completion;
 + (PFFileObject *)getPFFileFromImage: (UIImage * _Nullable)image;
 
 @end

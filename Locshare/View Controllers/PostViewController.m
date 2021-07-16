@@ -57,6 +57,7 @@
     [self.pickedPhotosCollectionView reloadData];
 }
 
+// Take photo using the phone camera when the camera icon is tapped, if available
 - (IBAction)onCameraTap:(id)sender {
     UIImagePickerController *imagePicker = [UIImagePickerController new];
     imagePicker.delegate = self;
@@ -72,7 +73,7 @@
     [self presentViewController:imagePicker animated:YES completion:nil];
 }
 
-// Choose a photo from the photo library
+// Choose multiple photos from the photo library
 - (IBAction)onPhotoLibraryTap:(id)sender {
     QBImagePickerController *imagePicker = [QBImagePickerController new];
     imagePicker.delegate = self;
@@ -136,27 +137,24 @@
 // Make post when share button is pressed
 - (IBAction)shareButton:(id)sender {
     if (self.locationSearchBar.text.length != 0) {
-        [Location tagLocation:self.locationID completion:^(NSString *locID, NSError * _Nonnull error) {
-            if (error != nil) {
-                NSLog(@"Location tag failed: %@", error.localizedDescription);
-            }
-            else {
-                // Make new post with the given location ID
-                Post *newPost = [Post initPost:self.photosToUpload withCaption:self.captionTextView.text withLocation:locID];
-                [Post makePost:newPost withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
-                    if (error != nil) {
-                        NSLog(@"Post share failed: %@", error.localizedDescription);
-                    }
-                    else {
-                        NSLog(@"Post shared successfully");
-                        PFUser *currentUser = [PFUser currentUser];
-                        [currentUser incrementKey:@"numPosts"];
-                        [currentUser saveInBackground];
-                    }
-                }];
-            }
-        }];
-        
+        Post *newPost = [Post initPost:self.photosToUpload withCaption:self.captionTextView.text withLocation:self.locationID];
+            // Make new post with the given location ID
+            [Post makePost:newPost completion:^(NSString * postID, NSError * _Nullable error) {
+                if (error != nil) {
+                    NSLog(@"Post share failed: %@", error.localizedDescription);
+                }
+                else {
+                    NSLog(@"Post shared successfully");
+                    [Location tagLocation:self.locationID newPost:postID completion:^(NSError * _Nonnull error) {
+                        if (error != nil) {
+                            NSLog(@"Location tag failed: %@", error.localizedDescription);
+                        }
+                    }];
+                    PFUser *currentUser = [PFUser currentUser];
+                    [currentUser incrementKey:@"numPosts"];
+                    [currentUser saveInBackground];
+                }
+            }];
         [self performSegueWithIdentifier:@"afterPostSegue" sender:nil];
     }
     else {
@@ -231,9 +229,15 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Once a suggested location is selected, update text in search bar
-    self.locationSearchBar.text = self.autocompleteResults[indexPath.row][@"description"];
+    if (self.autocompleteResults[indexPath.row][@"description"] != nil) {
+        self.locationSearchBar.text = self.autocompleteResults[indexPath.row][@"description"];
+    }
+    else {
+        self.locationSearchBar.text = self.autocompleteResults[indexPath.row][@"name"];
+    }
     self.locationID = self.autocompleteResults[indexPath.row][@"place_id"];
     self.autocompleteTableView.hidden = true;
+    self.locationSearchBar.showsCancelButton = NO;
 }
 
 - (IBAction)dismissKeyboard:(id)sender {

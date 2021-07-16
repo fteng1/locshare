@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *placeID;
 @property (nonatomic, strong) NSMutableArray *posts;
 
-+ (void)tagLocation:(NSString *)placeId completion:(void (^)(NSString *, NSError *))completion;
++ (void)tagLocation:(NSString *)placeId newPost:(NSString *)postId completion:(void (^)(NSError *))completion;
 
 @end
 

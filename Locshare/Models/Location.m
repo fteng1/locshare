@@ -23,7 +23,7 @@
 }
 
 // Function to update Location object in Parse to reflect new post
-+ (void)tagLocation:(NSString *)placeId completion:(void (^)(NSString *, NSError *))completion{
++ (void)tagLocation:(NSString *)placeId newPost:(NSString *)postId completion:(void (^)(NSError *))completion{
     PFQuery *query = [PFQuery queryWithClassName:@"Location"];
     [query whereKey:@"placeID" equalTo:placeId];
     
@@ -34,22 +34,23 @@
                 // If already exists, increase number of posts by 1
                 Location *loc = place[0];
                 [loc incrementKey:@"numPosts"];
+                [loc addObject:postId forKey:@"posts"];
                 [loc saveInBackground];
             }
             else {
                 // If does not exist, create new Location
-                [Location initLocation:placeId];
+                [Location initLocation:placeId newPost:postId];
             }
-            completion(placeId, nil);
+            completion(nil);
         } else {
             NSLog(@"%@", error.localizedDescription);
-            completion(nil, error);
+            completion(error);
         }
     }];
 }
 
-// Create new location given the place ID
-+ (void)initLocation:(NSString *)placeId {
+// Create new location given the place ID and new post
++ (void)initLocation:(NSString *)placeId newPost:(NSString *)postID {
     // Get details about location from place ID
     [[LocationManager shared] getPlaceDetails:placeId completion:^(NSDictionary * _Nonnull locInfo, NSError * _Nonnull error) {
         Location *newLoc = [Location new];
@@ -59,6 +60,7 @@
         newLoc.numPosts = @(1);
         newLoc.placeID = placeId;
         newLoc.posts = [[NSMutableArray alloc] init];
+        [newLoc.posts addObject:postID];
         [newLoc saveInBackground];
     }];
 }
