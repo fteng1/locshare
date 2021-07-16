@@ -152,6 +152,7 @@
                     }];
                     PFUser *currentUser = [PFUser currentUser];
                     [currentUser incrementKey:@"numPosts"];
+                    [currentUser addObject:postID forKey:@"posts"];
                     [currentUser saveInBackground];
                 }
             }];
