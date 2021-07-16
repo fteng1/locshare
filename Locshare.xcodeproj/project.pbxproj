@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		70007451269E33A600F10FE1 /* LocationAutocompleteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70007450269E33A600F10FE1 /* LocationAutocompleteCell.m */; };
+		704F136D26A1EABA009A71C8 /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 704F136C26A1EABA009A71C8 /* LocationManager.m */; };
 		70571E0F269CA9AE00CE1842 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E0E269CA9AE00CE1842 /* AppDelegate.m */; };
 		70571E12269CA9AE00CE1842 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E11269CA9AE00CE1842 /* SceneDelegate.m */; };
 		70571E18269CA9AE00CE1842 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70571E16269CA9AE00CE1842 /* Main.storyboard */; };
@@ -58,6 +59,8 @@
 		3E74B4E92CD0CD0E2DEC2DDC /* Pods-LocshareTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocshareTests.release.xcconfig"; path = "Target Support Files/Pods-LocshareTests/Pods-LocshareTests.release.xcconfig"; sourceTree = "<group>"; };
 		7000744F269E33A600F10FE1 /* LocationAutocompleteCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationAutocompleteCell.h; sourceTree = "<group>"; };
 		70007450269E33A600F10FE1 /* LocationAutocompleteCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationAutocompleteCell.m; sourceTree = "<group>"; };
+		704F136B26A1EABA009A71C8 /* LocationManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationManager.h; sourceTree = "<group>"; };
+		704F136C26A1EABA009A71C8 /* LocationManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
 		70571E0A269CA9AE00CE1842 /* Locshare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Locshare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		70571E0D269CA9AE00CE1842 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		70571E0E269CA9AE00CE1842 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -157,6 +160,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		704F136526A1E980009A71C8 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				704F136B26A1EABA009A71C8 /* LocationManager.h */,
+				704F136C26A1EABA009A71C8 /* LocationManager.m */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
 		70571E01269CA9AE00CE1842 = {
 			isa = PBXGroup;
 			children = (
@@ -182,6 +194,7 @@
 		70571E0C269CA9AE00CE1842 /* Locshare */ = {
 			isa = PBXGroup;
 			children = (
+				704F136526A1E980009A71C8 /* API */,
 				70571E44269CAA3600CE1842 /* Views */,
 				70571E43269CAA3000CE1842 /* View Controllers */,
 				70571E42269CAA2A00CE1842 /* Models */,
@@ -546,6 +559,7 @@
 				70571E59269CE62500CE1842 /* PostViewController.m in Sources */,
 				70571E47269CAF8F00CE1842 /* LoginViewController.m in Sources */,
 				70571E0F269CA9AE00CE1842 /* AppDelegate.m in Sources */,
+				704F136D26A1EABA009A71C8 /* LocationManager.m in Sources */,
 				70DD72B9269F93D600D2ACC9 /* PhotoShareCell.m in Sources */,
 				70571E62269CE67F00CE1842 /* LocationViewController.m in Sources */,
 				70571E20269CA9AF00CE1842 /* main.m in Sources */,

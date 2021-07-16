@@ -10,14 +10,13 @@
 #import <GooglePlaces/GooglePlaces.h>
 #import <Parse/Parse.h>
 #import "Location.h"
+#import "LocationManager.h"
 
 @interface HomeFeedViewController () <CLLocationManagerDelegate, GMSMapViewDelegate>
 @property (weak, nonatomic) IBOutlet GMSMapView *homeMapView;
 
 @end
 
-CLLocationManager *locationManager;
-CLLocation * _Nullable currentLocation;
 GMSPlacesClient *placesClient;
 float preciseLocationZoomLevel;
 float approximateLocationZoomLevel;
@@ -26,16 +25,6 @@ float approximateLocationZoomLevel;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // Initialize the location manager.
-    locationManager = [[CLLocationManager alloc] init];
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    
-    // Ask user for permission to use location
-    [locationManager requestWhenInUseAuthorization];
-    locationManager.distanceFilter = 50;
-    [locationManager startUpdatingLocation];
-    locationManager.delegate = self;
     
     // Set up for Places API
     placesClient = [GMSPlacesClient sharedClient];
@@ -49,7 +38,7 @@ float approximateLocationZoomLevel;
 
 - (void)updateDefaultPosition {
     // Get most updated position
-    CLLocation *currentLocation = locationManager.location;
+    CLLocation *currentLocation = [LocationManager shared].location;
     
     if (currentLocation != nil) {
         // Set camera of map to be at current position
@@ -92,6 +81,7 @@ float approximateLocationZoomLevel;
     [query whereKey:@"latitude" lessThanOrEqualTo:@(currentlyVisible.origin
      .y + currentlyVisible.size.height)];
     [query whereKey:@"numPosts" greaterThanOrEqualTo:@(0)];
+    // TODO: account for longitude discontinuity
     
     // Retrieve results from Parse using asynchronous call
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable locations, NSError * _Nullable error) {
