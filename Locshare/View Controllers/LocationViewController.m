@@ -14,9 +14,11 @@
 
 @interface LocationViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
 
-@property (strong, nonatomic) NSArray *posts;
 @property (weak, nonatomic) IBOutlet UICollectionView *postCollectionView;
 @property (weak, nonatomic) IBOutlet GMSMapView *mapView;
+
+@property (strong, nonatomic) NSArray *posts;
+@property (strong, nonatomic) UIRefreshControl *refreshControl;
 
 @end
 
@@ -44,6 +46,10 @@
     layout.itemSize = CGSizeMake(itemWidth, itemHeight);
     
     [self setMapLocation];
+    
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(refreshPage) forControlEvents:UIControlEventValueChanged];
+    [self.postCollectionView insertSubview:self.refreshControl atIndex:0];
 }
 
 // Set default map camera at the given location and place a marker
@@ -52,6 +58,21 @@
     marker.map = self.mapView;
     GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:marker.position.latitude longitude:marker.position.longitude zoom:12.0];
     [self.mapView setCamera:camera];
+}
+
+- (void)refreshPage {
+    PFQuery *query = [PFQuery queryWithClassName:@"Location"];
+    [query whereKey:@"objectId" equalTo:self.location.objectId];
+    query.limit = 1;
+    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        if (error != nil) {
+            NSLog(@"Error updating location: %@", error);
+        }
+        else {
+            self.location = objects[0];
+            [self loadPosts];
+        }
+    }];
 }
 
 - (void)loadPosts {
@@ -67,6 +88,7 @@
         else {
             NSLog(@"Error retrieving posts: %@", error);
         }
+        [self.refreshControl endRefreshing];
     }];
 }
 
