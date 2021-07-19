@@ -10,11 +10,13 @@
 #import "PostLocationCell.h"
 #import "Post.h"
 #import "DetailsViewController.h"
+#import <GoogleMaps/GoogleMaps.h>
 
 @interface LocationViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
 
 @property (strong, nonatomic) NSArray *posts;
 @property (weak, nonatomic) IBOutlet UICollectionView *postCollectionView;
+@property (weak, nonatomic) IBOutlet GMSMapView *mapView;
 
 @end
 
@@ -40,6 +42,16 @@
     CGFloat itemWidth = (self.postCollectionView.frame.size.width - layout.minimumInteritemSpacing * (postsPerLine - 1)) / postsPerLine;
     CGFloat itemHeight = itemWidth;
     layout.itemSize = CGSizeMake(itemWidth, itemHeight);
+    
+    [self setMapLocation];
+}
+
+// Set default map camera at the given location and place a marker
+- (void)setMapLocation {
+    GMSMarker *marker = [GMSMarker markerWithPosition:CLLocationCoordinate2DMake([self.location.latitude floatValue], [self.location.longitude floatValue])];
+    marker.map = self.mapView;
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:marker.position.latitude longitude:marker.position.longitude zoom:12.0];
+    [self.mapView setCamera:camera];
 }
 
 - (void)loadPosts {

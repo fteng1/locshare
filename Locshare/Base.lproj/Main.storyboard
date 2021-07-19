@@ -166,6 +166,7 @@
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="mapView" destination="STk-y4-lsg" id="kRQ-sg-S3f"/>
                         <outlet property="postCollectionView" destination="3pm-aA-36G" id="6rK-RS-EV7"/>
                         <segue destination="h8p-KT-O4t" kind="show" identifier="detailSegue" id="URW-5M-ibG"/>
                     </connections>
