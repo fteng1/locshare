@@ -6,10 +6,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Location.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface LocationViewController : UIViewController
+
+@property (strong, nonatomic) Location *location; 
 
 @end
 

@@ -11,6 +11,8 @@
 #import <Parse/Parse.h>
 #import "Location.h"
 #import "LocationManager.h"
+#import "LocationMarker.h"
+#import "LocationViewController.h"
 
 @interface HomeFeedViewController () <CLLocationManagerDelegate, GMSMapViewDelegate>
 @property (weak, nonatomic) IBOutlet GMSMapView *homeMapView;
@@ -84,15 +86,32 @@ GMSPlacesClient *placesClient;
     // Retrieve results from Parse using asynchronous call
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable locations, NSError * _Nullable error) {
         for (Location *loc in locations) {
-            GMSMarker *marker = [GMSMarker markerWithPosition:CLLocationCoordinate2DMake([loc.latitude doubleValue], [loc.longitude doubleValue])];
+            CLLocationCoordinate2D coord = CLLocationCoordinate2DMake([loc.latitude doubleValue], [loc.longitude doubleValue]);
+            LocationMarker *marker = [[LocationMarker alloc] initMarkerWithPosition:coord withLocation:loc];
             marker.map = self.homeMapView;
         }
     }];
 }
 
+
+// Perform segue to view posts at location screen when marker is tapped
+- (BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker {
+    [self performSegueWithIdentifier:@"locationSegue" sender:marker];
+    return true;
+}
+
 // Show newly visible locations once map is moved
 - (void)mapView:(GMSMapView *)mapView willMove:(BOOL)gesture {
     [self displayVisibleLocations];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Bring up location view screen if marker is tapped
+    if ([[segue identifier] isEqualToString:@"locationSegue"]) {
+        LocationMarker *marker = sender;
+        LocationViewController *locationViewController = [segue destinationViewController];
+        locationViewController.location = marker.location;
+    }
 }
 
 @end

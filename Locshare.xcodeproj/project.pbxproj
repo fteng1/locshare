@@ -28,6 +28,8 @@
 		70571E5F269CE66F00CE1842 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E5E269CE66F00CE1842 /* ProfileViewController.m */; };
 		70571E62269CE67F00CE1842 /* LocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E61269CE67F00CE1842 /* LocationViewController.m */; };
 		70571E65269CE69200CE1842 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E64269CE69200CE1842 /* DetailsViewController.m */; };
+		7075DFB126A5D4D40073CB5A /* PostLocationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7075DFB026A5D4D40073CB5A /* PostLocationCell.m */; };
+		7075DFB426A5D9790073CB5A /* LocationMarker.m in Sources */ = {isa = PBXBuildFile; fileRef = 7075DFB326A5D9790073CB5A /* LocationMarker.m */; };
 		70B30743269CFD4500ADFE9E /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 70B30742269CFD4500ADFE9E /* Keys.plist */; };
 		70DD72B9269F93D600D2ACC9 /* PhotoShareCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DD72B8269F93D600D2ACC9 /* PhotoShareCell.m */; };
 		A7C37B87B1356CCD753A958E /* Pods_LocshareTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB72C41EE9DADFD0AC0170F5 /* Pods_LocshareTests.framework */; };
@@ -99,6 +101,10 @@
 		70571E61269CE67F00CE1842 /* LocationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationViewController.m; sourceTree = "<group>"; };
 		70571E63269CE69200CE1842 /* DetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
 		70571E64269CE69200CE1842 /* DetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
+		7075DFAF26A5D4D40073CB5A /* PostLocationCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PostLocationCell.h; sourceTree = "<group>"; };
+		7075DFB026A5D4D40073CB5A /* PostLocationCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PostLocationCell.m; sourceTree = "<group>"; };
+		7075DFB226A5D9790073CB5A /* LocationMarker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationMarker.h; sourceTree = "<group>"; };
+		7075DFB326A5D9790073CB5A /* LocationMarker.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationMarker.m; sourceTree = "<group>"; };
 		70B30742269CFD4500ADFE9E /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		70DD72B7269F93D600D2ACC9 /* PhotoShareCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotoShareCell.h; sourceTree = "<group>"; };
 		70DD72B8269F93D600D2ACC9 /* PhotoShareCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotoShareCell.m; sourceTree = "<group>"; };
@@ -165,6 +171,8 @@
 			children = (
 				704F136B26A1EABA009A71C8 /* LocationManager.h */,
 				704F136C26A1EABA009A71C8 /* LocationManager.m */,
+				7075DFB226A5D9790073CB5A /* LocationMarker.h */,
+				7075DFB326A5D9790073CB5A /* LocationMarker.m */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -273,6 +281,8 @@
 				70007450269E33A600F10FE1 /* LocationAutocompleteCell.m */,
 				70DD72B7269F93D600D2ACC9 /* PhotoShareCell.h */,
 				70DD72B8269F93D600D2ACC9 /* PhotoShareCell.m */,
+				7075DFAF26A5D4D40073CB5A /* PostLocationCell.h */,
+				7075DFB026A5D4D40073CB5A /* PostLocationCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -555,12 +565,14 @@
 				70571E56269CE60D00CE1842 /* HomeFeedViewController.m in Sources */,
 				70571E50269CE24D00CE1842 /* Comment.m in Sources */,
 				70571E4A269CB03600CE1842 /* Post.m in Sources */,
+				7075DFB126A5D4D40073CB5A /* PostLocationCell.m in Sources */,
 				70007451269E33A600F10FE1 /* LocationAutocompleteCell.m in Sources */,
 				70571E59269CE62500CE1842 /* PostViewController.m in Sources */,
 				70571E47269CAF8F00CE1842 /* LoginViewController.m in Sources */,
 				70571E0F269CA9AE00CE1842 /* AppDelegate.m in Sources */,
 				704F136D26A1EABA009A71C8 /* LocationManager.m in Sources */,
 				70DD72B9269F93D600D2ACC9 /* PhotoShareCell.m in Sources */,
+				7075DFB426A5D9790073CB5A /* LocationMarker.m in Sources */,
 				70571E62269CE67F00CE1842 /* LocationViewController.m in Sources */,
 				70571E20269CA9AF00CE1842 /* main.m in Sources */,
 				70571E5C269CE64C00CE1842 /* SearchViewController.m in Sources */,
