@@ -33,6 +33,16 @@
     
     [self loadPosts];
     
+    [self setCollectionViewLayout];
+    
+    [self setMapLocation];
+    
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(refreshPage) forControlEvents:UIControlEventValueChanged];
+    [self.postCollectionView insertSubview:self.refreshControl atIndex:0];
+}
+
+- (void)setCollectionViewLayout {
     // Set layout settings for the collectionView
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *) self.postCollectionView.collectionViewLayout;
     
@@ -44,12 +54,6 @@
     CGFloat itemWidth = (self.postCollectionView.frame.size.width - layout.minimumInteritemSpacing * (postsPerLine - 1)) / postsPerLine;
     CGFloat itemHeight = itemWidth;
     layout.itemSize = CGSizeMake(itemWidth, itemHeight);
-    
-    [self setMapLocation];
-    
-    self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(refreshPage) forControlEvents:UIControlEventValueChanged];
-    [self.postCollectionView insertSubview:self.refreshControl atIndex:0];
 }
 
 // Set default map camera at the given location and place a marker

@@ -40,12 +40,7 @@
     self.captionTextView.placeholder = @"Write a caption...";
     self.photosToUpload = [[NSMutableArray alloc] init];
     
-    // Options for making requests regarding PHImages
-    self.requestOptions = [[PHImageRequestOptions alloc] init];
-    self.requestOptions.resizeMode = PHImageRequestOptionsResizeModeExact;
-    self.requestOptions.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
-    // Makes calls to requestOptions synchronous
-    self.requestOptions.synchronous = YES;
+    [self configureRequestOptions];
     
     // Initialize CollectionView
     self.pickedPhotosCollectionView.delegate = self;
@@ -55,6 +50,15 @@
     layout.minimumLineSpacing = 1;
     
     [self.pickedPhotosCollectionView reloadData];
+}
+
+- (void)configureRequestOptions {
+    // Options for making requests regarding PHImages
+    self.requestOptions = [[PHImageRequestOptions alloc] init];
+    self.requestOptions.resizeMode = PHImageRequestOptionsResizeModeExact;
+    self.requestOptions.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
+    // Makes calls to requestOptions synchronous
+    self.requestOptions.synchronous = YES;
 }
 
 // Take photo using the phone camera when the camera icon is tapped, if available
