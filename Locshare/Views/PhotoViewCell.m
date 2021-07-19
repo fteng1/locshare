@@ -5,8 +5,8 @@
 //  Created by Felianne Teng on 7/14/21.
 //
 
-#import "PhotoShareCell.h"
+#import "PhotoViewCell.h"
 
-@implementation PhotoShareCell
+@implementation PhotoViewCell
 
 @end

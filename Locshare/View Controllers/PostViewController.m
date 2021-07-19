@@ -11,7 +11,7 @@
 #import "LocationAutocompleteCell.h"
 #import "Location.h"
 #import <QBImagePickerController/QBImagePickerController.h>
-#import "PhotoShareCell.h"
+#import "PhotoViewCell.h"
 #import "LocationManager.h"
 
 @interface PostViewController () <QBImagePickerControllerDelegate, UIImagePickerControllerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
@@ -101,6 +101,11 @@
     }
     [self.pickedPhotosCollectionView reloadData];
     
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+// Dismiss controller window when cancel is tapped
+- (void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -259,7 +264,7 @@
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     // Set image for given cell
-    PhotoShareCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PhotoShareCell" forIndexPath:indexPath];
+    PhotoViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PhotoViewCell" forIndexPath:indexPath];
     if ([self.photosToUpload count] != 0) {
         cell.photoImageView.image = self.photosToUpload[indexPath.item];
     }

@@ -6,11 +6,12 @@
 //
 
 #import <UIKit/UIKit.h>
+@import Parse;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PostLocationCell : UICollectionViewCell
-@property (weak, nonatomic) IBOutlet UIImageView *postImageView;
+@property (weak, nonatomic) IBOutlet PFImageView *postImageView;
 
 @end
 

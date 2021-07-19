@@ -9,6 +9,7 @@
 #import <Parse/Parse.h>
 #import "PostLocationCell.h"
 #import "Post.h"
+#import "DetailsViewController.h"
 
 @interface LocationViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
 
@@ -45,6 +46,7 @@
     // Get posts with object id's stored in the location's array of posts
     PFQuery *query = [PFQuery queryWithClassName:@"Post"];
     [query whereKey:@"objectId" containedIn:self.location.posts];
+    [query orderByDescending:@"createdAt"];
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (error == nil) {
             self.posts = objects;
@@ -64,11 +66,23 @@
     PostLocationCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PostLocationCell" forIndexPath:indexPath];
     Post *post = self.posts[indexPath.item];
     PFFileObject *imageToDisplay = [post.photos firstObject];
-    if (imageToDisplay != nil) {
-        cell.postImageView.image = [UIImage imageWithData:imageToDisplay.getData];
-    }
+    cell.postImageView.image = [UIImage systemImageNamed:@"photo"];
+    cell.postImageView.file = imageToDisplay;
+    [cell.postImageView loadInBackground];
     
     return cell;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    [self performSegueWithIdentifier:@"detailSegue" sender:self.posts[indexPath.item]];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Bring up post details screen if post is tapped
+    if ([[segue identifier] isEqualToString:@"detailSegue"]) {
+        Post *post = sender;
+        DetailsViewController *detailsViewController = [segue destinationViewController];
+        detailsViewController.post = post;
+    }
+}
 @end

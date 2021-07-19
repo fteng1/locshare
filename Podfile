@@ -12,6 +12,7 @@ target 'Locshare' do
   pod 'DateTools'
   pod 'UITextView+Placeholder'
   pod 'QBImagePickerController'
+  pod 'Parse/UI'
 
   target 'LocshareTests' do
     inherit! :search_paths

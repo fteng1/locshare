@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface PhotoShareCell : UICollectionViewCell
+@interface PhotoViewCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *photoImageView;
 
