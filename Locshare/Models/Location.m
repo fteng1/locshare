@@ -12,8 +12,7 @@
 @implementation Location
 
 @dynamic name;
-@dynamic latitude;
-@dynamic longitude;
+@dynamic coordinate;
 @dynamic numPosts;
 @dynamic placeID;
 @dynamic posts;
@@ -55,8 +54,9 @@
     [[LocationManager shared] getPlaceDetails:placeId completion:^(NSDictionary * _Nonnull locInfo, NSError * _Nonnull error) {
         Location *newLoc = [Location new];
         newLoc.name = locInfo[@"name"];
-        newLoc.latitude = locInfo[@"geometry"][@"location"][@"lat"];
-        newLoc.longitude = locInfo[@"geometry"][@"location"][@"lng"];
+        NSNumber *latitude = locInfo[@"geometry"][@"location"][@"lat"];
+        NSNumber *longitude = locInfo[@"geometry"][@"location"][@"lng"];
+        newLoc.coordinate = [PFGeoPoint geoPointWithLatitude:[latitude floatValue] longitude:[longitude floatValue]];
         newLoc.numPosts = @(1);
         newLoc.placeID = placeId;
         newLoc.posts = [[NSMutableArray alloc] init];

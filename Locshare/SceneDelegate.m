@@ -17,10 +17,12 @@
 
 - (void)scene:(UIScene *)scene willConnectToSession:(UISceneSession *)session options:(UISceneConnectionOptions *)connectionOptions {
     // If there is currently a user logged in, skip the login screens
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     if (PFUser.currentUser) {
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        
         self.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"TabBarController"];
+    }
+    else {
+        self.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
     }
 }
 

@@ -48,7 +48,7 @@
 
 // Set default map camera at the given location and place a marker
 - (void)setMapLocation {
-    GMSMarker *marker = [GMSMarker markerWithPosition:CLLocationCoordinate2DMake([self.location.latitude floatValue], [self.location.longitude floatValue])];
+    GMSMarker *marker = [GMSMarker markerWithPosition:CLLocationCoordinate2DMake(self.location.coordinate.latitude, self.location.coordinate.longitude)];
     marker.map = self.mapView;
     GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:marker.position.latitude longitude:marker.position.longitude zoom:12.0];
     [self.mapView setCamera:camera];
