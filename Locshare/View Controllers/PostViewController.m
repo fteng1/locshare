@@ -13,6 +13,7 @@
 #import <QBImagePickerController/QBImagePickerController.h>
 #import "PhotoViewCell.h"
 #import "LocationManager.h"
+#import "ImageManager.h"
 
 @interface PostViewController () <QBImagePickerControllerDelegate, UIImagePickerControllerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
 
@@ -66,7 +67,7 @@
     UIImagePickerController *imagePicker = [UIImagePickerController new];
     imagePicker.delegate = self;
     imagePicker.allowsEditing = YES;
-    
+
     // The Xcode simulator does not support taking pictures, so let's first check that the camera is indeed supported on the device before trying to present it.
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
@@ -75,6 +76,7 @@
         NSLog(@"The camera is not available");
     }
     [self presentViewController:imagePicker animated:YES completion:nil];
+    
 }
 
 // Choose multiple photos from the photo library
@@ -100,7 +102,7 @@
         // Convert asset from PHAsset to UIImage
         [manager requestImageForAsset:photo targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeDefault options:self.requestOptions resultHandler:^void(UIImage *image, NSDictionary *info) {
                 // Add converted photo to photos array
-                [self.photosToUpload addObject:[self resizeImage:image withSize:CGSizeMake(400, 300)]];
+                [self.photosToUpload addObject:[[ImageManager shared] resizeImage:image withSize:CGSizeMake(400, 300)]];
          }];
     }
     [self.pickedPhotosCollectionView reloadData];
@@ -120,27 +122,12 @@
     
     // Get the image captured by the UIImagePickerController
     UIImage *editedImage = info[UIImagePickerControllerEditedImage];
-    editedImage = [self resizeImage:editedImage withSize:CGSizeMake(400, 300)];
+    editedImage = [[ImageManager shared] resizeImage:editedImage withSize:CGSizeMake(400, 300)];
     [self.photosToUpload addObject:editedImage];
     [self.pickedPhotosCollectionView reloadData];
     
     // Dismiss UIImagePickerController to go back to your original view controller
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-// Resizes image to the specified size
-- (UIImage *)resizeImage:(UIImage *)image withSize:(CGSize)size {
-    UIImageView *resizeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
-    
-    resizeImageView.contentMode = UIViewContentModeScaleAspectFill;
-    resizeImageView.image = image;
-    
-    UIGraphicsBeginImageContext(size);
-    [resizeImageView.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return newImage;
 }
 
 // Make post when share button is pressed

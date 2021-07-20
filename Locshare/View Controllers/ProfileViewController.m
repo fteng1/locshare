@@ -13,6 +13,7 @@
 #import "LocationManager.h"
 #import "LocationMarker.h"
 #import "LocationViewController.h"
+#import "ImageManager.h"
 @import Parse;
 
 @interface ProfileViewController () <UITabBarControllerDelegate, GMSMapViewDelegate, UIImagePickerControllerDelegate>
@@ -87,6 +88,7 @@
 - (void)fetchPosts {
     PFQuery *query = [PFQuery queryWithClassName:@"Post"];
     [query whereKey:@"objectId" containedIn:self.user[@"posts"]];
+    [query orderByDescending:@"createdAt"];
     
     // Fetch posts of user from database
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable posts, NSError * _Nullable error) {
@@ -94,21 +96,27 @@
             NSLog(@"Error retrieving posts: %@", error);
         }
         else {
-            NSMutableArray *locationIds = [[NSMutableArray alloc] init];
-            for (Post *post in posts) {
-                if (![locationIds containsObject:post.location]) {
-                    [locationIds addObject:post.location];
+            if ([posts count] >= 1) {
+                Post *mostRecentPost = posts[0];
+                NSMutableArray *locationIds = [[NSMutableArray alloc] init];
+                for (Post *post in posts) {
+                    if (![locationIds containsObject:post.location]) {
+                        [locationIds addObject:post.location];
+                    }
                 }
+                
+                // Fetch relevant locations from database
+                PFQuery *locQuery = [PFQuery queryWithClassName:@"Location"];
+                [locQuery whereKey:@"placeID" containedIn:locationIds];
+                [locQuery findObjectsInBackgroundWithBlock:^(NSArray * _Nullable locations, NSError * _Nullable error) {
+                    self.postLocations = locations;
+                    self.postsByLocationId = [self groupByLocation:posts];
+                    [[LocationManager shared] displayLocationsOnMap:self.userMapView locations:locations];
+                    Location *mostRecentLocation = [self.postLocations filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"placeID like %@", mostRecentPost.location]][0];
+                    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:mostRecentLocation.coordinate.latitude longitude:mostRecentLocation.coordinate.longitude zoom:10.0];
+                    [self.userMapView setCamera:camera];
+                }];
             }
-            
-            // Fetch relevant locations from database
-            PFQuery *locQuery = [PFQuery queryWithClassName:@"Location"];
-            [locQuery whereKey:@"placeID" containedIn:locationIds];
-            [locQuery findObjectsInBackgroundWithBlock:^(NSArray * _Nullable locations, NSError * _Nullable error) {
-                self.postLocations = locations;
-                self.postsByLocationId = [self groupByLocation:posts];
-                [[LocationManager shared] displayLocationsOnMap:self.userMapView locations:locations];
-            }];
         }
     }];
 }
@@ -173,26 +181,11 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<UIImagePickerControllerInfoKey,id> *)info {
     // Get the image captured by the UIImagePickerController
     UIImage *editedImage = info[UIImagePickerControllerEditedImage];
-    editedImage = [self resizeImage:editedImage withSize:CGSizeMake(400, 300)];
+    editedImage = [[ImageManager shared] resizeImage:editedImage withSize:CGSizeMake(400, 300)];
     self.profilePictureView.image = editedImage;
     
     // Dismiss UIImagePickerController to go back to your original view controller
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-// Resizes image to the specified size
-- (UIImage *)resizeImage:(UIImage *)image withSize:(CGSize)size {
-    UIImageView *resizeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
-    
-    resizeImageView.contentMode = UIViewContentModeScaleAspectFill;
-    resizeImageView.image = image;
-    
-    UIGraphicsBeginImageContext(size);
-    [resizeImageView.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return newImage;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

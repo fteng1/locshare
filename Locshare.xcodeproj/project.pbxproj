@@ -28,6 +28,7 @@
 		70571E5F269CE66F00CE1842 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E5E269CE66F00CE1842 /* ProfileViewController.m */; };
 		70571E62269CE67F00CE1842 /* LocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E61269CE67F00CE1842 /* LocationViewController.m */; };
 		70571E65269CE69200CE1842 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E64269CE69200CE1842 /* DetailsViewController.m */; };
+		7063F67226A77CEC00DE8196 /* ImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7063F67126A77CEC00DE8196 /* ImageManager.m */; };
 		7075DFB126A5D4D40073CB5A /* PostLocationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7075DFB026A5D4D40073CB5A /* PostLocationCell.m */; };
 		7075DFB426A5D9790073CB5A /* LocationMarker.m in Sources */ = {isa = PBXBuildFile; fileRef = 7075DFB326A5D9790073CB5A /* LocationMarker.m */; };
 		70B30743269CFD4500ADFE9E /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 70B30742269CFD4500ADFE9E /* Keys.plist */; };
@@ -101,6 +102,8 @@
 		70571E61269CE67F00CE1842 /* LocationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationViewController.m; sourceTree = "<group>"; };
 		70571E63269CE69200CE1842 /* DetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
 		70571E64269CE69200CE1842 /* DetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
+		7063F67026A77CEC00DE8196 /* ImageManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageManager.h; sourceTree = "<group>"; };
+		7063F67126A77CEC00DE8196 /* ImageManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageManager.m; sourceTree = "<group>"; };
 		7075DFAF26A5D4D40073CB5A /* PostLocationCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PostLocationCell.h; sourceTree = "<group>"; };
 		7075DFB026A5D4D40073CB5A /* PostLocationCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PostLocationCell.m; sourceTree = "<group>"; };
 		7075DFB226A5D9790073CB5A /* LocationMarker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationMarker.h; sourceTree = "<group>"; };
@@ -173,6 +176,8 @@
 				704F136C26A1EABA009A71C8 /* LocationManager.m */,
 				7075DFB226A5D9790073CB5A /* LocationMarker.h */,
 				7075DFB326A5D9790073CB5A /* LocationMarker.m */,
+				7063F67026A77CEC00DE8196 /* ImageManager.h */,
+				7063F67126A77CEC00DE8196 /* ImageManager.m */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -568,6 +573,7 @@
 				7075DFB126A5D4D40073CB5A /* PostLocationCell.m in Sources */,
 				70007451269E33A600F10FE1 /* LocationAutocompleteCell.m in Sources */,
 				70571E59269CE62500CE1842 /* PostViewController.m in Sources */,
+				7063F67226A77CEC00DE8196 /* ImageManager.m in Sources */,
 				70571E47269CAF8F00CE1842 /* LoginViewController.m in Sources */,
 				70571E0F269CA9AE00CE1842 /* AppDelegate.m in Sources */,
 				704F136D26A1EABA009A71C8 /* LocationManager.m in Sources */,
