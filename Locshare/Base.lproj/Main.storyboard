@@ -125,7 +125,7 @@
             <objects>
                 <viewController title="Location" id="L79-Ro-h21" customClass="LocationViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="v1v-Bd-LBQ">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="790"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="STk-y4-lsg" customClass="GMSMapView">
@@ -170,6 +170,7 @@
                         <viewLayoutGuide key="safeArea" id="ewb-m7-E3T"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <navigationItem key="navigationItem" id="wOC-6g-UqI"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="mapView" destination="STk-y4-lsg" id="kRQ-sg-S3f"/>
@@ -626,12 +627,13 @@
                     </navigationItem>
                     <connections>
                         <outlet property="descriptionLabel" destination="508-Nl-9Ij" id="Ej5-Dj-8i9"/>
+                        <outlet property="editButton" destination="vD5-s6-ISU" id="zCK-JP-faE"/>
                         <outlet property="friendCountLabel" destination="I68-Xy-AS9" id="tkn-3W-HnF"/>
                         <outlet property="postCountLabel" destination="0Si-Pq-MvS" id="VjD-Cq-eGv"/>
                         <outlet property="profilePictureView" destination="1hg-M9-fQL" id="jpp-sp-kld"/>
                         <outlet property="userMapView" destination="vqH-vT-f2X" id="cHa-93-V1P"/>
                         <outlet property="usernameLabel" destination="RQZ-VY-IbK" id="m6Q-ZK-XU4"/>
-                        <segue destination="h8p-KT-O4t" kind="showDetail" id="AIQ-dv-1GL"/>
+                        <segue destination="L79-Ro-h21" kind="show" identifier="profileLocationSegue" id="4Ck-x5-wBe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yhz-ak-YTf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -660,7 +662,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="29f-HC-vrl"/>
-        <segue reference="AIQ-dv-1GL"/>
+        <segue reference="4Ck-x5-wBe"/>
         <segue reference="ybK-Mk-Bd7"/>
     </inferredMetricsTieBreakers>
     <resources>

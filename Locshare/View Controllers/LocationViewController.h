@@ -12,7 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LocationViewController : UIViewController
 
-@property (strong, nonatomic) Location *location; 
+@property (strong, nonatomic) Location *location;
+@property (strong, nonatomic) NSArray *postsToDisplay;
+@property (strong, nonatomic) PFUser *userToFilter;
 
 @end
 

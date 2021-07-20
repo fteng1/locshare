@@ -78,11 +78,7 @@ GMSPlacesClient *placesClient;
     
     // Retrieve results from Parse using asynchronous call
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable locations, NSError * _Nullable error) {
-        for (Location *loc in locations) {
-            CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(loc.coordinate.latitude, loc.coordinate.longitude);
-            LocationMarker *marker = [[LocationMarker alloc] initMarkerWithPosition:coord withLocation:loc];
-            marker.map = self.homeMapView;
-        }
+        [[LocationManager shared] displayLocationsOnMap:self.homeMapView locations:locations];
     }];
 }
 
@@ -95,15 +91,6 @@ GMSPlacesClient *placesClient;
 // Show newly visible locations once map is moved
 - (void)mapView:(GMSMapView *)mapView willMove:(BOOL)gesture {
     [self displayVisibleLocations];
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Bring up location view screen if marker is tapped
-    if ([[segue identifier] isEqualToString:@"locationSegue"]) {
-        LocationMarker *marker = sender;
-        LocationViewController *locationViewController = [segue destinationViewController];
-        locationViewController.location = marker.location;
-    }
 }
 
 - (IBAction)onLogoutTap:(id)sender {
@@ -122,6 +109,15 @@ GMSPlacesClient *placesClient;
             sceneDelegate.window.rootViewController = loginViewController;
         }
     }];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Bring up location view screen if marker is tapped
+    if ([[segue identifier] isEqualToString:@"locationSegue"]) {
+        LocationMarker *marker = sender;
+        LocationViewController *locationViewController = [segue destinationViewController];
+        locationViewController.location = marker.location;
+    }
 }
 
 @end

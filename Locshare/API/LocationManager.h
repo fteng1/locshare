@@ -6,6 +6,7 @@
 //
 
 #import <CoreLocation/CoreLocation.h>
+#import <GoogleMaps/GoogleMaps.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -17,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)getNearbyLocations:(void (^)(NSArray *, NSError *))completion;
 - (void)makeURLRequest:(NSURL *)url completion:(void (^)(NSDictionary *, NSError *))completion;
 - (void)getPlaceDetails:(NSString *)placeId completion:(void (^)(NSDictionary *, NSError *))completion;
+- (void)displayLocationsOnMap:(GMSMapView *)mapView locations:(NSArray *)locations;
 
 @end
 
