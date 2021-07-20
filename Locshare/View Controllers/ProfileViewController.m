@@ -59,6 +59,7 @@
         self.saveButton.enabled = true;
         self.descriptionTextView.editable = true;
         self.profilePictureView.userInteractionEnabled = true;
+        [self.descriptionTextView resignFirstResponder];
     }
     else
     {

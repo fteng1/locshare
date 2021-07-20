@@ -17,6 +17,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *timestampLabel;
 @property (weak, nonatomic) IBOutlet UILabel *captionLabel;
 @property (weak, nonatomic) IBOutlet UICollectionView *photoCollectionView;
+@property (weak, nonatomic) IBOutlet PFImageView *profileImageView;
+
+@property (strong, nonatomic) PFUser *postAuthor;
 
 @end
 
@@ -41,6 +44,8 @@
     
     self.photoCollectionView.dataSource = self;
     self.photoCollectionView.delegate = self;
+    
+    [self getAuthorInfoInBackground];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -56,8 +61,8 @@
     return cell;
 }
 
-- (IBAction)onUsernameTap:(id)sender {
-    // Get information about selected user from database
+- (void)getAuthorInfoInBackground {
+    // Get information about post author from database
     PFQuery *query = [PFQuery queryWithClassName:@"_User"];
     [query whereKey:@"objectId" equalTo:self.post.author.objectId];
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
@@ -66,11 +71,16 @@
         }
         else {
             if ([objects count] == 1) {
-                [self performSegueWithIdentifier:@"profileSegue" sender:objects[0]];
-
+                self.postAuthor = objects[0];
+                self.profileImageView.file = self.postAuthor[@"profilePicture"];
+                [self.profileImageView loadInBackground];
             }
         }
     }];
+}
+
+- (IBAction)onHeaderTap:(id)sender {
+    [self performSegueWithIdentifier:@"profileSegue" sender:self.postAuthor];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
