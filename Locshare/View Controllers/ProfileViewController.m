@@ -15,15 +15,15 @@
 #import "LocationViewController.h"
 @import Parse;
 
-@interface ProfileViewController () <UITabBarControllerDelegate, GMSMapViewDelegate>
+@interface ProfileViewController () <UITabBarControllerDelegate, GMSMapViewDelegate, UIImagePickerControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet PFImageView *profilePictureView;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
+@property (weak, nonatomic) IBOutlet UITextView *descriptionTextView;
 @property (weak, nonatomic) IBOutlet UILabel *friendCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *postCountLabel;
 @property (weak, nonatomic) IBOutlet GMSMapView *userMapView;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *editButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *saveButton;
 
 @property (strong, nonatomic) NSDictionary *postsByLocationId;
 @property (strong, nonatomic) NSArray *postLocations;
@@ -52,6 +52,20 @@
         self.user = [PFUser currentUser];
     }
     
+    // If user accessed the profile via the tab bar, it is their own profile and they can edit
+    if ([self profileIsEditable]) {
+        self.saveButton.title = @"Save";
+        self.saveButton.enabled = true;
+        self.descriptionTextView.editable = true;
+        self.profilePictureView.userInteractionEnabled = true;
+    }
+    else
+    {
+        self.saveButton.title = @"";
+        self.saveButton.enabled = false;
+        self.descriptionTextView.editable = false;
+        self.profilePictureView.userInteractionEnabled = false;
+    }
     [self fetchPosts];
     [self updateFields];
 }
@@ -59,7 +73,7 @@
 - (void)updateFields {
     // Set text fields to user's current values
     self.usernameLabel.text = self.user.username;
-    self.descriptionLabel.text = self.user[@"tagline"];
+    self.descriptionTextView.text = self.user[@"tagline"];
     self.friendCountLabel.text = [NSString stringWithFormat:@"%@", self.user[@"numFriends"]];
     self.postCountLabel.text = [NSString stringWithFormat:@"%@", self.user[@"numPosts"]];
     
@@ -124,6 +138,61 @@
         self.user = [PFUser currentUser];
         [self updateFields];
     }
+}
+
+- (BOOL)profileIsEditable {
+    return self.tabBarController.selectedIndex == 3;
+}
+
+// Save currently selected description and profile picture to database
+- (IBAction)onSaveTap:(id)sender {
+    self.user[@"tagline"] = self.descriptionTextView.text;
+    self.user[@"profilePicture"] = [Post getPFFileFromImage:self.profilePictureView.image];
+    [self.user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+        [self updateFields];
+    }];
+    [self.descriptionTextView resignFirstResponder];
+}
+
+- (IBAction)onProfilePictureTap:(id)sender {
+    UIImagePickerController *imagePicker = [UIImagePickerController new];
+    imagePicker.delegate = self;
+    imagePicker.allowsEditing = YES;
+    
+    // The Xcode simulator does not support taking pictures, so let's first check that the camera is indeed supported on the device before trying to present it.
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    }
+    else {
+        NSLog(@"The camera is not available");
+    }
+    [self presentViewController:imagePicker animated:YES completion:nil];
+}
+
+// Use when camera is used to take photo, can only choose one photo
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<UIImagePickerControllerInfoKey,id> *)info {
+    // Get the image captured by the UIImagePickerController
+    UIImage *editedImage = info[UIImagePickerControllerEditedImage];
+    editedImage = [self resizeImage:editedImage withSize:CGSizeMake(400, 300)];
+    self.profilePictureView.image = editedImage;
+    
+    // Dismiss UIImagePickerController to go back to your original view controller
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+// Resizes image to the specified size
+- (UIImage *)resizeImage:(UIImage *)image withSize:(CGSize)size {
+    UIImageView *resizeImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
+    
+    resizeImageView.contentMode = UIViewContentModeScaleAspectFill;
+    resizeImageView.image = image;
+    
+    UIGraphicsBeginImageContext(size);
+    [resizeImageView.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return newImage;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

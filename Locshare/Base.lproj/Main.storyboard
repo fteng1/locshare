@@ -570,16 +570,13 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1hg-M9-fQL" customClass="PFImageView">
                                 <rect key="frame" x="16" y="116" width="148" height="137"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="wl2-9x-bde" appends="YES" id="GuB-OH-guD"/>
+                                </connections>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RQZ-VY-IbK">
                                 <rect key="frame" x="190" y="128" width="79" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Description " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="508-Nl-9Ij">
-                                <rect key="frame" x="190" y="165" width="184" height="88"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -606,11 +603,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vqH-vT-f2X" customClass="GMSMapView">
-                                <rect key="frame" x="0.0" y="322" width="390" height="439"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemGray2Color"/>
-                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="posts" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="obh-d4-xvP">
                                 <rect key="frame" x="306" y="273" width="42" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -618,25 +610,48 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vqH-vT-f2X" customClass="GMSMapView">
+                                <rect key="frame" x="0.0" y="322" width="390" height="439"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemGray2Color"/>
+                            </view>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="Description" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="XXV-jb-xqs">
+                                <rect key="frame" x="172" y="157" width="202" height="96"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <gestureRecognizers/>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="fiE-Ec-Ncu"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="302-at-7jT">
-                        <barButtonItem key="rightBarButtonItem" title="Edit" id="vD5-s6-ISU"/>
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="vD5-s6-ISU">
+                            <connections>
+                                <action selector="onSaveTap:" destination="0vV-1o-gEl" id="eA6-gM-Gj2"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="descriptionLabel" destination="508-Nl-9Ij" id="Ej5-Dj-8i9"/>
-                        <outlet property="editButton" destination="vD5-s6-ISU" id="zCK-JP-faE"/>
+                        <outlet property="descriptionTextView" destination="XXV-jb-xqs" id="s7N-Mr-8Il"/>
                         <outlet property="friendCountLabel" destination="I68-Xy-AS9" id="tkn-3W-HnF"/>
                         <outlet property="postCountLabel" destination="0Si-Pq-MvS" id="VjD-Cq-eGv"/>
                         <outlet property="profilePictureView" destination="1hg-M9-fQL" id="jpp-sp-kld"/>
+                        <outlet property="saveButton" destination="vD5-s6-ISU" id="zCK-JP-faE"/>
                         <outlet property="userMapView" destination="vqH-vT-f2X" id="cHa-93-V1P"/>
                         <outlet property="usernameLabel" destination="RQZ-VY-IbK" id="m6Q-ZK-XU4"/>
                         <segue destination="L79-Ro-h21" kind="show" identifier="profileLocationSegue" id="4Ck-x5-wBe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yhz-ak-YTf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="wl2-9x-bde">
+                    <connections>
+                        <action selector="onProfilePictureTap:" destination="0vV-1o-gEl" id="kWM-E6-WvC"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="4860" y="619.19431279620846"/>
         </scene>
