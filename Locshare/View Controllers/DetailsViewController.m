@@ -9,6 +9,7 @@
 #import "PhotoViewCell.h"
 #import <DateTools/DateTools.h>
 #import <Parse/Parse.h>
+#import "ProfileViewController.h"
 
 @interface DetailsViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
 
@@ -53,6 +54,32 @@
     cell.photoImageView.file = photo;
     [cell.photoImageView loadInBackground];
     return cell;
+}
+
+- (IBAction)onUsernameTap:(id)sender {
+    // Get information about selected user from database
+    PFQuery *query = [PFQuery queryWithClassName:@"_User"];
+    [query whereKey:@"objectId" equalTo:self.post.author.objectId];
+    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        if (error != nil) {
+            NSLog(@"Issue with obtaining user profile: %@", error);
+        }
+        else {
+            if ([objects count] == 1) {
+                [self performSegueWithIdentifier:@"profileSegue" sender:objects[0]];
+
+            }
+        }
+    }];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Bring up profile view screen if username is tapped
+    if ([[segue identifier] isEqualToString:@"profileSegue"]) {
+        PFUser *user = sender;
+        ProfileViewController *profileViewController = [segue destinationViewController];
+        profileViewController.user = user;
+    }
 }
 
 @end
