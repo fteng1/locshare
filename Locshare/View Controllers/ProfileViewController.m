@@ -25,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *postCountLabel;
 @property (weak, nonatomic) IBOutlet GMSMapView *userMapView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *saveButton;
+@property (weak, nonatomic) IBOutlet UIButton *friendButton;
 
 @property (strong, nonatomic) NSDictionary *postsByLocationId;
 @property (strong, nonatomic) NSArray *postLocations;
@@ -163,30 +164,13 @@
     [self.descriptionTextView resignFirstResponder];
 }
 
-- (IBAction)onProfilePictureTap:(id)sender {
-    UIImagePickerController *imagePicker = [UIImagePickerController new];
-    imagePicker.delegate = self;
-    imagePicker.allowsEditing = YES;
-    
-    // The Xcode simulator does not support taking pictures, so let's first check that the camera is indeed supported on the device before trying to present it.
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-    }
-    else {
-        NSLog(@"The camera is not available");
-    }
-    [self presentViewController:imagePicker animated:YES completion:nil];
+- (void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion {
 }
 
-// Use when camera is used to take photo, can only choose one photo
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<UIImagePickerControllerInfoKey,id> *)info {
-    // Get the image captured by the UIImagePickerController
-    UIImage *editedImage = info[UIImagePickerControllerEditedImage];
-    editedImage = [[ImageManager shared] resizeImage:editedImage withSize:CGSizeMake(400, 300)];
-    self.profilePictureView.image = editedImage;
-    
-    // Dismiss UIImagePickerController to go back to your original view controller
-    [self dismissViewControllerAnimated:YES completion:nil];
+- (IBAction)onProfilePictureTap:(id)sender {
+    ImageManager *imagePicker = [ImageManager new];
+    imagePicker.viewToSet = self.profilePictureView;
+    [self presentViewController:imagePicker animated:YES completion:nil];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

@@ -26,6 +26,7 @@
 @property (strong, nonatomic) NSString *locationID;
 @property (strong, nonatomic) NSMutableArray *photosToUpload;
 @property (nonatomic, strong) PHImageRequestOptions *requestOptions;
+@property (strong, nonatomic) UIImageView *storageView;
 
 @end
 
@@ -51,6 +52,7 @@
     layout.minimumLineSpacing = 1;
     
     [self.pickedPhotosCollectionView reloadData];
+    self.storageView = [UIImageView new];
 }
 
 - (void)configureRequestOptions {
@@ -64,19 +66,11 @@
 
 // Take photo using the phone camera when the camera icon is tapped, if available
 - (IBAction)onCameraTap:(id)sender {
-    UIImagePickerController *imagePicker = [UIImagePickerController new];
-    imagePicker.delegate = self;
-    imagePicker.allowsEditing = YES;
-
-    // The Xcode simulator does not support taking pictures, so let's first check that the camera is indeed supported on the device before trying to present it.
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-    }
-    else {
-        NSLog(@"The camera is not available");
-    }
+    ImageManager *imagePicker = [ImageManager new];
+    imagePicker.viewToSet = self.storageView;
+    [self setDefinesPresentationContext:YES];
+    imagePicker.modalPresentationStyle = UIModalPresentationCurrentContext;
     [self presentViewController:imagePicker animated:YES completion:nil];
-    
 }
 
 // Choose multiple photos from the photo library
@@ -102,7 +96,7 @@
         // Convert asset from PHAsset to UIImage
         [manager requestImageForAsset:photo targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeDefault options:self.requestOptions resultHandler:^void(UIImage *image, NSDictionary *info) {
                 // Add converted photo to photos array
-                [self.photosToUpload addObject:[[ImageManager shared] resizeImage:image withSize:CGSizeMake(400, 300)]];
+                [self.photosToUpload addObject:[ImageManager resizeImage:image withSize:CGSizeMake(400, 300)]];
          }];
     }
     [self.pickedPhotosCollectionView reloadData];
@@ -115,19 +109,11 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-// Use when camera is used to take photo, can only choose one photo
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<UIImagePickerControllerInfoKey,id> *)info {
-    // Remove any existing photos in array
+- (void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion {
+    [super dismissViewControllerAnimated:flag completion:completion];
     [self.photosToUpload removeAllObjects];
-    
-    // Get the image captured by the UIImagePickerController
-    UIImage *editedImage = info[UIImagePickerControllerEditedImage];
-    editedImage = [[ImageManager shared] resizeImage:editedImage withSize:CGSizeMake(400, 300)];
-    [self.photosToUpload addObject:editedImage];
+    [self.photosToUpload addObject:self.storageView.image];
     [self.pickedPhotosCollectionView reloadData];
-    
-    // Dismiss UIImagePickerController to go back to your original view controller
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 // Make post when share button is pressed

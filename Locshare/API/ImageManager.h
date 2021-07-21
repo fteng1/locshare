@@ -9,11 +9,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ImageManager : UIImagePickerController
+@interface ImageManager : UIViewController
 
-+ (instancetype)shared;
+@property (strong, nonatomic) UIImage *image;
+@property (strong, nonatomic) UIImageView *viewToSet;
 
-- (UIImage *)resizeImage:(UIImage *)image withSize:(CGSize)size;
++ (UIImage *)resizeImage:(UIImage *)image withSize:(CGSize)size;
+
+- (void)presentImagePicker;
     
 @end
 
