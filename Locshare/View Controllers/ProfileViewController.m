@@ -49,13 +49,12 @@
     
     self.userMapView.delegate = self;
     
-    if (self.tabBarController.delegate == nil && self.firstAccessedFromTab) {
-        self.tabBarController.delegate = self;
-        self.user = [PFUser currentUser];
-    }
-    
     // If user accessed the profile via the tab bar, it is their own profile and they can edit
     if ([self profileIsEditable]) {
+        if (self.tabBarController.delegate == nil) {
+            self.tabBarController.delegate = self;
+        }
+        self.user = [PFUser currentUser];
         self.saveButton.title = @"Save";
         self.saveButton.enabled = true;
         self.descriptionTextView.editable = true;
@@ -69,8 +68,8 @@
         self.descriptionTextView.editable = false;
         self.profilePictureView.userInteractionEnabled = false;
     }
-    [self fetchPosts];
     [self updateFields];
+    [self fetchPosts];
 }
 
 - (void)updateFields {
@@ -89,7 +88,8 @@
 
 - (void)fetchPosts {
     PFQuery *query = [PFQuery queryWithClassName:@"Post"];
-    [query whereKey:@"objectId" containedIn:self.user[@"posts"]];
+//    [query whereKey:@"objectId" containedIn:self.user[@"posts"]];
+    [query whereKey:@"author" equalTo:self.user];
     [query orderByDescending:@"createdAt"];
     
     // Fetch posts of user from database

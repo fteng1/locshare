@@ -89,11 +89,13 @@
 - (void)loadPosts {
     // Get posts with object id's stored in the location's array of posts
     PFQuery *query = [PFQuery queryWithClassName:@"Post"];
-    [query whereKey:@"objectId" containedIn:self.location.posts];
+    [query whereKey:@"location" equalTo:self.location.placeID];
     if ([self isUserFiltered]) {
-        PFQuery *relationalQuery = [PFUser query];
-        [relationalQuery whereKey:@"objectId" equalTo:self.userToFilter.objectId];
-        [query whereKey:@"author" matchesQuery:relationalQuery];
+//        PFQuery *relationalQuery = [PFUser query];
+//        [relationalQuery whereKey:@"objectId" equalTo:self.userToFilter.objectId];
+//        [query whereKey:@"author" matchesQuery:relationalQuery];
+        [query whereKey:@"author" equalTo:self.userToFilter];
+        
     }
     [query orderByDescending:@"createdAt"];
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
