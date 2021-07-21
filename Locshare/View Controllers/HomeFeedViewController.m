@@ -117,6 +117,7 @@ GMSPlacesClient *placesClient;
         LocationMarker *marker = sender;
         LocationViewController *locationViewController = [segue destinationViewController];
         locationViewController.location = marker.location;
+        locationViewController.isUserFiltered = false;
     }
 }
 

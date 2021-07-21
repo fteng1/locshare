@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) Location *location;
 @property (strong, nonatomic) NSArray *postsToDisplay;
 @property (strong, nonatomic) PFUser *userToFilter;
+@property (assign, nonatomic) BOOL isUserFiltered;
 
 @end
 

@@ -134,6 +134,7 @@
                 [locQuery findObjectsInBackgroundWithBlock:^(NSArray * _Nullable locations, NSError * _Nullable error) {
                     self.postLocations = locations;
                     self.postsByLocationId = [self groupByLocation:posts];
+                    [self.userMapView clear];
                     [[LocationManager shared] displayLocationsOnMap:self.userMapView locations:locations];
                     
                     // Set camera to be at location of most recent post
@@ -204,6 +205,7 @@
         locationViewController.location = marker.location;
         locationViewController.postsToDisplay = self.postsByLocationId[marker.location.placeID];
         locationViewController.userToFilter = self.user;
+        locationViewController.isUserFiltered = true;
     }
 }
 

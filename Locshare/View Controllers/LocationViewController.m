@@ -30,6 +30,9 @@
     self.postCollectionView.delegate = self;
     self.postCollectionView.dataSource = self;
     self.tabBarController.delegate = self;
+    if (self.tabBarController.selectedIndex == 3) {
+        self.isUserFiltered = true;
+    }
     
     [self loadPosts];
     
@@ -82,18 +85,11 @@
     }];
 }
 
-- (BOOL)isUserFiltered {
-    return self.tabBarController.selectedIndex == 3;
-}
-
 - (void)loadPosts {
     // Get posts with object id's stored in the location's array of posts
     PFQuery *query = [PFQuery queryWithClassName:@"Post"];
     [query whereKey:@"location" equalTo:self.location.placeID];
-    if ([self isUserFiltered]) {
-//        PFQuery *relationalQuery = [PFUser query];
-//        [relationalQuery whereKey:@"objectId" equalTo:self.userToFilter.objectId];
-//        [query whereKey:@"author" matchesQuery:relationalQuery];
+    if (self.isUserFiltered) {
         [query whereKey:@"author" equalTo:self.userToFilter];
         
     }
