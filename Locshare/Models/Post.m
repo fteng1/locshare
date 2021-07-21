@@ -9,7 +9,6 @@
 
 @implementation Post
 
-@dynamic userID;
 @dynamic author;
 @dynamic caption;
 @dynamic photos;

@@ -34,16 +34,6 @@
 
 @implementation ProfileViewController
 
-// sets initial value for accessed property
-- (id)initWithCoder:(NSCoder *)decoder
-{
-    self = [super initWithCoder:decoder];
-    if (self) {
-        self.firstAccessedFromTab = true;
-    }
-    return self;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -60,6 +50,7 @@
         self.descriptionTextView.editable = true;
         self.profilePictureView.userInteractionEnabled = true;
         [self.descriptionTextView resignFirstResponder];
+        self.friendButton.hidden = true;
     }
     else
     {
@@ -67,9 +58,40 @@
         self.saveButton.enabled = false;
         self.descriptionTextView.editable = false;
         self.profilePictureView.userInteractionEnabled = false;
+        
+        // Handle friend button visibility/enabled state
+        [self.friendButton setTitle:@"Already Friends" forState: UIControlStateSelected];
+        [self.friendButton setTitle:@"Friend" forState: UIControlStateNormal];
+        if (![self.user.objectId isEqual:[PFUser currentUser].objectId]) {
+            self.friendButton.hidden = false;
+            NSArray *friendList = [PFUser currentUser][@"friends"];
+            if ([friendList containsObject:self.user.objectId]) {
+                self.friendButton.selected = true;
+            }
+            else {
+                self.friendButton.selected = false;
+            }
+        }
+        else {
+            self.friendButton.hidden = true;
+        }
     }
     [self updateFields];
     [self fetchPosts];
+}
+
+- (IBAction)onFriendTap:(id)sender {
+    PFUser *currUser = [PFUser currentUser];
+    if (!self.friendButton.selected) {
+        [currUser addObject:self.user.objectId forKey:@"friends"];
+        [currUser incrementKey:@"numFriends"];
+    }
+    else {
+        [currUser removeObject:self.user.objectId forKey:@"friends"];
+        [currUser incrementKey:@"numFriends" byAmount:@(-1)];
+    }
+    self.friendButton.selected = !self.friendButton.selected;
+    [[PFUser currentUser] saveInBackground];
 }
 
 - (void)updateFields {
@@ -88,7 +110,6 @@
 
 - (void)fetchPosts {
     PFQuery *query = [PFQuery queryWithClassName:@"Post"];
-//    [query whereKey:@"objectId" containedIn:self.user[@"posts"]];
     [query whereKey:@"author" equalTo:self.user];
     [query orderByDescending:@"createdAt"];
     
@@ -114,6 +135,8 @@
                     self.postLocations = locations;
                     self.postsByLocationId = [self groupByLocation:posts];
                     [[LocationManager shared] displayLocationsOnMap:self.userMapView locations:locations];
+                    
+                    // Set camera to be at location of most recent post
                     Location *mostRecentLocation = [self.postLocations filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"placeID like %@", mostRecentPost.location]][0];
                     GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:mostRecentLocation.coordinate.latitude longitude:mostRecentLocation.coordinate.longitude zoom:10.0];
                     [self.userMapView setCamera:camera];

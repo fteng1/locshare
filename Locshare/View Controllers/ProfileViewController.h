@@ -13,7 +13,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ProfileViewController : UIViewController
 
 @property (strong, nonatomic) PFUser *user;
-@property (assign, nonatomic) BOOL firstAccessedFromTab;
 
 @end
 
