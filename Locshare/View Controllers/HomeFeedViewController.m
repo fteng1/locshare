@@ -38,6 +38,10 @@ GMSPlacesClient *placesClient;
     self.homeMapView.delegate = self;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [self displayVisibleLocations];
+}
+
 - (void)updateDefaultPosition {
     // Get most updated position
     CLLocation *currentLocation = [LocationManager shared].location;
@@ -122,6 +126,10 @@ GMSPlacesClient *placesClient;
         locationViewController.location = marker.location;
         locationViewController.isUserFiltered = false;
     }
+}
+
+- (IBAction)onRefreshTap:(id)sender {
+    [self displayVisibleLocations];
 }
 
 @end

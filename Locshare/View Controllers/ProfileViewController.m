@@ -97,6 +97,7 @@
     self.friendButton.selected = !self.friendButton.selected;
     [[PFUser currentUser] saveInBackground];
     [self.user saveInBackground];
+    [self updateFields];
 }
 
 - (void)updateFields {
@@ -200,6 +201,11 @@
     ImageManager *imagePicker = [ImageManager new];
     imagePicker.viewToSet = self.profilePictureView;
     [self presentViewController:imagePicker animated:YES completion:nil];
+}
+
+- (IBAction)onRefreshTap:(id)sender {
+    [self updateFields];
+    [self fetchPosts];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
