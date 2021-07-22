@@ -125,7 +125,7 @@
             <objects>
                 <viewController title="Location" id="L79-Ro-h21" customClass="LocationViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="v1v-Bd-LBQ">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="790"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="STk-y4-lsg" customClass="GMSMapView">
@@ -187,7 +187,7 @@
             <objects>
                 <viewController title="Details" id="h8p-KT-O4t" customClass="DetailsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="02F-8y-QZK">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="790"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Timestamp" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g1R-hR-Z9d">
@@ -545,6 +545,7 @@
                                             <outlet property="descriptionLabel" destination="DMS-x0-gJC" id="bi5-6b-8iF"/>
                                             <outlet property="profileImageView" destination="h6z-OW-nPy" id="UZg-C1-Vsw"/>
                                             <outlet property="usernameLabel" destination="yXV-E6-O2h" id="d4E-rV-kZN"/>
+                                            <segue destination="0vV-1o-gEl" kind="show" id="dcW-XL-d9M"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -587,7 +588,7 @@
             <objects>
                 <viewController id="0vV-1o-gEl" customClass="ProfileViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tyo-fc-Gy4">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="790"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1hg-M9-fQL" customClass="PFImageView">
@@ -708,7 +709,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="29f-HC-vrl"/>
+        <segue reference="dcW-XL-d9M"/>
         <segue reference="4Ck-x5-wBe"/>
         <segue reference="jvO-ql-lyu"/>
     </inferredMetricsTieBreakers>

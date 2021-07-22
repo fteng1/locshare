@@ -7,6 +7,7 @@
 
 #import "SearchViewController.h"
 #import "UserSearchCell.h"
+#import "ProfileViewController.h"
 
 @interface SearchViewController () <UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource>
 
@@ -66,6 +67,20 @@
     [cell.profileImageView loadInBackground];
     
     return cell;
+}
+
+// Deselect row in table after it has been tapped
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:true];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    UserSearchCell *tappedCell = sender;
+    NSIndexPath *indexPath = [self.resultsTableView indexPathForCell:tappedCell];
+    PFUser *userToView = self.results[indexPath.row];
+    
+    ProfileViewController *profileViewController = [segue destinationViewController];
+    profileViewController.user = userToView;
 }
 
 @end
