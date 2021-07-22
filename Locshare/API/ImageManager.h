@@ -11,7 +11,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ImageManager : UIViewController
 
-@property (strong, nonatomic) UIImage *image;
 @property (strong, nonatomic) UIImageView *viewToSet;
 
 + (UIImage *)resizeImage:(UIImage *)image withSize:(CGSize)size;

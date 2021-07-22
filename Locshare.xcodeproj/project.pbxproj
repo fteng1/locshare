@@ -21,7 +21,6 @@
 		70571E4A269CB03600CE1842 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E49269CB03600CE1842 /* Post.m */; };
 		70571E4D269CB3D000CE1842 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E4C269CB3D000CE1842 /* Location.m */; };
 		70571E50269CE24D00CE1842 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E4F269CE24D00CE1842 /* Comment.m */; };
-		70571E53269CE3CD00CE1842 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E52269CE3CD00CE1842 /* User.m */; };
 		70571E56269CE60D00CE1842 /* HomeFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E55269CE60D00CE1842 /* HomeFeedViewController.m */; };
 		70571E59269CE62500CE1842 /* PostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E58269CE62500CE1842 /* PostViewController.m */; };
 		70571E5C269CE64C00CE1842 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E5B269CE64C00CE1842 /* SearchViewController.m */; };
@@ -88,8 +87,6 @@
 		70571E4C269CB3D000CE1842 /* Location.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
 		70571E4E269CE24D00CE1842 /* Comment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
 		70571E4F269CE24D00CE1842 /* Comment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
-		70571E51269CE3CD00CE1842 /* User.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		70571E52269CE3CD00CE1842 /* User.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		70571E54269CE60D00CE1842 /* HomeFeedViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeFeedViewController.h; sourceTree = "<group>"; };
 		70571E55269CE60D00CE1842 /* HomeFeedViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeFeedViewController.m; sourceTree = "<group>"; };
 		70571E57269CE62500CE1842 /* PostViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PostViewController.h; sourceTree = "<group>"; };
@@ -247,8 +244,6 @@
 			isa = PBXGroup;
 			children = (
 				70571E48269CB03600CE1842 /* Post.h */,
-				70571E51269CE3CD00CE1842 /* User.h */,
-				70571E52269CE3CD00CE1842 /* User.m */,
 				70571E49269CB03600CE1842 /* Post.m */,
 				70571E4B269CB3D000CE1842 /* Location.h */,
 				70571E4C269CB3D000CE1842 /* Location.m */,
@@ -566,7 +561,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				70571E53269CE3CD00CE1842 /* User.m in Sources */,
 				70571E56269CE60D00CE1842 /* HomeFeedViewController.m in Sources */,
 				70571E50269CE24D00CE1842 /* Comment.m in Sources */,
 				70571E4A269CB03600CE1842 /* Post.m in Sources */,

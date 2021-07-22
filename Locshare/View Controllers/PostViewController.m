@@ -101,12 +101,12 @@
     }
     [self.pickedPhotosCollectionView reloadData];
     
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [super dismissViewControllerAnimated:YES completion:nil];
 }
 
 // Dismiss controller window when cancel is tapped
 - (void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [super dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion {
@@ -121,20 +121,19 @@
     if (self.locationSearchBar.text.length != 0) {
         Post *newPost = [Post initPost:self.photosToUpload withCaption:self.captionTextView.text withLocation:self.locationID];
             // Make new post with the given location ID
-            [Post makePost:newPost completion:^(NSString * postID, NSError * _Nullable error) {
+            [Post makePost:newPost completion:^(NSString * userPostID, NSError * _Nullable error) {
                 if (error != nil) {
                     NSLog(@"Post share failed: %@", error.localizedDescription);
                 }
                 else {
                     NSLog(@"Post shared successfully");
-                    [Location tagLocation:self.locationID newPost:postID completion:^(NSError * _Nonnull error) {
+                    [Location tagLocation:self.locationID newPost:userPostID completion:^(NSError * _Nonnull error) {
                         if (error != nil) {
                             NSLog(@"Location tag failed: %@", error.localizedDescription);
                         }
                     }];
                     PFUser *currentUser = [PFUser currentUser];
                     [currentUser incrementKey:@"numPosts"];
-                    [currentUser addObject:postID forKey:@"posts"];
                     [currentUser saveInBackground];
                 }
             }];

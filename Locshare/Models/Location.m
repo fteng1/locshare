@@ -15,14 +15,14 @@
 @dynamic coordinate;
 @dynamic numPosts;
 @dynamic placeID;
-@dynamic posts;
+@dynamic usersWithPosts;
 
 + (nonnull NSString *)parseClassName {
     return @"Location";
 }
 
 // Function to update Location object in Parse to reflect new post
-+ (void)tagLocation:(NSString *)placeId newPost:(NSString *)postId completion:(void (^)(NSError *))completion{
++ (void)tagLocation:(NSString *)placeId newPost:(NSString *)userPostId completion:(void (^)(NSError *))completion{
     PFQuery *query = [PFQuery queryWithClassName:@"Location"];
     [query whereKey:@"placeID" equalTo:placeId];
     
@@ -33,12 +33,12 @@
                 // If already exists, increase number of posts by 1
                 Location *loc = place[0];
                 [loc incrementKey:@"numPosts"];
-                [loc addObject:postId forKey:@"posts"];
+                [loc addObject:userPostId forKey:@"usersWithPosts"];
                 [loc saveInBackground];
             }
             else {
                 // If does not exist, create new Location
-                [Location initLocation:placeId newPost:postId];
+                [Location initLocation:placeId newPost:userPostId];
             }
             completion(nil);
         } else {
@@ -48,8 +48,8 @@
     }];
 }
 
-// Create new location given the place ID and new post
-+ (void)initLocation:(NSString *)placeId newPost:(NSString *)postID {
+// Create new location given the place ID and author of new post
++ (void)initLocation:(NSString *)placeId newPost:(NSString *)userPostId {
     // Get details about location from place ID
     [[LocationManager shared] getPlaceDetails:placeId completion:^(NSDictionary * _Nonnull locInfo, NSError * _Nonnull error) {
         Location *newLoc = [Location new];
@@ -59,8 +59,8 @@
         newLoc.coordinate = [PFGeoPoint geoPointWithLatitude:[latitude floatValue] longitude:[longitude floatValue]];
         newLoc.numPosts = @(1);
         newLoc.placeID = placeId;
-        newLoc.posts = [[NSMutableArray alloc] init];
-        [newLoc.posts addObject:postID];
+        newLoc.usersWithPosts = [[NSMutableArray alloc] init];
+        [newLoc.usersWithPosts addObject:userPostId];
         [newLoc saveInBackground];
     }];
 }

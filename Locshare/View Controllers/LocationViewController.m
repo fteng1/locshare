@@ -94,6 +94,14 @@
         
     }
     [query orderByDescending:@"createdAt"];
+    
+    // Only retrieve posts from user's friends and user
+    PFQuery *userQuery = [PFUser query];
+    NSMutableArray *friendsWithSelf = [PFUser currentUser][@"friends"];
+    [friendsWithSelf addObject:[PFUser currentUser].objectId];
+    [userQuery whereKey:@"objectId" containedIn:friendsWithSelf];
+    [query whereKey:@"author" matchesQuery:userQuery];
+    
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (error == nil) {
             self.postsToDisplay = objects;

@@ -75,6 +75,9 @@ GMSPlacesClient *placesClient;
     PFQuery *query = [PFQuery queryWithClassName:@"Location"];
     [query whereKey:@"coordinate" withinGeoBoxFromSouthwest:southWest toNortheast:northEast];
     [query whereKey:@"numPosts" greaterThanOrEqualTo:@(0)];
+    NSMutableArray *friendsWithSelf = [PFUser currentUser][@"friends"];
+    [friendsWithSelf addObject:[PFUser currentUser].objectId];
+    [query whereKey:@"usersWithPosts" containedIn:friendsWithSelf];
     
     // Retrieve results from Parse using asynchronous call
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable locations, NSError * _Nullable error) {

@@ -83,15 +83,20 @@
 - (IBAction)onFriendTap:(id)sender {
     PFUser *currUser = [PFUser currentUser];
     if (!self.friendButton.selected) {
+        [self.user addObject:currUser.objectId forKey:@"friends"];
+        [self.user incrementKey:@"numFriends"];
         [currUser addObject:self.user.objectId forKey:@"friends"];
         [currUser incrementKey:@"numFriends"];
     }
     else {
+        [self.user removeObject:currUser.objectId forKey:@"friends"];
+        [self.user incrementKey:@"numFriends" byAmount:@(-1)];
         [currUser removeObject:self.user.objectId forKey:@"friends"];
         [currUser incrementKey:@"numFriends" byAmount:@(-1)];
     }
     self.friendButton.selected = !self.friendButton.selected;
     [[PFUser currentUser] saveInBackground];
+    [self.user saveInBackground];
 }
 
 - (void)updateFields {

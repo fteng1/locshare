@@ -43,7 +43,7 @@
 + (void) makePost: (Post *)post completion:(void (^)(NSString *, NSError *))completion{
     [post saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         if (error == nil) {
-            completion(post.objectId, nil);
+            completion(post.author.objectId, nil);
         }
         else {
             completion(nil, error);
