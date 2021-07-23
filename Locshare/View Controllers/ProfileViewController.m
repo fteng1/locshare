@@ -83,18 +83,23 @@
 - (IBAction)onFriendTap:(id)sender {
     PFUser *currUser = [PFUser currentUser];
     if (!self.friendButton.selected) {
-        [PFCloud callFunctionInBackground:@"friendUser" withParameters:@{@"userToEditID": self.user.objectId, @"friend": @(true)}];
+        [PFCloud callFunctionInBackground:@"friendUser" withParameters:@{@"userToEditID": self.user.objectId, @"friend": @(true), @"currentUserID": currUser.objectId}];
+        
+        // Update fields locally
+        [self.user incrementKey:@"numFriends"];
         [currUser addObject:self.user.objectId forKey:@"friends"];
         [currUser incrementKey:@"numFriends"];
     }
     else {
-        [PFCloud callFunctionInBackground:@"friendUser" withParameters:@{@"userToEditID": self.user.objectId, @"friend": @(true)}];
+        [PFCloud callFunctionInBackground:@"friendUser" withParameters:@{@"userToEditID": self.user.objectId, @"friend": @(false), @"currentUserID": currUser.objectId}];
+        
+        // Update fields locally
+        [self.user incrementKey:@"numFriends" byAmount:@(-1)];
         [currUser removeObject:self.user.objectId forKey:@"friends"];
         [currUser incrementKey:@"numFriends" byAmount:@(-1)];
     }
     self.friendButton.selected = !self.friendButton.selected;
     [currUser saveInBackground];
-//    [self.user saveInBackground];
     [self updateFields];
 }
 
