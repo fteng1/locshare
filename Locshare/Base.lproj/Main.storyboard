@@ -133,7 +133,7 @@
             <objects>
                 <viewController title="Location" id="L79-Ro-h21" customClass="LocationViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="v1v-Bd-LBQ">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="790"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="STk-y4-lsg" customClass="GMSMapView">
@@ -195,7 +195,7 @@
             <objects>
                 <viewController title="Details" id="h8p-KT-O4t" customClass="DetailsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="02F-8y-QZK">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="790"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Timestamp" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g1R-hR-Z9d">
@@ -231,9 +231,11 @@
                                                 </imageView>
                                             </subviews>
                                         </collectionViewCellContentView>
+                                        <gestureRecognizers/>
                                         <size key="customSize" width="358" height="209"/>
                                         <connections>
                                             <outlet property="photoImageView" destination="4hM-6R-kPJ" id="EuJ-fq-9xL"/>
+                                            <outletCollection property="gestureRecognizers" destination="pHb-T8-pKK" appends="YES" id="kot-ZY-ogD"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -373,6 +375,11 @@
                 <tapGestureRecognizer id="XgU-cf-kQ9">
                     <connections>
                         <action selector="onHeaderTap:" destination="h8p-KT-O4t" id="T5h-ho-NEy"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer cancelsTouchesInView="NO" numberOfTapsRequired="2" id="pHb-T8-pKK">
+                    <connections>
+                        <action selector="onLikeTap:" destination="h8p-KT-O4t" id="6Qd-5e-rSR"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -643,7 +650,7 @@
             <objects>
                 <viewController id="0vV-1o-gEl" customClass="ProfileViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tyo-fc-Gy4">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="790"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1hg-M9-fQL" customClass="PFImageView">
