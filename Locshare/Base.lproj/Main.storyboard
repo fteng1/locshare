@@ -318,6 +318,9 @@
                                 <rect key="frame" x="13" y="369" width="21" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="heart" catalog="system"/>
+                                <connections>
+                                    <action selector="onLikeTap:" destination="h8p-KT-O4t" eventType="touchUpInside" id="Cm4-eN-P6y"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Caption" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eRD-SK-8Rt">
                                 <rect key="frame" x="16" y="399" width="358" height="21"/>
@@ -334,6 +337,8 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="captionLabel" destination="eRD-SK-8Rt" id="aOw-bL-DMV"/>
+                        <outlet property="likeButton" destination="9Bl-6t-ZN9" id="WHC-Mw-S9s"/>
+                        <outlet property="numLikesLabel" destination="Bt0-Pe-Mwk" id="MPC-F3-GV9"/>
                         <outlet property="photoCollectionView" destination="1Qy-o2-09G" id="yLf-Or-w4c"/>
                         <outlet property="profileImageView" destination="EMC-Hh-7na" id="F6g-ZT-BtK"/>
                         <outlet property="timestampLabel" destination="g1R-hR-Z9d" id="POU-3L-Zd3"/>
