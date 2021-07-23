@@ -26,6 +26,8 @@
 @property (weak, nonatomic) IBOutlet GMSMapView *userMapView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *saveButton;
 @property (weak, nonatomic) IBOutlet UIButton *friendButton;
+@property (weak, nonatomic) IBOutlet UILabel *friendLabel;
+@property (weak, nonatomic) IBOutlet UILabel *postLabel;
 
 @property (strong, nonatomic) NSDictionary *postsByLocationId;
 @property (strong, nonatomic) NSArray *postLocations;
@@ -107,7 +109,20 @@
     self.usernameLabel.text = self.user.username;
     self.descriptionTextView.text = self.user[@"tagline"];
     self.friendCountLabel.text = [NSString stringWithFormat:@"%@", self.user[@"numFriends"]];
+    // Check if text should be plural or singular
+    if ([self.friendCountLabel.text isEqual:@"1"]) {
+        self.friendLabel.text = @"friend";
+    }
+    else {
+        self.friendLabel.text = @"friends";
+    }
     self.postCountLabel.text = [NSString stringWithFormat:@"%@", self.user[@"numPosts"]];
+    if ([self.postCountLabel.text isEqual:@"1"]) {
+        self.postLabel.text = @"post";
+    }
+    else {
+        self.postLabel.text = @"posts";
+    }
     
     // Load profile picture
     PFFileObject *imageToDisplay = self.user[@"profilePicture"];

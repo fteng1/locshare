@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet PFImageView *profileImageView;
 @property (weak, nonatomic) IBOutlet UIButton *likeButton;
 @property (weak, nonatomic) IBOutlet UILabel *numLikesLabel;
+@property (weak, nonatomic) IBOutlet UILabel *likesLabel;
 
 @property (strong, nonatomic) PFUser *postAuthor;
 
@@ -48,6 +49,12 @@
     self.captionLabel.text = self.post.caption;
     NSArray *likedPosts = [PFUser currentUser][@"likedPosts"];
     self.likeButton.selected = [likedPosts containsObject:self.post.objectId];
+    if ([self.post.numLikes intValue] == 1) {
+        self.likesLabel.text = @"like";
+    }
+    else {
+        self.likesLabel.text = @"likes";
+    }
     self.numLikesLabel.text = [NSString stringWithFormat:@"%@", self.post.numLikes];
     
     // Format createdAt date string
