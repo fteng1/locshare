@@ -109,9 +109,11 @@ NSString *gMapsAPIKey;
 
 // Display a given array of posts on a map as markers
 - (void)displayLocationsOnMap:(GMSMapView *)mapView locations:(NSArray *)locations {
+    [mapView clear];
     for (Location *loc in locations) {
         CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(loc.coordinate.latitude, loc.coordinate.longitude);
         LocationMarker *marker = [[LocationMarker alloc] initMarkerWithPosition:coord withLocation:loc];
+        marker.appearAnimation = kGMSMarkerAnimationPop;
         marker.map = mapView;
     }
 }

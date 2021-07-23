@@ -29,6 +29,7 @@
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    // Searches for users with username matching the inputted query
     searchBar.showsCancelButton = false;
     [searchBar resignFirstResponder];
     PFQuery *query = [PFQuery queryWithClassName:@"_User"];
