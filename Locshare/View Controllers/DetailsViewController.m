@@ -10,8 +10,10 @@
 #import <DateTools/DateTools.h>
 #import <Parse/Parse.h>
 #import "ProfileViewController.h"
+#import "Comment.h"
+#import "CommentCell.h"
 
-@interface DetailsViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
+@interface DetailsViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UITableViewDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timestampLabel;
@@ -21,8 +23,12 @@
 @property (weak, nonatomic) IBOutlet UIButton *likeButton;
 @property (weak, nonatomic) IBOutlet UILabel *numLikesLabel;
 @property (weak, nonatomic) IBOutlet UILabel *likesLabel;
+@property (weak, nonatomic) IBOutlet UITextField *commentTextField;
+@property (weak, nonatomic) IBOutlet UIButton *postCommentButton;
+@property (weak, nonatomic) IBOutlet UITableView *commentTableView;
 
 @property (strong, nonatomic) PFUser *postAuthor;
+@property (strong, nonatomic) NSMutableArray *comments;
 
 @end
 
@@ -39,8 +45,21 @@
 
     self.photoCollectionView.dataSource = self;
     self.photoCollectionView.delegate = self;
+    self.commentTableView.dataSource = self;
+    self.commentTableView.delegate = self;
     
     [self getAuthorInfoInBackground];
+    [self fetchComments];
+}
+
+- (NSString *)formatDate:(NSString *)creationTime {
+    // Format createdAt date string
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    // Configure the input format to parse the date string
+    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss Z";
+    // Convert String to Date
+    NSDate *date = [formatter dateFromString:creationTime];
+    return date.shortTimeAgoSinceNow;
 }
 
 - (void)updateFields {
@@ -57,15 +76,34 @@
     }
     self.numLikesLabel.text = [NSString stringWithFormat:@"%@", self.post.numLikes];
     
-    // Format createdAt date string
-    NSString *createdAtOriginalString = self.post.createdAt.description;
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    // Configure the input format to parse the date string
-    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss Z";
-    // Convert String to Date
-    NSDate *date = [formatter dateFromString:createdAtOriginalString];
-    // Put date in time ago format
-    self.timestampLabel.text = date.shortTimeAgoSinceNow;
+    self.timestampLabel.text = [self formatDate:self.post.createdAt.description];
+    
+    [self.commentTableView reloadData];
+}
+
+- (void)fetchComments {
+    // Make query to retrieve comments on post from the database
+    PFQuery *query = [PFQuery queryWithClassName:@"Comment"];
+    [query whereKey:@"postID" equalTo:self.post.objectId];
+    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable postComments, NSError * _Nullable error) {
+        if (error == nil) {
+            self.comments = [postComments mutableCopy];
+            [self.commentTableView reloadData];
+        }
+        else {
+            NSLog(@"Error fetching comments: %@", error);
+        }
+    }];
+}
+
+- (IBAction)makeComment:(id)sender {
+    if ([self.commentTextField.text length] != 0) {
+        Comment *newComment = [Comment initWithText:self.commentTextField.text author:[PFUser currentUser] post:self.post];
+        [self.comments addObject:newComment];
+        [self.commentTableView reloadData];
+        [newComment saveInBackground];
+        self.commentTextField.text = @"";
+    }
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -122,6 +160,19 @@
     // Update database
     [currUser saveInBackground];
     [self.post saveInBackground];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [self.comments count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CommentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CommentCell"];
+    Comment *comment = self.comments[indexPath.row];
+    cell.commentTextLabel.text = comment.text;
+    cell.usernameLabel.text = comment.username;
+    cell.timestampLabel.text = [self formatDate:comment.createdAt.description];
+    return cell;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

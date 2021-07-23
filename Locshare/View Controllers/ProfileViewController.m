@@ -161,9 +161,12 @@
                     [[LocationManager shared] displayLocationsOnMap:self.userMapView locations:locations];
                     
                     // Set camera to be at location of most recent post
-                    Location *mostRecentLocation = [self.postLocations filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"placeID like %@", mostRecentPost.location]][0];
-                    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:mostRecentLocation.coordinate.latitude longitude:mostRecentLocation.coordinate.longitude zoom:10.0];
-                    [self.userMapView setCamera:camera];
+                    NSArray *filteredLocation = [self.postLocations filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"placeID like %@", mostRecentPost.location]];
+                    if ([filteredLocation count] > 0) {
+                        Location *mostRecentLocation = filteredLocation[0];
+                        GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:mostRecentLocation.coordinate.latitude longitude:mostRecentLocation.coordinate.longitude zoom:10.0];
+                        [self.userMapView setCamera:camera];
+                    }
                 }];
             }
         }

@@ -25,13 +25,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     self.title = self.location.name;
     self.postCollectionView.delegate = self;
     self.postCollectionView.dataSource = self;
     self.tabBarController.delegate = self;
-    if (self.tabBarController.selectedIndex == 3) {
+    if (self.tabBarController.selectedIndex == 3 || self.tabBarController.selectedIndex == 2) {
         self.isUserFiltered = true;
+    }
+    else {
+        self.isUserFiltered = false;
     }
     
     [self loadPosts];
@@ -86,21 +89,22 @@
 }
 
 - (void)loadPosts {
-    // Get posts with object id's stored in the location's array of posts
+    // Get posts with location matching the current location and matching the current user, if relevant
     PFQuery *query = [PFQuery queryWithClassName:@"Post"];
     [query whereKey:@"location" equalTo:self.location.placeID];
     if (self.isUserFiltered) {
         [query whereKey:@"author" equalTo:self.userToFilter];
         
     }
+    else {
+        // Only retrieve posts from user's friends and user
+        PFQuery *userQuery = [PFUser query];
+        NSMutableArray *friendsWithSelf = [PFUser currentUser][@"friends"];
+        [friendsWithSelf addObject:[PFUser currentUser].objectId];
+        [userQuery whereKey:@"objectId" containedIn:friendsWithSelf];
+        [query whereKey:@"author" matchesQuery:userQuery];
+    }
     [query orderByDescending:@"createdAt"];
-    
-    // Only retrieve posts from user's friends and user
-    PFQuery *userQuery = [PFUser query];
-    NSMutableArray *friendsWithSelf = [PFUser currentUser][@"friends"];
-    [friendsWithSelf addObject:[PFUser currentUser].objectId];
-    [userQuery whereKey:@"objectId" containedIn:friendsWithSelf];
-    [query whereKey:@"author" matchesQuery:userQuery];
     
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (error == nil) {

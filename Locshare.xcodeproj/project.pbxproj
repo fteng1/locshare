@@ -33,6 +33,7 @@
 		7087940126AA071A00AB45BA /* UserSearchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7087940026AA071A00AB45BA /* UserSearchCell.m */; };
 		70B30743269CFD4500ADFE9E /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 70B30742269CFD4500ADFE9E /* Keys.plist */; };
 		70DD72B9269F93D600D2ACC9 /* PhotoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DD72B8269F93D600D2ACC9 /* PhotoViewCell.m */; };
+		70E26A2226AB667600B702D5 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70E26A2126AB667600B702D5 /* CommentCell.m */; };
 		A7C37B87B1356CCD753A958E /* Pods_LocshareTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB72C41EE9DADFD0AC0170F5 /* Pods_LocshareTests.framework */; };
 		C00D74ED1B04D45B2F772B3A /* Pods_Locshare_LocshareUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF243CCBA4B7B20A0370E822 /* Pods_Locshare_LocshareUITests.framework */; };
 		FBA41A05342A76C5688C32EE /* Pods_Locshare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD266C79FDA7AE06089B6621 /* Pods_Locshare.framework */; };
@@ -111,6 +112,8 @@
 		70B30742269CFD4500ADFE9E /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		70DD72B7269F93D600D2ACC9 /* PhotoViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotoViewCell.h; sourceTree = "<group>"; };
 		70DD72B8269F93D600D2ACC9 /* PhotoViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotoViewCell.m; sourceTree = "<group>"; };
+		70E26A2026AB667600B702D5 /* CommentCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommentCell.h; sourceTree = "<group>"; };
+		70E26A2126AB667600B702D5 /* CommentCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommentCell.m; sourceTree = "<group>"; };
 		7E8A0C260B8E046507FC86BA /* Pods-Locshare-LocshareUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Locshare-LocshareUITests.release.xcconfig"; path = "Target Support Files/Pods-Locshare-LocshareUITests/Pods-Locshare-LocshareUITests.release.xcconfig"; sourceTree = "<group>"; };
 		D92930AF93ECC1F7A2525ACC /* Pods-LocshareTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocshareTests.debug.xcconfig"; path = "Target Support Files/Pods-LocshareTests/Pods-LocshareTests.debug.xcconfig"; sourceTree = "<group>"; };
 		DD266C79FDA7AE06089B6621 /* Pods_Locshare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Locshare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -288,6 +291,8 @@
 				7075DFB026A5D4D40073CB5A /* PostLocationCell.m */,
 				708793FF26AA071A00AB45BA /* UserSearchCell.h */,
 				7087940026AA071A00AB45BA /* UserSearchCell.m */,
+				70E26A2026AB667600B702D5 /* CommentCell.h */,
+				70E26A2126AB667600B702D5 /* CommentCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -582,6 +587,7 @@
 				70571E62269CE67F00CE1842 /* LocationViewController.m in Sources */,
 				70571E20269CA9AF00CE1842 /* main.m in Sources */,
 				70571E4D269CB3D000CE1842 /* Location.m in Sources */,
+				70E26A2226AB667600B702D5 /* CommentCell.m in Sources */,
 				7087940126AA071A00AB45BA /* UserSearchCell.m in Sources */,
 				70571E65269CE69200CE1842 /* DetailsViewController.m in Sources */,
 				70571E5F269CE66F00CE1842 /* ProfileViewController.m in Sources */,

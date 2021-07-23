@@ -22,7 +22,8 @@
     NSString *path = [[NSBundle mainBundle] pathForResource: @"Keys" ofType: @"plist"];
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: path];
     
-    NSString *appID = [dict objectForKey: @"application_id"];
+    NSString *extractedExpr = @"application_id";
+    NSString *appID = [dict objectForKey: extractedExpr];
     NSString *clientKey = [dict objectForKey: @"client_key"];
     NSString *gmapsAPIKey = [dict objectForKey:@"google_api_key"];
     
