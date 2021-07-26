@@ -59,7 +59,11 @@
     formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss Z";
     // Convert String to Date
     NSDate *date = [formatter dateFromString:creationTime];
-    return date.shortTimeAgoSinceNow;
+    NSString *timestamp = date.shortTimeAgoSinceNow;
+    if (timestamp == nil) {
+        timestamp = @"0s";
+    }
+    return timestamp;
 }
 
 - (void)updateFields {
