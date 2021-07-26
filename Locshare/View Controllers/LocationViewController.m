@@ -30,12 +30,6 @@
     self.postCollectionView.delegate = self;
     self.postCollectionView.dataSource = self;
     self.tabBarController.delegate = self;
-    if (self.tabBarController.selectedIndex == 3 || self.tabBarController.selectedIndex == 2) {
-        self.isUserFiltered = true;
-    }
-    else {
-        self.isUserFiltered = false;
-    }
     
     [self loadPosts];
     

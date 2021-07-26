@@ -85,7 +85,7 @@ GMSPlacesClient *placesClient;
     
     // Retrieve results from Parse using asynchronous call
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable locations, NSError * _Nullable error) {
-        [[LocationManager shared] displayLocationsOnMap:self.homeMapView locations:locations];
+        [[LocationManager shared] displayLocationsOnMap:self.homeMapView locations:locations userFiltering:false];
     }];
 }
 

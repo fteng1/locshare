@@ -158,7 +158,7 @@
                     self.postLocations = locations;
                     self.postsByLocationId = [self groupByLocation:posts];
                     [self.userMapView clear];
-                    [[LocationManager shared] displayLocationsOnMap:self.userMapView locations:locations];
+                    [[LocationManager shared] displayLocationsOnMap:self.userMapView locations:locations userFiltering:true];
                     
                     // Set camera to be at location of most recent post
                     NSArray *filteredLocation = [self.postLocations filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"placeID like %@", mostRecentPost.location]];
@@ -236,7 +236,7 @@
         locationViewController.location = marker.location;
         locationViewController.postsToDisplay = self.postsByLocationId[marker.location.placeID];
         locationViewController.userToFilter = self.user;
-        locationViewController.isUserFiltered = true;
+        locationViewController.isUserFiltered = marker.userFiltered;
     }
 }
 
