@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface LocationMarker : GMSMarker
 
 @property (strong, nonatomic) Location *location;
-@property (assign, nonatomic) BOOL *userFiltered;
+@property (assign, nonatomic) BOOL userFiltered;
 
 -(instancetype)initMarkerWithPosition:(CLLocationCoordinate2D)coord withLocation:(Location *)loc;
 

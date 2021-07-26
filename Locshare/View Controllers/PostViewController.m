@@ -14,6 +14,7 @@
 #import "PhotoViewCell.h"
 #import "LocationManager.h"
 #import "ImageManager.h"
+#import "ImagePickerViewController.h"
 
 @interface PostViewController () <QBImagePickerControllerDelegate, UIImagePickerControllerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
 
@@ -75,13 +76,6 @@
 
 // Choose multiple photos from the photo library
 - (IBAction)onPhotoLibraryTap:(id)sender {
-    QBImagePickerController *imagePicker = [QBImagePickerController new];
-    imagePicker.delegate = self;
-    imagePicker.allowsMultipleSelection = YES;
-    imagePicker.maximumNumberOfSelection = 6;
-    imagePicker.showsNumberOfSelectedAssets = YES;
-    
-    [self presentViewController:imagePicker animated:YES completion:nil];
 }
 
 // Use when multiple photos are selected from the photo library
