@@ -69,6 +69,18 @@
     return [self.photosToDisplay count];
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    [self.selectedPhotos addObject: [NSNumber numberWithLong: indexPath.item]];
+    ImagePickerCell *cell = (ImagePickerCell *) [collectionView cellForItemAtIndexPath:indexPath];
+    cell.selectedView.hidden = false;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
+    [self.selectedPhotos removeObject: [NSNumber numberWithLong: indexPath.item]];
+    ImagePickerCell *cell = (ImagePickerCell *) [collectionView cellForItemAtIndexPath:indexPath];
+    cell.selectedView.hidden = true;
+}
+
 - (IBAction)onNextTap:(id)sender {
 }
 

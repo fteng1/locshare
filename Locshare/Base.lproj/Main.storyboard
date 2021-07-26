@@ -411,29 +411,29 @@
                                             <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="6Vb-Fl-iwC">
-                                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="6Vb-Fl-iwC">
+                                                    <rect key="frame" x="0.0" y="1.6666666666666572" width="128" height="125"/>
                                                     <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </imageView>
-                                                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Kf-fQ-wB6">
-                                                    <rect key="frame" x="0.0" y="0.0" width="128" height="129"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="6Kf-fQ-wB6">
+                                                    <rect key="frame" x="0.0" y="2.3333333333333286" width="128" height="124"/>
                                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </imageView>
-                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vzl-0w-Hrj">
-                                                    <rect key="frame" x="112" y="99" width="8" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="6Kf-fQ-wB6" secondAttribute="trailing" id="Cix-WP-nYQ"/>
+                                                <constraint firstItem="6Vb-Fl-iwC" firstAttribute="top" secondItem="URw-JX-f8Q" secondAttribute="top" id="KHP-Dp-joJ"/>
+                                                <constraint firstAttribute="trailing" secondItem="6Vb-Fl-iwC" secondAttribute="trailing" id="PMN-a4-aIi"/>
+                                                <constraint firstItem="6Kf-fQ-wB6" firstAttribute="top" secondItem="URw-JX-f8Q" secondAttribute="top" id="QqO-bo-YgG"/>
+                                                <constraint firstAttribute="bottom" secondItem="6Vb-Fl-iwC" secondAttribute="bottom" id="eO2-41-kte"/>
+                                                <constraint firstAttribute="bottom" secondItem="6Kf-fQ-wB6" secondAttribute="bottom" id="fvw-L9-fY2"/>
+                                                <constraint firstItem="6Kf-fQ-wB6" firstAttribute="leading" secondItem="URw-JX-f8Q" secondAttribute="leading" id="i8c-H3-IZl"/>
+                                                <constraint firstItem="6Vb-Fl-iwC" firstAttribute="leading" secondItem="URw-JX-f8Q" secondAttribute="leading" id="y9T-OC-CtZ"/>
+                                            </constraints>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="128" height="128"/>
                                         <connections>
                                             <outlet property="imageView" destination="6Vb-Fl-iwC" id="k3k-3h-Reo"/>
-                                            <outlet property="indexLabel" destination="vzl-0w-Hrj" id="uXX-YL-QE5"/>
                                             <outlet property="selectedView" destination="6Kf-fQ-wB6" id="JDi-mZ-cRa"/>
                                         </connections>
                                     </collectionViewCell>
@@ -880,6 +880,7 @@
         <image name="button_compass" width="128" height="128"/>
         <image name="camera" catalog="system" width="128" height="94"/>
         <image name="camera.metering.center.weighted" catalog="system" width="128" height="93"/>
+        <image name="checkmark" catalog="system" width="128" height="114"/>
         <image name="heart" catalog="system" width="128" height="109"/>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="map" catalog="system" width="128" height="110"/>
