@@ -60,9 +60,6 @@
     // Convert String to Date
     NSDate *date = [formatter dateFromString:creationTime];
     NSString *timestamp = date.shortTimeAgoSinceNow;
-    if (timestamp == nil) {
-        timestamp = @"0s";
-    }
     return timestamp;
 }
 
@@ -104,8 +101,9 @@
     if ([self.commentTextField.text length] != 0) {
         Comment *newComment = [Comment initWithText:self.commentTextField.text author:[PFUser currentUser] post:self.post];
         [self.comments addObject:newComment];
-        [self.commentTableView reloadData];
-        [newComment saveInBackground];
+        [newComment saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+            [self.commentTableView reloadData];
+        }];
         self.commentTextField.text = @"";
     }
 }

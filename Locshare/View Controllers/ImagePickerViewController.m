@@ -8,6 +8,7 @@
 #import "ImagePickerViewController.h"
 #import "ImagePickerCell.h"
 #import <Photos/Photos.h>
+#import "PhotoProcessor.h"
 
 @interface ImagePickerViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
 
@@ -29,14 +30,26 @@
     [self setCollectionViewLayout];
     self.selectedPhotos = [NSMutableArray new];
     
-    // Check if app has authorization to access photos, and request authorization if it does not
-    if ([PHPhotoLibrary authorizationStatus] != PHAuthorizationStatusAuthorized) {
-        [PHPhotoLibrary requestAuthorizationForAccessLevel:PHAccessLevelReadWrite handler:^(PHAuthorizationStatus status) {
+    if (!self.useCamera) {
+        // Check if app has authorization to access photos, and request authorization if it does not
+        if ([PHPhotoLibrary authorizationStatus] != PHAuthorizationStatusAuthorized) {
+            [PHPhotoLibrary requestAuthorizationForAccessLevel:PHAccessLevelReadWrite handler:^(PHAuthorizationStatus status) {
+                [self fetchPhotos];
+            }];
+        }
+        else {
             [self fetchPhotos];
-        }];
+        }
     }
     else {
-        [self fetchPhotos];
+        if ([AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo] != AVAuthorizationStatusAuthorized) {
+            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+                [self takePhotos];
+            }];
+        }
+        else {
+            [self takePhotos];
+        }
     }
 }
 
@@ -62,6 +75,28 @@
     CGFloat itemWidth = (self.libraryCollectionView.frame.size.width - layout.minimumInteritemSpacing * (photosPerLine - 1)) / photosPerLine;
     CGFloat itemHeight = itemWidth;
     layout.itemSize = CGSizeMake(itemWidth, itemHeight);
+}
+
+- (void)takePhotos {
+    AVCaptureSession *captureSession = [[AVCaptureSession alloc] init];
+    [captureSession beginConfiguration];
+    AVCaptureDevice *camera = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    AVCaptureDeviceInput *videoInput = [AVCaptureDeviceInput deviceInputWithDevice:camera error:nil];
+    if (videoInput) {
+        if ([captureSession canAddInput:videoInput]) {
+            [captureSession addInput:videoInput];
+        }
+    }
+    AVCapturePhotoOutput *photoOutput = [[AVCapturePhotoOutput alloc] init];
+    if ([captureSession canAddOutput:photoOutput]) {
+        [captureSession addOutput:photoOutput];
+    }
+    [captureSession commitConfiguration];
+    [captureSession startRunning];
+    
+    AVCapturePhotoSettings *photoSettings = [AVCapturePhotoSettings photoSettings];
+    PhotoProcessor *processor = [[PhotoProcessor alloc] init];
+    [photoOutput capturePhotoWithSettings:photoSettings delegate:processor];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {

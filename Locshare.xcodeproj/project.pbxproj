@@ -10,6 +10,7 @@
 		70007451269E33A600F10FE1 /* LocationAutocompleteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70007450269E33A600F10FE1 /* LocationAutocompleteCell.m */; };
 		701B1CE126AF13F2002CD8F3 /* ImagePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 701B1CE026AF13F2002CD8F3 /* ImagePickerViewController.m */; };
 		701B1CE426AF1A48002CD8F3 /* ImagePickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 701B1CE326AF1A48002CD8F3 /* ImagePickerCell.m */; };
+		703913AC26B0A81700180530 /* PhotoProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 703913AB26B0A81700180530 /* PhotoProcessor.m */; };
 		704F136D26A1EABA009A71C8 /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 704F136C26A1EABA009A71C8 /* LocationManager.m */; };
 		70571E0F269CA9AE00CE1842 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E0E269CA9AE00CE1842 /* AppDelegate.m */; };
 		70571E12269CA9AE00CE1842 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E11269CA9AE00CE1842 /* SceneDelegate.m */; };
@@ -69,6 +70,8 @@
 		701B1CE026AF13F2002CD8F3 /* ImagePickerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImagePickerViewController.m; sourceTree = "<group>"; };
 		701B1CE226AF1A48002CD8F3 /* ImagePickerCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImagePickerCell.h; sourceTree = "<group>"; };
 		701B1CE326AF1A48002CD8F3 /* ImagePickerCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImagePickerCell.m; sourceTree = "<group>"; };
+		703913AA26B0A81700180530 /* PhotoProcessor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotoProcessor.h; sourceTree = "<group>"; };
+		703913AB26B0A81700180530 /* PhotoProcessor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotoProcessor.m; sourceTree = "<group>"; };
 		704F136B26A1EABA009A71C8 /* LocationManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationManager.h; sourceTree = "<group>"; };
 		704F136C26A1EABA009A71C8 /* LocationManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
 		70571E0A269CA9AE00CE1842 /* Locshare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Locshare.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -261,6 +264,8 @@
 				70571E4C269CB3D000CE1842 /* Location.m */,
 				70571E4E269CE24D00CE1842 /* Comment.h */,
 				70571E4F269CE24D00CE1842 /* Comment.m */,
+				703913AA26B0A81700180530 /* PhotoProcessor.h */,
+				703913AB26B0A81700180530 /* PhotoProcessor.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -586,6 +591,7 @@
 				70571E4A269CB03600CE1842 /* Post.m in Sources */,
 				7075DFB126A5D4D40073CB5A /* PostLocationCell.m in Sources */,
 				70007451269E33A600F10FE1 /* LocationAutocompleteCell.m in Sources */,
+				703913AC26B0A81700180530 /* PhotoProcessor.m in Sources */,
 				70571E59269CE62500CE1842 /* PostViewController.m in Sources */,
 				708793FE26AA064400AB45BA /* SearchViewController.m in Sources */,
 				7063F67226A77CEC00DE8196 /* ImageManager.m in Sources */,

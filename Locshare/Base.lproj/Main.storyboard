@@ -474,6 +474,34 @@
             </objects>
             <point key="canvasLocation" x="2426.1538461538462" y="2207.345971563981"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="wcs-jf-M5v">
+            <objects>
+                <viewController id="CLs-pn-ZHe" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="yMO-Ss-Qi3">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LVi-V0-Ibg">
+                                <rect key="frame" x="0.0" y="76" width="390" height="655"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="scd-rx-rQw">
+                                <rect key="frame" x="165" y="740" width="60" height="56"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" backgroundImage="circle" catalog="system"/>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="wv2-C7-27l"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rj0-YM-pAb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3821.5384615384614" y="2206.6350710900474"/>
+        </scene>
         <!--Home-->
         <scene sceneID="pdK-U0-Hp1">
             <objects>
@@ -618,6 +646,7 @@
                         <outlet property="pickedPhotosCollectionView" destination="5t6-fY-KVQ" id="irF-oa-t1c"/>
                         <segue destination="bpb-YL-bpO" kind="presentation" identifier="afterPostSegue" modalPresentationStyle="fullScreen" id="jvO-ql-lyu"/>
                         <segue destination="dqT-XA-fUY" kind="presentation" identifier="imagePickerSegue" id="cGp-mS-7X1"/>
+                        <segue destination="dqT-XA-fUY" kind="presentation" identifier="cameraSegue" id="gg4-re-qKD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n8u-bf-jbL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -872,6 +901,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="29f-HC-vrl"/>
+        <segue reference="gg4-re-qKD"/>
         <segue reference="4Ck-x5-wBe"/>
         <segue reference="jvO-ql-lyu"/>
     </inferredMetricsTieBreakers>
@@ -881,6 +911,7 @@
         <image name="camera" catalog="system" width="128" height="94"/>
         <image name="camera.metering.center.weighted" catalog="system" width="128" height="93"/>
         <image name="checkmark" catalog="system" width="128" height="114"/>
+        <image name="circle" catalog="system" width="128" height="121"/>
         <image name="heart" catalog="system" width="128" height="109"/>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="map" catalog="system" width="128" height="110"/>

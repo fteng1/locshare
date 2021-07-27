@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ImagePickerViewController : UIViewController
 
 @property (nonatomic, weak) id<ImagePickerControllerDelegate> delegate;
+@property (assign, nonatomic) BOOL useCamera;
 
 @end
 

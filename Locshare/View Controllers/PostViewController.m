@@ -216,10 +216,16 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Bring up image picker view if photo button is pressed
-    if ([[segue identifier] isEqualToString:@"imagePickerSegue"]) {
+    // Bring up image picker view if photo or camera button is pressed
+    if ([[segue identifier] isEqualToString:@"imagePickerSegue"] || [[segue identifier] isEqualToString:@"cameraSegue"]) {
         ImagePickerViewController *imagePickerController = [segue destinationViewController];
         imagePickerController.delegate = self;
+        if ([[segue identifier] isEqualToString:@"cameraSegue"]) {
+            imagePickerController.useCamera = true;
+        }
+        else {
+            imagePickerController.useCamera = false;
+        }
     }
 }
 
