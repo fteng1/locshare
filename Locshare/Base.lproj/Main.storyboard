@@ -517,7 +517,6 @@
                                 <state key="normal" image="photo.on.rectangle.angled" catalog="system"/>
                                 <connections>
                                     <action selector="onPhotoLibraryTap:" destination="t7a-ai-1iy" eventType="touchUpInside" id="teL-dP-YGD"/>
-                                    <segue destination="dqT-XA-fUY" kind="presentation" id="577-a9-DkR"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vy0-Eu-qcj">
@@ -618,6 +617,7 @@
                         <outlet property="locationSearchBar" destination="0zq-jz-3KE" id="1FF-Vt-vA1"/>
                         <outlet property="pickedPhotosCollectionView" destination="5t6-fY-KVQ" id="irF-oa-t1c"/>
                         <segue destination="bpb-YL-bpO" kind="presentation" identifier="afterPostSegue" modalPresentationStyle="fullScreen" id="jvO-ql-lyu"/>
+                        <segue destination="dqT-XA-fUY" kind="presentation" identifier="imagePickerSegue" id="cGp-mS-7X1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n8u-bf-jbL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -627,7 +627,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1451" y="603"/>
+            <point key="canvasLocation" x="1451" y="619"/>
         </scene>
         <!--Share-->
         <scene sceneID="P5f-aG-auw">

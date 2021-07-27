@@ -16,7 +16,7 @@
 #import "ImageManager.h"
 #import "ImagePickerViewController.h"
 
-@interface PostViewController () <QBImagePickerControllerDelegate, UIImagePickerControllerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
+@interface PostViewController () <ImagePickerControllerDelegate, UIImagePickerControllerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UISearchBar *locationSearchBar;
 @property (weak, nonatomic) IBOutlet UICollectionView *pickedPhotosCollectionView;
@@ -25,7 +25,7 @@
 
 @property (strong, nonatomic) NSArray *autocompleteResults;
 @property (strong, nonatomic) NSString *locationID;
-@property (strong, nonatomic) NSMutableArray *photosToUpload;
+@property (strong, nonatomic) NSArray *photosToUpload;
 @property (nonatomic, strong) PHImageRequestOptions *requestOptions;
 @property (strong, nonatomic) UIImageView *storageView;
 
@@ -76,38 +76,7 @@
 
 // Choose multiple photos from the photo library
 - (IBAction)onPhotoLibraryTap:(id)sender {
-}
-
-// Use when multiple photos are selected from the photo library
-- (void)qb_imagePickerController:(QBImagePickerController *)imagePickerController didFinishPickingAssets:(NSArray *)assets {
-    // Remove any existing photos in array
-    [self.photosToUpload removeAllObjects];
-    
-    // Add each selected image into photosToUpload array
-    for (PHAsset *photo in assets) {
-        PHImageManager *manager = [PHImageManager defaultManager];
-        
-        // Convert asset from PHAsset to UIImage
-        [manager requestImageForAsset:photo targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeDefault options:self.requestOptions resultHandler:^void(UIImage *image, NSDictionary *info) {
-                // Add converted photo to photos array
-                [self.photosToUpload addObject:[ImageManager resizeImage:image withSize:CGSizeMake(400, 300)]];
-         }];
-    }
-    [self.pickedPhotosCollectionView reloadData];
-    
-    [super dismissViewControllerAnimated:YES completion:nil];
-}
-
-// Dismiss controller window when cancel is tapped
-- (void)qb_imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController {
-    [super dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion {
-    [super dismissViewControllerAnimated:flag completion:completion];
-    [self.photosToUpload removeAllObjects];
-    [self.photosToUpload addObject:self.storageView.image];
-    [self.pickedPhotosCollectionView reloadData];
+    [self performSegueWithIdentifier:@"imagePickerSegue" sender:nil];
 }
 
 // Make post when share button is pressed
@@ -240,4 +209,18 @@
     }
     return cell;
 }
+
+- (void)didFinishPicking:(NSArray *)images {
+    self.photosToUpload = images;
+    [self.pickedPhotosCollectionView reloadData];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Bring up image picker view if photo button is pressed
+    if ([[segue identifier] isEqualToString:@"imagePickerSegue"]) {
+        ImagePickerViewController *imagePickerController = [segue destinationViewController];
+        imagePickerController.delegate = self;
+    }
+}
+
 @end

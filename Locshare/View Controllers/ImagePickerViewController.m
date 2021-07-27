@@ -27,28 +27,27 @@
     self.libraryCollectionView.dataSource = self;
     self.libraryCollectionView.allowsMultipleSelection = true;
     [self setCollectionViewLayout];
+    self.selectedPhotos = [NSMutableArray new];
     
     // Check if app has authorization to access photos, and request authorization if it does not
     if ([PHPhotoLibrary authorizationStatus] != PHAuthorizationStatusAuthorized) {
         [PHPhotoLibrary requestAuthorizationForAccessLevel:PHAccessLevelReadWrite handler:^(PHAuthorizationStatus status) {
-            // Order retrieved photos by date of creation
-            PHFetchOptions *options = [PHFetchOptions new];
-            options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:true]];
-            
-            // Fetch photos from photo library
-            self.photosToDisplay = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:options];
-            [self.libraryCollectionView reloadData];
+            [self fetchPhotos];
         }];
     }
     else {
-        // Order retrieved photos by date of creation
-        PHFetchOptions *options = [PHFetchOptions new];
-        options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:true]];
-        
-        // Fetch photos from photo library
-        self.photosToDisplay = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:options];
-        [self.libraryCollectionView reloadData];
+        [self fetchPhotos];
     }
+}
+
+- (void)fetchPhotos {
+    // Order retrieved photos by date of creation
+    PHFetchOptions *options = [PHFetchOptions new];
+    options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:true]];
+    
+    // Fetch photos from photo library
+    self.photosToDisplay = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:options];
+    [self.libraryCollectionView reloadData];
 }
 
 - (void)setCollectionViewLayout {
@@ -82,6 +81,20 @@
 }
 
 - (IBAction)onNextTap:(id)sender {
+    NSMutableArray *imagesToReturn = [NSMutableArray new];
+    // Get larger version of each selected image
+    for (NSNumber *num in self.selectedPhotos) {
+        [[PHImageManager defaultManager] requestImageForAsset:self.photosToDisplay[[num intValue]] targetSize:CGSizeMake(400, 300) contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+            [imagesToReturn addObject:result];
+            
+            // Check if this is the final image to load
+            if ([imagesToReturn count] == [self.selectedPhotos count]) {
+                [self.delegate didFinishPicking:imagesToReturn];
+                [self dismissViewControllerAnimated:true completion:nil];
+            }
+        }];
+    }
+
 }
 
 - (IBAction)onCancelTap:(id)sender {
@@ -91,7 +104,7 @@
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     ImagePickerCell *cell = [self.libraryCollectionView dequeueReusableCellWithReuseIdentifier:@"ImagePickerCell" forIndexPath:indexPath];
     
-    // Get indicated PHAsset from array of assets and display its image in the image view
+    // Get indicated PHAsset from array of assets and display its thumbnail in the image view
     PHAsset *toDisplay = self.photosToDisplay[indexPath.item];
     [[PHImageManager defaultManager] requestImageForAsset:toDisplay targetSize:CGSizeMake(128, 128) contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
         cell.imageView.image = result;

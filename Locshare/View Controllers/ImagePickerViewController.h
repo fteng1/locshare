@@ -9,7 +9,18 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol ImagePickerControllerDelegate
+
+@optional
+- (void)didFinishPicking:(NSArray *)images;
+@optional
+- (NSArray *)didTakePhoto;
+
+@end
+
 @interface ImagePickerViewController : UIViewController
+
+@property (nonatomic, weak) id<ImagePickerControllerDelegate> delegate;
 
 @end
 
