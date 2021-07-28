@@ -1,7 +1,7 @@
 Original App Design Project
 ===
 
-# I'm Here! (Name not finalized)
+# Geotag
 
 ## Table of Contents
 1. [Overview](#Overview)
@@ -11,7 +11,7 @@ Original App Design Project
 
 ## Overview
 ### Description
-I'm Here! is a location based social media app that allows users to share the places they have been to with friends. Posts made by users are tied to specific locations and can contain pictures as well as text descriptions. Each user has a map "feed" where they can view the posts made by themselves and their friends. In this way, users can find new places of interest recommended by friends, connect with friends close by, and share where they have been, whether it be to recommend a restaurant or reminisce on past travels. 
+Geotag is a location based social media app that allows users to share the places they have been to with friends. Posts made by users are tied to specific locations and can contain pictures as well as text descriptions. Each user has a map "feed" where they can view the posts made by themselves and their friends. In this way, users can find new places of interest recommended by friends, connect with friends close by, and share where they have been, whether it be to recommend a restaurant or reminisce on past travels. 
 
 ### App Evaluation
 - **Category:** Social
@@ -38,6 +38,7 @@ I'm Here! is a location based social media app that allows users to share the pl
 * Zoom in and out of the map using pinch gestures
 * Users can like and comment on other users' posts
 * Each user has a profile that shows their posts only 
+* App uses a custom image picker to choose photos from the Photo Library and take photos with the camera
 * Animations and UI implementation
 
 **Optional Nice-to-have Stories**
@@ -121,37 +122,44 @@ User
 |--------|----|-----------|
 |username|String|Screen name displayed for user|
 |password|String|Password used to sign in|
-|description|String|Description of user displayed in profile|
+|tagline|String|Description of user displayed in profile|
 |numPosts|Number|Number of posts made by user|
+|numFriends|Number|Number of friends of user|
+|friends|Array|Array of objectIds of users that are friends with current user|
+|likedPosts|Array|Array of objectIds of posts that the user liked|
 |profilePicture|File|Profile picture of user|
 |objectId|String|Unique identifier for user (default field)|
 
 Post 
 |Property|Type|Description|
 |--------|----|-----------|
-|location|Pointer to Location|Location that post is tied to|
-|photo|Array|Array of Files of photos attached to the post|
+|location|String|Place ID of Location that post is tied to|
+|photos|Array|Array of Files of photos attached to the post|
 |caption|String|Text caption of post|
 |author|Pointer to User|User that created the post|
+|authorUsername|String|Username of author that created the post|
 |createdAt|DateTime|Time at which post was created|
 |numLikes|Number|Number of users that liked the post|
-|numComments|Number|Number of users that commented on the post|
-|comments|Array|Array of Comments made on this post| 
+|objectId|String|Unique identifier for post (default field)|
 
 Location
 |Property|Type|Description|
 |--------|----|-----------|
 |name|String|Name of location|
-|latitude|Number|Geographic latitude of location|
-|longitude|Number|Geographic longitude of location|
+|coordinate|GeoPoint|Geographic coordinate of location|
 |numPosts|Number|Number of posts tied to this location|
+|placeID|String|ID of location to look up place details|
+|usersWithPosts|Array|objectIds of users with posts at this location|
+|objectId|String|Unique identifier for location (default field)|
 
 Comment
 |Property|Type|Description|
 |--------|----|-----------|
 |author|Pointer to User|User that made the comment|
+|username|String|Username of author of comment|
 |text|String|Contents of the comment|
 |createdAt|DateTime|Time at which the comment was made|
+|postID|String|objectId of post the comment was made on|
 
 ### Networking
 * Login/Register screen 
