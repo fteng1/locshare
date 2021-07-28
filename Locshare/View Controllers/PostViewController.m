@@ -44,12 +44,21 @@
     // Initialize CollectionView
     self.pickedPhotosCollectionView.delegate = self;
     self.pickedPhotosCollectionView.dataSource = self;
+    [self setCollectionViewLayout];
+    
+    [self.pickedPhotosCollectionView reloadData];
+    self.storageView = [UIImageView new];
+}
+
+- (void)setCollectionViewLayout {
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *) self.pickedPhotosCollectionView.collectionViewLayout;
     layout.minimumInteritemSpacing = 1;
     layout.minimumLineSpacing = 1;
     
-    [self.pickedPhotosCollectionView reloadData];
-    self.storageView = [UIImageView new];
+    // size of posts depends on device size
+    CGFloat itemWidth = self.pickedPhotosCollectionView.collectionViewLayout.collectionViewContentSize.width;
+    CGFloat itemHeight = self.pickedPhotosCollectionView.collectionViewLayout.collectionViewContentSize.height;
+    layout.itemSize = CGSizeMake(itemWidth, itemHeight);
 }
 
 // Take photo using the phone camera when the camera icon is tapped, if available
