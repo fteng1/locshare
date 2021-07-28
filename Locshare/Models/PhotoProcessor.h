@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface PhotoProcessor : NSObject <AVCapturePhotoCaptureDelegate>
 
+@property (strong, nonatomic) NSMutableArray *returnedPhotos;
+
 @end
 
 NS_ASSUME_NONNULL_END

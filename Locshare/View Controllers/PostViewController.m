@@ -67,11 +67,7 @@
 
 // Take photo using the phone camera when the camera icon is tapped, if available
 - (IBAction)onCameraTap:(id)sender {
-    ImageManager *imagePicker = [ImageManager new];
-    imagePicker.viewToSet = self.storageView;
-    [self setDefinesPresentationContext:YES];
-    imagePicker.modalPresentationStyle = UIModalPresentationCurrentContext;
-    [self presentViewController:imagePicker animated:YES completion:nil];
+    [self performSegueWithIdentifier:@"cameraSegue" sender:nil];
 }
 
 // Choose multiple photos from the photo library

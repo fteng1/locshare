@@ -10,7 +10,7 @@
 @implementation PhotoProcessor
 
 - (void)captureOutput:(AVCapturePhotoOutput *)output didFinishProcessingPhoto:(AVCapturePhoto *)photo error:(NSError *)error {
-    
+    [self.returnedPhotos addObject:photo.fileDataRepresentation];
 }
 
 @end

@@ -16,6 +16,7 @@
 
 @property (strong, nonatomic) PHFetchResult *photosToDisplay;
 @property (strong, nonatomic) NSMutableArray *selectedPhotos;
+@property (strong, nonatomic) NSMutableArray *photosFromCamera;
 
 @end
 
@@ -29,6 +30,7 @@
     self.libraryCollectionView.allowsMultipleSelection = true;
     [self setCollectionViewLayout];
     self.selectedPhotos = [NSMutableArray new];
+    self.photosFromCamera = [NSMutableArray new];
     
     if (!self.useCamera) {
         // Check if app has authorization to access photos, and request authorization if it does not
@@ -96,6 +98,7 @@
     
     AVCapturePhotoSettings *photoSettings = [AVCapturePhotoSettings photoSettings];
     PhotoProcessor *processor = [[PhotoProcessor alloc] init];
+    processor.returnedPhotos = self.photosFromCamera;
     [photoOutput capturePhotoWithSettings:photoSettings delegate:processor];
 }
 
@@ -119,15 +122,20 @@
     NSMutableArray *imagesToReturn = [NSMutableArray new];
     // Get larger version of each selected image
     for (NSNumber *num in self.selectedPhotos) {
-        [[PHImageManager defaultManager] requestImageForAsset:self.photosToDisplay[[num intValue]] targetSize:CGSizeMake(400, 300) contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-            [imagesToReturn addObject:result];
-            
-            // Check if this is the final image to load
-            if ([imagesToReturn count] == [self.selectedPhotos count]) {
-                [self.delegate didFinishPicking:imagesToReturn];
-                [self dismissViewControllerAnimated:true completion:nil];
-            }
-        }];
+        if (!self.useCamera) {
+            [[PHImageManager defaultManager] requestImageForAsset:self.photosToDisplay[[num intValue]] targetSize:CGSizeMake(400, 300) contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+                [imagesToReturn addObject:result];
+                
+                // Check if this is the final image to load
+                if ([imagesToReturn count] == [self.selectedPhotos count]) {
+                    [self.delegate didFinishPicking:imagesToReturn];
+                    [self dismissViewControllerAnimated:true completion:nil];
+                }
+            }];
+        }
+        else {
+            [imagesToReturn addObject:self.selectedPhotos];
+        }
     }
 
 }
@@ -139,11 +147,16 @@
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     ImagePickerCell *cell = [self.libraryCollectionView dequeueReusableCellWithReuseIdentifier:@"ImagePickerCell" forIndexPath:indexPath];
     
-    // Get indicated PHAsset from array of assets and display its thumbnail in the image view
-    PHAsset *toDisplay = self.photosToDisplay[indexPath.item];
-    [[PHImageManager defaultManager] requestImageForAsset:toDisplay targetSize:CGSizeMake(128, 128) contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-        cell.imageView.image = result;
-    }];
+    if (!self.useCamera) {
+        // Get indicated PHAsset from array of assets and display its thumbnail in the image view
+        PHAsset *toDisplay = self.photosToDisplay[indexPath.item];
+        [[PHImageManager defaultManager] requestImageForAsset:toDisplay targetSize:CGSizeMake(128, 128) contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+            cell.imageView.image = result;
+        }];
+    }
+    else {
+        cell.imageView.image = [UIImage imageWithData:self.photosFromCamera[indexPath.item]];
+    }
     
     return cell;
 }
