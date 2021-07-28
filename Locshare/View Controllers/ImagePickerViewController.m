@@ -26,6 +26,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    // Set delegates and initialize variables
     self.libraryCollectionView.delegate = self;
     self.libraryCollectionView.dataSource = self;
     self.libraryCollectionView.allowsMultipleSelection = true;
@@ -34,6 +35,7 @@
     self.photosFromCamera = [NSMutableArray new];
     
     if (!self.useCamera) {
+        // Select photos from photo library
         // Check if app has authorization to access photos, and request authorization if it does not
         if ([PHPhotoLibrary authorizationStatus] != PHAuthorizationStatusAuthorized) {
             [PHPhotoLibrary requestAuthorizationForAccessLevel:PHAccessLevelReadWrite handler:^(PHAuthorizationStatus status) {
@@ -45,6 +47,8 @@
         }
     }
     else {
+        // Select photos from camera
+        // Check if app has authorization to use camera, and request authorization if it does not
         if ([AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo] != AVAuthorizationStatusAuthorized) {
             [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
                 [self takePhotos];
@@ -82,7 +86,21 @@
 
 - (void)takePhotos {
     AVCaptureSession *captureSession = [[AVCaptureSession alloc] init];
-    [captureSession beginConfiguration];
+    [self initializeSessionConfiguration:captureSession];
+    
+    // Show a camera preview of the photos that will be taken
+    self.previewView.hidden = false;
+    AVCaptureVideoPreviewLayer *previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:captureSession];
+    previewLayer.frame = self.previewView.bounds;
+    [self.previewView.layer insertSublayer:previewLayer atIndex:0];
+    
+    [captureSession startRunning];
+}
+
+- (void)initializeSessionConfiguration:(AVCaptureSession *)session {
+    [session beginConfiguration];
+    
+    // Search for rear camera of phone and set it to be capture device
     AVCaptureDevice *inputDevice = nil;
     AVCaptureDeviceDiscoverySession *captureDeviceDiscoverySession = [AVCaptureDeviceDiscoverySession discoverySessionWithDeviceTypes:@[AVCaptureDeviceTypeBuiltInWideAngleCamera]
                                           mediaType:AVMediaTypeVideo
@@ -94,37 +112,37 @@
             break;
         }
     }
+    
+    // Configure the input to be the rear camera and add to session
     AVCaptureDeviceInput *videoInput = [AVCaptureDeviceInput deviceInputWithDevice:inputDevice error:nil];
     if (videoInput) {
-        if ([captureSession canAddInput:videoInput]) {
-            [captureSession addInput:videoInput];
+        if ([session canAddInput:videoInput]) {
+            [session addInput:videoInput];
         }
     }
+    
+    // Configure the photo output and add it to the session
     self.photoOutput = [[AVCapturePhotoOutput alloc] init];
-    if ([captureSession canAddOutput:self.photoOutput]) {
-        [captureSession addOutput:self.photoOutput];
+    if ([session canAddOutput:self.photoOutput]) {
+        [session addOutput:self.photoOutput];
     }
-    [captureSession commitConfiguration];
-    
-    self.previewView.hidden = false;
-    AVCaptureVideoPreviewLayer *previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:captureSession];
-    previewLayer.frame = self.previewView.bounds;
-    [self.previewView.layer insertSublayer:previewLayer atIndex:0];
-    
-    [captureSession startRunning];
+    [session commitConfiguration];
 }
 
 - (IBAction)capturePhoto:(id)sender {
+    // Occurs on press of shutter button
     AVCapturePhotoSettings *photoSettings = [AVCapturePhotoSettings photoSettings];
     [self.photoOutput capturePhotoWithSettings:photoSettings delegate:self];
 }
 
 - (IBAction)selectPhotos:(id)sender {
+    // Hides the camera preview view so the user can select photos to post
     self.previewView.hidden = true;
     [self.libraryCollectionView reloadData];
 }
 
 - (void)captureOutput:(AVCapturePhotoOutput *)output didFinishProcessingPhoto:(AVCapturePhoto *)photo error:(NSError *)error {
+    // Add photo to array after it has been processed
     [self.photosFromCamera addObject:photo.fileDataRepresentation];
 }
 
@@ -138,9 +156,11 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    [self.selectedPhotos addObject: [NSNumber numberWithLong: indexPath.item]];
-    ImagePickerCell *cell = (ImagePickerCell *) [collectionView cellForItemAtIndexPath:indexPath];
-    cell.selectedView.hidden = false;
+    if ([self.selectedPhotos count] < self.limitSelection) {
+        [self.selectedPhotos addObject: [NSNumber numberWithLong: indexPath.item]];
+        ImagePickerCell *cell = (ImagePickerCell *) [collectionView cellForItemAtIndexPath:indexPath];
+        cell.selectedView.hidden = false;
+    }
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {

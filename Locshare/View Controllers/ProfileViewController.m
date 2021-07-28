@@ -14,9 +14,10 @@
 #import "LocationMarker.h"
 #import "LocationViewController.h"
 #import "ImageManager.h"
+#import "ImagePickerViewController.h"
 @import Parse;
 
-@interface ProfileViewController () <UITabBarControllerDelegate, GMSMapViewDelegate, UIImagePickerControllerDelegate>
+@interface ProfileViewController () <UITabBarControllerDelegate, GMSMapViewDelegate, ImagePickerControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet PFImageView *profilePictureView;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
@@ -41,6 +42,12 @@
     
     self.userMapView.delegate = self;
     
+    [self changeEditability];
+    [self updateFields];
+    [self fetchPosts];
+}
+
+- (void)changeEditability {
     // If user accessed the profile via the tab bar, it is their own profile and they can edit
     if ([self profileIsEditable]) {
         if (self.tabBarController.delegate == nil) {
@@ -78,8 +85,6 @@
             self.friendButton.hidden = true;
         }
     }
-    [self updateFields];
-    [self fetchPosts];
 }
 
 - (IBAction)onFriendTap:(id)sender {
@@ -214,13 +219,12 @@
     [self.descriptionTextView resignFirstResponder];
 }
 
-- (void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion {
+- (IBAction)onProfilePictureTap:(id)sender {
+    [self performSegueWithIdentifier:@"chooseProfileSegue" sender:nil];
 }
 
-- (IBAction)onProfilePictureTap:(id)sender {
-    ImageManager *imagePicker = [ImageManager new];
-    imagePicker.viewToSet = self.profilePictureView;
-    [self presentViewController:imagePicker animated:YES completion:nil];
+- (void)didFinishPicking:(NSArray *)images {
+    self.profilePictureView.image = [images firstObject];
 }
 
 - (IBAction)onRefreshTap:(id)sender {
@@ -237,6 +241,13 @@
         locationViewController.postsToDisplay = self.postsByLocationId[marker.location.placeID];
         locationViewController.userToFilter = self.user;
         locationViewController.isUserFiltered = marker.userFiltered;
+    }
+    // Bring up image picker screen if profile picture is tapped
+    if ([[segue identifier] isEqualToString:@"chooseProfileSegue"]) {
+        ImagePickerViewController *imagePicker = [segue destinationViewController];
+        imagePicker.delegate = self;
+        imagePicker.useCamera = false;
+        imagePicker.limitSelection = 1;
     }
 }
 

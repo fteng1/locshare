@@ -10,13 +10,12 @@
 #import "Post.h"
 #import "LocationAutocompleteCell.h"
 #import "Location.h"
-#import <QBImagePickerController/QBImagePickerController.h>
 #import "PhotoViewCell.h"
 #import "LocationManager.h"
 #import "ImageManager.h"
 #import "ImagePickerViewController.h"
 
-@interface PostViewController () <ImagePickerControllerDelegate, UIImagePickerControllerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
+@interface PostViewController () <ImagePickerControllerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UISearchBar *locationSearchBar;
 @property (weak, nonatomic) IBOutlet UICollectionView *pickedPhotosCollectionView;
@@ -26,7 +25,6 @@
 @property (strong, nonatomic) NSArray *autocompleteResults;
 @property (strong, nonatomic) NSString *locationID;
 @property (strong, nonatomic) NSArray *photosToUpload;
-@property (nonatomic, strong) PHImageRequestOptions *requestOptions;
 @property (strong, nonatomic) UIImageView *storageView;
 
 @end
@@ -42,9 +40,7 @@
     self.locationSearchBar.delegate = self;
     self.captionTextView.placeholder = @"Write a caption...";
     self.photosToUpload = [[NSMutableArray alloc] init];
-    
-    [self configureRequestOptions];
-    
+        
     // Initialize CollectionView
     self.pickedPhotosCollectionView.delegate = self;
     self.pickedPhotosCollectionView.dataSource = self;
@@ -54,15 +50,6 @@
     
     [self.pickedPhotosCollectionView reloadData];
     self.storageView = [UIImageView new];
-}
-
-- (void)configureRequestOptions {
-    // Options for making requests regarding PHImages
-    self.requestOptions = [[PHImageRequestOptions alloc] init];
-    self.requestOptions.resizeMode = PHImageRequestOptionsResizeModeExact;
-    self.requestOptions.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
-    // Makes calls to requestOptions synchronous
-    self.requestOptions.synchronous = YES;
 }
 
 // Take photo using the phone camera when the camera icon is tapped, if available
@@ -216,6 +203,7 @@
     if ([[segue identifier] isEqualToString:@"imagePickerSegue"] || [[segue identifier] isEqualToString:@"cameraSegue"]) {
         ImagePickerViewController *imagePickerController = [segue destinationViewController];
         imagePickerController.delegate = self;
+        imagePickerController.limitSelection = 6;
         if ([[segue identifier] isEqualToString:@"cameraSegue"]) {
             imagePickerController.useCamera = true;
         }

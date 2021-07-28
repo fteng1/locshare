@@ -11,10 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol ImagePickerControllerDelegate
 
-@optional
 - (void)didFinishPicking:(NSArray *)images;
-@optional
-- (NSArray *)didTakePhoto;
 
 @end
 
@@ -22,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, weak) id<ImagePickerControllerDelegate> delegate;
 @property (assign, nonatomic) BOOL useCamera;
+@property (assign, nonatomic) NSInteger limitSelection;
 
 @end
 

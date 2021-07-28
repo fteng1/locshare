@@ -8,7 +8,7 @@
 #import "ImageManager.h"
 @import Parse;
 
-@interface ImageManager () <UIImagePickerControllerDelegate>
+@interface ImageManager ()
 
 @end
 
@@ -16,7 +16,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self presentImagePicker];
 }
 
 // Resizes image to the specified size
@@ -31,37 +30,6 @@
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return newImage;
-}
-
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [picker dismissViewControllerAnimated:YES completion:nil];
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<UIImagePickerControllerInfoKey,id> *)info {
-    // Get the image captured by the UIImagePickerController
-    UIImage *editedImage = info[UIImagePickerControllerEditedImage];
-    editedImage = [ImageManager resizeImage:editedImage withSize:CGSizeMake(400, 300)];
-    self.viewToSet.image = editedImage;
-    // Dismiss UIImagePickerController to go back to your original view controller
-    UIViewController *presenter = self.presentingViewController;
-    [self dismissViewControllerAnimated:YES completion:nil];
-    [presenter dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)presentImagePicker {
-    UIImagePickerController *imagePicker = [UIImagePickerController new];
-    imagePicker.delegate = self;
-    imagePicker.allowsEditing = YES;
-    
-    // The Xcode simulator does not support taking pictures, so let's first check that the camera is indeed supported on the device before trying to present it.
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-    }
-    else {
-        NSLog(@"The camera is not available");
-    }
-    [self presentViewController:imagePicker animated:YES completion:nil];
 }
 
 @end

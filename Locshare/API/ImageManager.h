@@ -14,8 +14,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UIImageView *viewToSet;
 
 + (UIImage *)resizeImage:(UIImage *)image withSize:(CGSize)size;
-
-- (void)presentImagePicker;
     
 @end
 
