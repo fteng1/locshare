@@ -466,9 +466,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="790"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="DNG-xI-Zij">
-                                <rect key="frame" x="0.0" y="57" width="390" height="677"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="DNG-xI-Zij">
+                                <rect key="frame" x="0.0" y="55" width="390" height="735"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="kUb-4D-OeO">
                                     <size key="itemSize" width="128" height="128"/>
@@ -512,9 +511,11 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xTg-B9-pCD">
-                                <rect key="frame" x="0.0" y="0.0" width="390" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xTg-B9-pCD">
+                                <rect key="frame" x="0.0" y="0.0" width="390" height="55"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="55" id="TUc-mU-0qN"/>
+                                </constraints>
                                 <items>
                                     <navigationItem title="Photos" id="bOM-80-CGA">
                                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="Lbi-KX-PzL">
@@ -530,22 +531,23 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iOg-Ig-bAL">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iOg-Ig-bAL">
                                 <rect key="frame" x="0.0" y="0.0" width="390" height="790"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8qa-Y6-VN7">
-                                        <rect key="frame" x="165" y="634" width="60" height="56"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8qa-Y6-VN7">
+                                        <rect key="frame" x="165" y="631" width="60" height="58.666666666666629"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="60" id="HAp-UU-A0N"/>
+                                            <constraint firstAttribute="height" constant="60" id="ocw-dy-dGp"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <state key="normal" backgroundImage="circle" catalog="system"/>
                                         <connections>
                                             <action selector="capturePhoto:" destination="dqT-XA-fUY" eventType="touchUpInside" id="Rom-av-DoF"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WLr-tY-28c">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WLr-tY-28c">
                                         <rect key="frame" x="287" y="8" width="95" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="Select Photos"/>
                                         <connections>
                                             <action selector="selectPhotos:" destination="dqT-XA-fUY" eventType="touchUpInside" id="Gac-Yp-xcy"/>
@@ -553,10 +555,29 @@
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="8qa-Y6-VN7" secondAttribute="bottom" constant="100" id="1jS-h7-6fu"/>
+                                    <constraint firstItem="8qa-Y6-VN7" firstAttribute="centerX" secondItem="iOg-Ig-bAL" secondAttribute="centerX" id="JQZ-Ha-zm7"/>
+                                    <constraint firstItem="WLr-tY-28c" firstAttribute="top" secondItem="iOg-Ig-bAL" secondAttribute="top" constant="8" id="ZyX-dQ-bCS"/>
+                                    <constraint firstAttribute="trailing" secondItem="WLr-tY-28c" secondAttribute="trailing" constant="8" id="cIR-eG-Soh"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="BEj-Q4-h2r"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="xTg-B9-pCD" firstAttribute="trailing" secondItem="BEj-Q4-h2r" secondAttribute="trailing" id="6Gy-yi-Pt8"/>
+                            <constraint firstItem="DNG-xI-Zij" firstAttribute="leading" secondItem="BEj-Q4-h2r" secondAttribute="leading" id="FiV-FT-Ofm"/>
+                            <constraint firstItem="DNG-xI-Zij" firstAttribute="trailing" secondItem="BEj-Q4-h2r" secondAttribute="trailing" id="Fse-H8-8Xc"/>
+                            <constraint firstItem="xTg-B9-pCD" firstAttribute="leading" secondItem="BEj-Q4-h2r" secondAttribute="leading" id="GVv-xe-QjY"/>
+                            <constraint firstItem="DNG-xI-Zij" firstAttribute="top" secondItem="xTg-B9-pCD" secondAttribute="bottom" id="PvL-A4-imv"/>
+                            <constraint firstItem="iOg-Ig-bAL" firstAttribute="top" secondItem="BEj-Q4-h2r" secondAttribute="top" id="QEF-0x-GEU"/>
+                            <constraint firstAttribute="bottom" secondItem="iOg-Ig-bAL" secondAttribute="bottom" id="Yls-De-cvl"/>
+                            <constraint firstItem="iOg-Ig-bAL" firstAttribute="leading" secondItem="BEj-Q4-h2r" secondAttribute="leading" id="d45-06-Kcz"/>
+                            <constraint firstItem="xTg-B9-pCD" firstAttribute="top" secondItem="BEj-Q4-h2r" secondAttribute="top" id="grq-hc-Zk8"/>
+                            <constraint firstAttribute="bottom" secondItem="DNG-xI-Zij" secondAttribute="bottom" id="xTw-0H-VC6"/>
+                            <constraint firstItem="iOg-Ig-bAL" firstAttribute="trailing" secondItem="BEj-Q4-h2r" secondAttribute="trailing" id="xZF-gU-6Ku"/>
+                        </constraints>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Photos" id="ncF-zr-Qx3">
