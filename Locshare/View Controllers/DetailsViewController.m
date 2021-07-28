@@ -52,6 +52,17 @@
     [self fetchComments];
 }
 
+- (void)setCollectionViewLayout {
+    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *) self.photoCollectionView.collectionViewLayout;
+    layout.minimumInteritemSpacing = 1;
+    layout.minimumLineSpacing = 1;
+    
+    // size of posts depends on device size
+    CGFloat itemWidth = self.photoCollectionView.collectionViewLayout.collectionViewContentSize.width;
+    CGFloat itemHeight = self.photoCollectionView.collectionViewLayout.collectionViewContentSize.height;
+    layout.itemSize = CGSizeMake(itemWidth, itemHeight);
+}
+
 - (NSString *)formatDate:(NSString *)creationTime {
     // Format createdAt date string
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
