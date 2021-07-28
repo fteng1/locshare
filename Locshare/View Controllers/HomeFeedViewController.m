@@ -46,19 +46,21 @@ GMSPlacesClient *placesClient;
     // Get most updated position
     CLLocation *currentLocation = [LocationManager shared].location;
     
+    GMSCameraPosition *camera = nil;
     if (currentLocation != nil) {
         // Set camera of map to be at current position
-        GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:currentLocation.coordinate.latitude longitude:currentLocation.coordinate.longitude zoom:10.0];
-        [self.homeMapView setCamera:camera];
-        self.homeMapView.settings.myLocationButton = YES;
-        self.homeMapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        
+        camera = [GMSCameraPosition cameraWithLatitude:currentLocation.coordinate.latitude longitude:currentLocation.coordinate.longitude zoom:10.0];
+
         // Display current location on map
         self.homeMapView.myLocationEnabled = YES;
+        self.homeMapView.settings.myLocationButton = YES;
     }
     else {
-        // TODO: change default location if no current location
+        // Set default location to be center of US
+        camera = [GMSCameraPosition cameraWithLatitude:40.745028 longitude:-100.657394 zoom:1.0];
     }
+    [self.homeMapView setCamera:camera];
+    self.homeMapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 }
 
 - (GMSCoordinateBounds *)getVisibleRegion {

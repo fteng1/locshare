@@ -42,6 +42,10 @@
     
     self.userMapView.delegate = self;
     
+    // Set default location of map to be the center of the US
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:40.745028 longitude:-100.657394 zoom:1.0];
+    [self.userMapView setCamera:camera];
+    
     [self changeEditability];
     [self updateFields];
     [self fetchPosts];
