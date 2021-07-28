@@ -21,6 +21,8 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *pickedPhotosCollectionView;
 @property (weak, nonatomic) IBOutlet UITextView *captionTextView;
 @property (weak, nonatomic) IBOutlet UITableView *autocompleteTableView;
+@property (weak, nonatomic) IBOutlet UIImageView *mapImage;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchBarLeadingConstraint;
 
 @property (strong, nonatomic) NSArray *autocompleteResults;
 @property (strong, nonatomic) NSString *locationID;
@@ -133,6 +135,12 @@
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    // Expand search bar
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.view layoutIfNeeded];
+        [self animateSearchBar:true];
+    }];
+    
     // Let user cancel once a location is being searched
     searchBar.showsCancelButton = YES;
     
@@ -145,10 +153,32 @@
 
 }
 
+- (void)animateSearchBar:(BOOL)showSearchBar {
+    // Animate search bar to expand fully and hide
+    self.mapImage.hidden = showSearchBar;
+    [self.view removeConstraint:self.searchBarLeadingConstraint];
+    if (showSearchBar) {
+        self.searchBarLeadingConstraint = [NSLayoutConstraint constraintWithItem:self.locationSearchBar attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view.safeAreaLayoutGuide attribute:NSLayoutAttributeLeading multiplier:1 constant:10];
+        [self.view addConstraint:self.searchBarLeadingConstraint];
+    }
+    else {
+        self.searchBarLeadingConstraint = [NSLayoutConstraint constraintWithItem:self.locationSearchBar attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.mapImage attribute:NSLayoutAttributeTrailing multiplier:1 constant:10];
+    }
+    self.searchBarLeadingConstraint.priority = 1000;
+    [self.view addConstraint:self.searchBarLeadingConstraint];
+    [self.view layoutIfNeeded];
+}
+
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     // Dismiss search term once cancel is pressed
     searchBar.showsCancelButton = NO;
     self.autocompleteTableView.hidden = true;
+    
+    // Shrink search bar
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.view layoutIfNeeded];
+        [self animateSearchBar:false];
+    }];
     [searchBar resignFirstResponder];
 }
 
@@ -175,7 +205,12 @@
     self.locationID = self.autocompleteResults[indexPath.row][@"place_id"];
     self.autocompleteTableView.hidden = true;
     self.locationSearchBar.showsCancelButton = NO;
-}
+    
+    // Shrink search bar
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.view layoutIfNeeded];
+        [self animateSearchBar:false];
+    }];}
 
 - (IBAction)dismissKeyboard:(id)sender {
     // after typing in the caption text view, tapping anywhere in the view dismisses the keyboard

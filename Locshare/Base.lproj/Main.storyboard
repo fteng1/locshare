@@ -743,14 +743,14 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="e4Y-Zb-Imu" firstAttribute="trailing" secondItem="qZr-bq-9WV" secondAttribute="trailing" constant="10" id="8DJ-SQ-2xn"/>
                             <constraint firstItem="61m-6l-JyQ" firstAttribute="top" secondItem="0zq-jz-3KE" secondAttribute="bottom" constant="18" id="8Eh-aQ-Xix"/>
-                            <constraint firstItem="qZr-bq-9WV" firstAttribute="leading" secondItem="bkZ-zw-KOA" secondAttribute="trailing" constant="10" id="BAs-ix-n8i"/>
                             <constraint firstItem="e4Y-Zb-Imu" firstAttribute="trailing" secondItem="5t6-fY-KVQ" secondAttribute="trailing" constant="15" id="CKc-eg-F0i"/>
                             <constraint firstItem="oZA-dj-V8Y" firstAttribute="leading" secondItem="e4Y-Zb-Imu" secondAttribute="leading" constant="15" id="Dff-7M-XJ7"/>
                             <constraint firstItem="Vy0-Eu-qcj" firstAttribute="leading" secondItem="bkZ-zw-KOA" secondAttribute="trailing" constant="40" id="HU1-wh-EsQ"/>
                             <constraint firstItem="e4Y-Zb-Imu" firstAttribute="trailing" secondItem="oZA-dj-V8Y" secondAttribute="trailing" constant="15" id="JUP-Jj-ICc"/>
+                            <constraint firstItem="qZr-bq-9WV" firstAttribute="leading" secondItem="0zq-jz-3KE" secondAttribute="leading" id="JtB-8i-7ej"/>
                             <constraint firstItem="bkZ-zw-KOA" firstAttribute="top" secondItem="e4Y-Zb-Imu" secondAttribute="top" constant="15" id="Pnx-EW-jiX"/>
+                            <constraint firstItem="e4Y-Zb-Imu" firstAttribute="trailing" secondItem="qZr-bq-9WV" secondAttribute="trailing" constant="10" id="QpC-Az-Y21"/>
                             <constraint firstItem="bkZ-zw-KOA" firstAttribute="leading" secondItem="e4Y-Zb-Imu" secondAttribute="leading" constant="15" id="S7S-0C-FSn"/>
                             <constraint firstItem="5t6-fY-KVQ" firstAttribute="leading" secondItem="e4Y-Zb-Imu" secondAttribute="leading" constant="15" id="W4r-8r-fSM"/>
                             <constraint firstItem="0zq-jz-3KE" firstAttribute="centerY" secondItem="bkZ-zw-KOA" secondAttribute="centerY" id="YqB-f4-9r9"/>
@@ -778,7 +778,9 @@
                         <outlet property="autocompleteTableView" destination="qZr-bq-9WV" id="efP-tD-aj2"/>
                         <outlet property="captionTextView" destination="oZA-dj-V8Y" id="XJa-id-MOG"/>
                         <outlet property="locationSearchBar" destination="0zq-jz-3KE" id="1FF-Vt-vA1"/>
+                        <outlet property="mapImage" destination="bkZ-zw-KOA" id="o4X-yb-MBd"/>
                         <outlet property="pickedPhotosCollectionView" destination="5t6-fY-KVQ" id="irF-oa-t1c"/>
+                        <outlet property="searchBarLeadingConstraint" destination="hs4-Bj-VdD" id="79d-7d-Glq"/>
                         <segue destination="bpb-YL-bpO" kind="presentation" identifier="afterPostSegue" modalPresentationStyle="fullScreen" id="jvO-ql-lyu"/>
                         <segue destination="dqT-XA-fUY" kind="presentation" identifier="imagePickerSegue" id="cGp-mS-7X1"/>
                         <segue destination="dqT-XA-fUY" kind="presentation" identifier="cameraSegue" id="gg4-re-qKD"/>
@@ -1091,9 +1093,9 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="29f-HC-vrl"/>
-        <segue reference="gvy-cC-lvO"/>
+        <segue reference="cGp-mS-7X1"/>
         <segue reference="4Ck-x5-wBe"/>
-        <segue reference="ybK-Mk-Bd7"/>
+        <segue reference="jvO-ql-lyu"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrow.clockwise" catalog="system" width="115" height="128"/>
