@@ -8,15 +8,16 @@
 #import "ImagePickerViewController.h"
 #import "ImagePickerCell.h"
 #import <Photos/Photos.h>
-#import "PhotoProcessor.h"
 
-@interface ImagePickerViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
+@interface ImagePickerViewController () <UICollectionViewDelegate, UICollectionViewDataSource, AVCapturePhotoCaptureDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *libraryCollectionView;
+@property (weak, nonatomic) IBOutlet UIView *previewView;
 
 @property (strong, nonatomic) PHFetchResult *photosToDisplay;
 @property (strong, nonatomic) NSMutableArray *selectedPhotos;
 @property (strong, nonatomic) NSMutableArray *photosFromCamera;
+@property (strong, nonatomic) AVCapturePhotoOutput *photoOutput;
 
 @end
 
@@ -82,28 +83,58 @@
 - (void)takePhotos {
     AVCaptureSession *captureSession = [[AVCaptureSession alloc] init];
     [captureSession beginConfiguration];
-    AVCaptureDevice *camera = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-    AVCaptureDeviceInput *videoInput = [AVCaptureDeviceInput deviceInputWithDevice:camera error:nil];
+    AVCaptureDevice *inputDevice = nil;
+    AVCaptureDeviceDiscoverySession *captureDeviceDiscoverySession = [AVCaptureDeviceDiscoverySession discoverySessionWithDeviceTypes:@[AVCaptureDeviceTypeBuiltInWideAngleCamera]
+                                          mediaType:AVMediaTypeVideo
+                                           position:AVCaptureDevicePositionBack];
+    NSArray *cameras = [captureDeviceDiscoverySession devices];
+    for (AVCaptureDevice *camera in cameras) {
+        if([camera position] == AVCaptureDevicePositionBack) {
+            inputDevice = camera;
+            break;
+        }
+    }
+    AVCaptureDeviceInput *videoInput = [AVCaptureDeviceInput deviceInputWithDevice:inputDevice error:nil];
     if (videoInput) {
         if ([captureSession canAddInput:videoInput]) {
             [captureSession addInput:videoInput];
         }
     }
-    AVCapturePhotoOutput *photoOutput = [[AVCapturePhotoOutput alloc] init];
-    if ([captureSession canAddOutput:photoOutput]) {
-        [captureSession addOutput:photoOutput];
+    self.photoOutput = [[AVCapturePhotoOutput alloc] init];
+    if ([captureSession canAddOutput:self.photoOutput]) {
+        [captureSession addOutput:self.photoOutput];
     }
     [captureSession commitConfiguration];
-    [captureSession startRunning];
     
+    self.previewView.hidden = false;
+    AVCaptureVideoPreviewLayer *previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:captureSession];
+    previewLayer.frame = self.previewView.bounds;
+    [self.previewView.layer insertSublayer:previewLayer atIndex:0];
+    
+    [captureSession startRunning];
+}
+
+- (IBAction)capturePhoto:(id)sender {
     AVCapturePhotoSettings *photoSettings = [AVCapturePhotoSettings photoSettings];
-    PhotoProcessor *processor = [[PhotoProcessor alloc] init];
-    processor.returnedPhotos = self.photosFromCamera;
-    [photoOutput capturePhotoWithSettings:photoSettings delegate:processor];
+    [self.photoOutput capturePhotoWithSettings:photoSettings delegate:self];
+}
+
+- (IBAction)selectPhotos:(id)sender {
+    self.previewView.hidden = true;
+    [self.libraryCollectionView reloadData];
+}
+
+- (void)captureOutput:(AVCapturePhotoOutput *)output didFinishProcessingPhoto:(AVCapturePhoto *)photo error:(NSError *)error {
+    [self.photosFromCamera addObject:photo.fileDataRepresentation];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [self.photosToDisplay count];
+    if (self.useCamera) {
+        return [self.photosFromCamera count];
+    }
+    else {
+        return [self.photosToDisplay count];
+    }
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -134,7 +165,12 @@
             }];
         }
         else {
-            [imagesToReturn addObject:self.selectedPhotos];
+            [imagesToReturn addObject:[UIImage imageWithData:self.photosFromCamera[[num intValue]]]];
+            // Check if this is the final image to load
+            if ([imagesToReturn count] == [self.selectedPhotos count]) {
+                [self.delegate didFinishPicking:imagesToReturn];
+                [self dismissViewControllerAnimated:true completion:nil];
+            }
         }
     }
 
