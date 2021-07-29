@@ -26,6 +26,24 @@
     self.searchBar.delegate = self;
     self.resultsTableView.delegate = self;
     self.resultsTableView.dataSource = self;
+    
+    [self fetchInitialPosts];
+}
+
+- (void)fetchInitialPosts {
+    // Before searching, fetch users with most posts
+    PFQuery *query = [PFQuery queryWithClassName:@"_User"];
+    [query orderByDescending:@"numPosts"];
+    query.limit = 10;
+    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable returnedUsers, NSError * _Nullable error) {
+        if (error != nil) {
+            NSLog(@"Error performing search: %@", error);
+        }
+        else {
+            self.results = returnedUsers;
+            [self.resultsTableView reloadData];
+        }
+    }];
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {

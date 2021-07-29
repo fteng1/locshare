@@ -203,7 +203,6 @@
             }
         }
     }
-
 }
 
 - (IBAction)onCancelTap:(id)sender {
@@ -223,7 +222,6 @@
     else {
         cell.imageView.image = [UIImage imageWithData:self.photosFromCamera[indexPath.item]];
     }
-    
     return cell;
 }
 
