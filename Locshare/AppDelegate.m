@@ -9,6 +9,7 @@
 #import <Parse/Parse.h>
 #import <GoogleMaps/GoogleMaps.h>
 #import <GooglePlaces/GooglePlaces.h>
+#import <IQKeyboardManager/IQKeyboardManager.h>
 
 @interface AppDelegate ()
 
@@ -41,7 +42,16 @@
     [GMSServices provideAPIKey:gmapsAPIKey];
     [GMSPlacesClient provideAPIKey:gmapsAPIKey];
     
+    [self configureKeyboardManager];
+
     return YES;
+}
+
+- (void)configureKeyboardManager {
+    [IQKeyboardManager sharedManager].enable = true;
+    [IQKeyboardManager sharedManager].keyboardDistanceFromTextField = 0;
+    [IQKeyboardManager sharedManager].enableAutoToolbar = false;
+    [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = true;
 }
 
 

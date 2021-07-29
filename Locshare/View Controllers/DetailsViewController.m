@@ -15,6 +15,7 @@
 
 @interface DetailsViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UITableViewDelegate, UITableViewDelegate, UITableViewDataSource>
 
+@property (weak, nonatomic) IBOutlet UIView *commentView;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timestampLabel;
 @property (weak, nonatomic) IBOutlet UILabel *captionLabel;
@@ -116,6 +117,7 @@
             [self.commentTableView reloadData];
         }];
         self.commentTextField.text = @"";
+        [self.commentTextField resignFirstResponder];
     }
 }
 
