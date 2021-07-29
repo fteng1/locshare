@@ -553,13 +553,21 @@
                                             <action selector="selectPhotos:" destination="dqT-XA-fUY" eventType="touchUpInside" id="Gac-Yp-xcy"/>
                                         </connections>
                                     </button>
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rSY-TK-Wdk">
+                                        <rect key="frame" x="0.0" y="0.0" width="390" height="790"/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="8qa-Y6-VN7" secondAttribute="bottom" constant="100" id="1jS-h7-6fu"/>
                                     <constraint firstItem="8qa-Y6-VN7" firstAttribute="centerX" secondItem="iOg-Ig-bAL" secondAttribute="centerX" id="JQZ-Ha-zm7"/>
+                                    <constraint firstItem="rSY-TK-Wdk" firstAttribute="leading" secondItem="iOg-Ig-bAL" secondAttribute="leading" id="Yha-Sd-zZ7"/>
                                     <constraint firstItem="WLr-tY-28c" firstAttribute="top" secondItem="iOg-Ig-bAL" secondAttribute="top" constant="8" id="ZyX-dQ-bCS"/>
                                     <constraint firstAttribute="trailing" secondItem="WLr-tY-28c" secondAttribute="trailing" constant="8" id="cIR-eG-Soh"/>
+                                    <constraint firstAttribute="trailing" secondItem="rSY-TK-Wdk" secondAttribute="trailing" id="gqg-dv-0pt"/>
+                                    <constraint firstAttribute="bottom" secondItem="rSY-TK-Wdk" secondAttribute="bottom" id="zDI-9r-GLJ"/>
+                                    <constraint firstItem="rSY-TK-Wdk" firstAttribute="top" secondItem="iOg-Ig-bAL" secondAttribute="top" id="zQy-eb-f6N"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -585,6 +593,7 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="blackScreen" destination="rSY-TK-Wdk" id="D4U-7O-cba"/>
                         <outlet property="libraryCollectionView" destination="DNG-xI-Zij" id="sH9-56-fzk"/>
                         <outlet property="previewView" destination="iOg-Ig-bAL" id="B3T-wn-hZ0"/>
                     </connections>

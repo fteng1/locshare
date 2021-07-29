@@ -18,6 +18,7 @@
 @property (strong, nonatomic) NSMutableArray *selectedPhotos;
 @property (strong, nonatomic) NSMutableArray *photosFromCamera;
 @property (strong, nonatomic) AVCapturePhotoOutput *photoOutput;
+@property (weak, nonatomic) IBOutlet UIView *blackScreen;
 
 @end
 
@@ -130,6 +131,15 @@
 }
 
 - (IBAction)capturePhoto:(id)sender {
+    // Animate to show that picture has been taken
+    [UIView transitionWithView:self.previewView duration:0.05 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+        self.blackScreen.hidden = false;
+    } completion:^(BOOL finished) {
+        [UIView transitionWithView:self.previewView duration:0.05 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+            self.blackScreen.hidden = true;
+        } completion:nil];
+    }];
+
     // Occurs on press of shutter button
     AVCapturePhotoSettings *photoSettings = [AVCapturePhotoSettings photoSettings];
     [self.photoOutput capturePhotoWithSettings:photoSettings delegate:self];
