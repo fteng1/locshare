@@ -110,6 +110,7 @@
 - (IBAction)onFriendTap:(id)sender {
     PFUser *currUser = [PFUser currentUser];
     NSNumber *incrementFriendAmount = @(1);
+    // Update fields in database
     if (!self.friendButton.selected) {
         [PFCloud callFunctionInBackground:@"friendUser" withParameters:@{@"userToEditID": self.user.objectId, @"friend": @(true), @"currentUserID": currUser.objectId}];
         [currUser addObject:self.user.objectId forKey:@"friends"];

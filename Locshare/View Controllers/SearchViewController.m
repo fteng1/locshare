@@ -89,17 +89,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UserSearchCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UserSearchCell"];
-    
-    // Make profile image circular
-    cell.profileImageView.layer.cornerRadius = cell.profileImageView.frame.size.height / 2;;
-    cell.profileImageView.layer.masksToBounds = true;
-    
-    PFUser *user = self.results[indexPath.row];
-    cell.usernameLabel.text = user[@"username"];
-    cell.descriptionLabel.text = user[@"tagline"];
-    cell.profileImageView.file = user[@"profilePicture"];
-    [cell.profileImageView loadInBackground];
-    
+    [cell setFieldsWithUser:self.results[indexPath.row]];
     return cell;
 }
 

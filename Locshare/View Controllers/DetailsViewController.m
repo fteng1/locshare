@@ -47,7 +47,6 @@
     self.photoCollectionView.delegate = self;
     self.commentTableView.dataSource = self;
     self.commentTableView.delegate = self;
-    self.commentTextField.delegate = self;
     
     [self getAuthorInfoInBackground];
     [self fetchComments];
