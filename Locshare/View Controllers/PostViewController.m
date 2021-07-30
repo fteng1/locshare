@@ -48,6 +48,13 @@
     self.pickedPhotosCollectionView.dataSource = self;
     [self setCollectionViewLayout];
     
+    [self initializeUI];
+    
+    [self.pickedPhotosCollectionView reloadData];
+    self.storageView = [UIImageView new];
+}
+
+- (void)initializeUI {
     // Change color of search bar
     self.locationSearchBar.searchTextField.backgroundColor = [UIColor colorWithRed:250/255.0 green:243/255.0 blue:221/255.0 alpha:1];
     [self.locationSearchBar setSearchFieldBackgroundImage:[UIImage new] forState:UIControlStateNormal];
@@ -58,8 +65,8 @@
     self.autocompleteTableView.layer.borderWidth = 0.5;
     self.autocompleteTableView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     
-    [self.pickedPhotosCollectionView reloadData];
-    self.storageView = [UIImageView new];
+    self.captionTextView.layer.cornerRadius = 10;
+    self.captionTextView.clipsToBounds = true;
 }
 
 - (void)setCollectionViewLayout {

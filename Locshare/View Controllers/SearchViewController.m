@@ -28,13 +28,16 @@
     self.resultsTableView.delegate = self;
     self.resultsTableView.dataSource = self;
     
+    [self initializeUI];
+    [self fetchInitialPosts];
+}
+
+- (void)initializeUI {
     // Change color of search bar
     self.searchBar.searchTextField.backgroundColor = [UIColor colorWithRed:250/255.0 green:243/255.0 blue:221/255.0 alpha:1];
     [self.searchBar setSearchFieldBackgroundImage:[UIImage new] forState:UIControlStateNormal];
     self.searchBar.searchTextField.layer.cornerRadius = 10;
     self.searchBar.searchTextField.clipsToBounds = true;
-    
-    [self fetchInitialPosts];
 }
 
 - (void)fetchInitialPosts {
@@ -85,6 +88,10 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UserSearchCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UserSearchCell"];
+    
+    // Make profile image circular
+    cell.profileImageView.layer.cornerRadius = cell.profileImageView.frame.size.height / 2;;
+    cell.profileImageView.layer.masksToBounds = true;
     
     PFUser *user = self.results[indexPath.row];
     cell.usernameLabel.text = user[@"username"];

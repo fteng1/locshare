@@ -42,13 +42,23 @@
     
     self.userMapView.delegate = self;
     
-    // Set default location of map to be the center of the US
-    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:40.745028 longitude:-100.657394 zoom:1.0];
-    [self.userMapView setCamera:camera];
-    
+    [self setDefaultMapLocation];
+    [self initializeUI];
     [self changeEditability];
     [self updateFields];
     [self fetchPosts];
+}
+
+- (void)setDefaultMapLocation {
+    // Set default location of map to be the center of the US
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:40.745028 longitude:-100.657394 zoom:1.0];
+    [self.userMapView setCamera:camera];
+}
+
+- (void)initializeUI {
+    // Make profile image circular
+    self.profilePictureView.layer.cornerRadius = self.profilePictureView.frame.size.height / 2;;
+    self.profilePictureView.layer.masksToBounds = true;
 }
 
 - (void)changeEditability {
