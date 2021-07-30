@@ -10,6 +10,7 @@
 		70007451269E33A600F10FE1 /* LocationAutocompleteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70007450269E33A600F10FE1 /* LocationAutocompleteCell.m */; };
 		701B1CE126AF13F2002CD8F3 /* ImagePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 701B1CE026AF13F2002CD8F3 /* ImagePickerViewController.m */; };
 		701B1CE426AF1A48002CD8F3 /* ImagePickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 701B1CE326AF1A48002CD8F3 /* ImagePickerCell.m */; };
+		7049025D26B4B23E00046A0C /* FriendRequestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7049025C26B4B23E00046A0C /* FriendRequestViewController.m */; };
 		704F136D26A1EABA009A71C8 /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 704F136C26A1EABA009A71C8 /* LocationManager.m */; };
 		70571E0F269CA9AE00CE1842 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E0E269CA9AE00CE1842 /* AppDelegate.m */; };
 		70571E12269CA9AE00CE1842 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 70571E11269CA9AE00CE1842 /* SceneDelegate.m */; };
@@ -69,6 +70,8 @@
 		701B1CE026AF13F2002CD8F3 /* ImagePickerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImagePickerViewController.m; sourceTree = "<group>"; };
 		701B1CE226AF1A48002CD8F3 /* ImagePickerCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImagePickerCell.h; sourceTree = "<group>"; };
 		701B1CE326AF1A48002CD8F3 /* ImagePickerCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImagePickerCell.m; sourceTree = "<group>"; };
+		7049025B26B4B23E00046A0C /* FriendRequestViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FriendRequestViewController.h; sourceTree = "<group>"; };
+		7049025C26B4B23E00046A0C /* FriendRequestViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FriendRequestViewController.m; sourceTree = "<group>"; };
 		704F136B26A1EABA009A71C8 /* LocationManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationManager.h; sourceTree = "<group>"; };
 		704F136C26A1EABA009A71C8 /* LocationManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
 		70571E0A269CA9AE00CE1842 /* Locshare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Locshare.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -284,6 +287,8 @@
 				70571E58269CE62500CE1842 /* PostViewController.m */,
 				701B1CDF26AF13F2002CD8F3 /* ImagePickerViewController.h */,
 				701B1CE026AF13F2002CD8F3 /* ImagePickerViewController.m */,
+				7049025B26B4B23E00046A0C /* FriendRequestViewController.h */,
+				7049025C26B4B23E00046A0C /* FriendRequestViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -597,6 +602,7 @@
 				70571E62269CE67F00CE1842 /* LocationViewController.m in Sources */,
 				701B1CE426AF1A48002CD8F3 /* ImagePickerCell.m in Sources */,
 				701B1CE126AF13F2002CD8F3 /* ImagePickerViewController.m in Sources */,
+				7049025D26B4B23E00046A0C /* FriendRequestViewController.m in Sources */,
 				70571E20269CA9AF00CE1842 /* main.m in Sources */,
 				70571E4D269CB3D000CE1842 /* Location.m in Sources */,
 				70E26A2226AB667600B702D5 /* CommentCell.m in Sources */,

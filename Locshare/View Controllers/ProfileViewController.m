@@ -63,6 +63,8 @@
     // Round borders of friend button
     self.friendButton.layer.cornerRadius = 5;
     self.friendButton.layer.masksToBounds = true;
+    self.friendButton.layer.borderColor = [[UIColor colorWithRed:104/255.0 green:176/255.0 blue:171/255.0 alpha:1.0] CGColor];
+    self.friendButton.layer.borderWidth = 1;
 }
 
 - (void)changeEditability {

@@ -43,6 +43,7 @@ Geotag is a location based social media app that allows users to share the place
 
 **Optional Nice-to-have Stories**
 
+* Add friend request system
 * Users can either make public posts or private posts (only to friends)
 * Ability to add locations not in Google Maps SDK
 * Ability to filter posts on map feed by date or location 
