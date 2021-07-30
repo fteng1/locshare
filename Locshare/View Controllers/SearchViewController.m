@@ -38,6 +38,7 @@
     [self.searchBar setSearchFieldBackgroundImage:[UIImage new] forState:UIControlStateNormal];
     self.searchBar.searchTextField.layer.cornerRadius = 10;
     self.searchBar.searchTextField.clipsToBounds = true;
+    self.searchBar.searchTextField.font = [UIFont fontWithName:@"Kohinoor Devanagari" size:17];
 }
 
 - (void)fetchInitialPosts {

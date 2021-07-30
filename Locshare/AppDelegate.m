@@ -43,6 +43,10 @@
     [GMSPlacesClient provideAPIKey:gmapsAPIKey];
     
     [self configureKeyboardManager];
+    
+    // Set font of tab bar and navigation bar
+    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Kohinoor Devanagari" size:12], NSFontAttributeName, nil] forState:UIControlStateNormal];
+    [[UIBarButtonItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Kohinoor Devanagari" size:17], NSFontAttributeName, nil] forState:UIControlStateNormal];
 
     return YES;
 }

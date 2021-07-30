@@ -60,6 +60,7 @@
     [self.locationSearchBar setSearchFieldBackgroundImage:[UIImage new] forState:UIControlStateNormal];
     self.locationSearchBar.searchTextField.layer.cornerRadius = 10;
     self.locationSearchBar.searchTextField.clipsToBounds = true;
+    self.locationSearchBar.searchTextField.font = [UIFont fontWithName:@"Kohinoor Devanagari" size:17];
         
     // Add border to autocompleted results table view
     self.autocompleteTableView.layer.borderWidth = 0.5;
