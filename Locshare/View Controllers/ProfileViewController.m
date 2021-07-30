@@ -59,6 +59,10 @@
     // Make profile image circular
     self.profilePictureView.layer.cornerRadius = self.profilePictureView.frame.size.height / 2;;
     self.profilePictureView.layer.masksToBounds = true;
+    
+    // Round borders of friend button
+    self.friendButton.layer.cornerRadius = 5;
+    self.friendButton.layer.masksToBounds = true;
 }
 
 - (void)changeEditability {
