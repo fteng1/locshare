@@ -783,6 +783,7 @@
                             </collectionView>
                             <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="qZr-bq-9WV">
                                 <rect key="frame" x="150" y="103" width="230" height="128"/>
+                                <color key="tintColor" red="0.40784313729999999" green="0.69019607839999997" blue="0.6705882353" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="128" id="LBb-4S-JMP"/>
                                 </constraints>
@@ -814,6 +815,7 @@
                                                 <constraint firstItem="5sx-GS-3Gh" firstAttribute="top" secondItem="Peh-i9-Hne" secondAttribute="top" constant="11" id="w4c-wI-Xp7"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="tintColor" red="0.40784313729999999" green="0.69019607839999997" blue="0.6705882353" alpha="1" colorSpace="calibratedRGB"/>
                                         <gestureRecognizers/>
                                         <connections>
                                             <outlet property="locationLabel" destination="5sx-GS-3Gh" id="Ag6-g4-JVx"/>
@@ -1212,7 +1214,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="fU6-JF-6ag"/>
+        <segue reference="dcW-XL-d9M"/>
         <segue reference="cGp-mS-7X1"/>
         <segue reference="4Ck-x5-wBe"/>
         <segue reference="jvO-ql-lyu"/>

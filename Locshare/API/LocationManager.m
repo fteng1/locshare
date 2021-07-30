@@ -113,7 +113,6 @@ NSString *gMapsAPIKey;
     for (Location *loc in locations) {
         CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(loc.coordinate.latitude, loc.coordinate.longitude);
         LocationMarker *marker = [[LocationMarker alloc] initMarkerWithPosition:coord withLocation:loc];
-        marker.appearAnimation = kGMSMarkerAnimationPop;
         marker.userFiltered = filter;
         marker.map = mapView;
     }

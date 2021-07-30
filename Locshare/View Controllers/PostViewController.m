@@ -53,6 +53,10 @@
     [self.locationSearchBar setSearchFieldBackgroundImage:[UIImage new] forState:UIControlStateNormal];
     self.locationSearchBar.searchTextField.layer.cornerRadius = 10;
     self.locationSearchBar.searchTextField.clipsToBounds = true;
+        
+    // Add border to autocompleted results table view
+    self.autocompleteTableView.layer.borderWidth = 0.5;
+    self.autocompleteTableView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     
     [self.pickedPhotosCollectionView reloadData];
     self.storageView = [UIImageView new];
@@ -137,6 +141,7 @@
     else {
         cell.locationLabel.text = loc[@"name"];
     }
+    
     return cell;
 }
 
