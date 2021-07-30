@@ -122,12 +122,12 @@
                                 <color key="backgroundColor" systemColor="systemGray2Color"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c7C-j7-4Jm">
-                                <rect key="frame" x="320" y="541" width="55" height="55"/>
+                                <rect key="frame" x="323" y="541" width="55" height="55"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="55" id="GVK-He-Ssq"/>
                                     <constraint firstAttribute="width" constant="55" id="lzg-KH-4p6"/>
                                 </constraints>
-                                <state key="normal" image="arrow.clockwise" catalog="system" backgroundImage="button_compass"/>
+                                <state key="normal" image="refresh_button"/>
                                 <connections>
                                     <action selector="onRefreshTap:" destination="WC1-1V-sli" eventType="touchUpInside" id="Y0n-MR-sZX"/>
                                 </connections>
@@ -141,7 +141,7 @@
                             <constraint firstItem="EE5-fJ-9G0" firstAttribute="bottom" secondItem="c7C-j7-4Jm" secondAttribute="bottom" constant="77" id="LbZ-UM-aVY"/>
                             <constraint firstItem="7SV-rC-Uhw" firstAttribute="trailing" secondItem="EE5-fJ-9G0" secondAttribute="trailing" id="ano-ar-4gE"/>
                             <constraint firstItem="7SV-rC-Uhw" firstAttribute="bottom" secondItem="EE5-fJ-9G0" secondAttribute="bottom" id="cPE-Cp-2XN"/>
-                            <constraint firstItem="EE5-fJ-9G0" firstAttribute="trailing" secondItem="c7C-j7-4Jm" secondAttribute="trailing" constant="15" id="jM7-jG-t6V"/>
+                            <constraint firstItem="EE5-fJ-9G0" firstAttribute="trailing" secondItem="c7C-j7-4Jm" secondAttribute="trailing" constant="12" id="jM7-jG-t6V"/>
                             <constraint firstItem="7SV-rC-Uhw" firstAttribute="leading" secondItem="EE5-fJ-9G0" secondAttribute="leading" id="qqm-Lr-PKd"/>
                         </constraints>
                     </view>
@@ -1126,7 +1126,7 @@
                                     <constraint firstAttribute="height" constant="55" id="ZFW-kC-rlP"/>
                                     <constraint firstAttribute="width" constant="55" id="grb-wv-QFN"/>
                                 </constraints>
-                                <state key="normal" image="arrow.clockwise" catalog="system" backgroundImage="button_compass"/>
+                                <state key="normal" image="refresh_button"/>
                                 <connections>
                                     <action selector="onRefreshTap:" destination="0vV-1o-gEl" eventType="touchUpInside" id="5hh-S1-YDo"/>
                                 </connections>
@@ -1353,12 +1353,10 @@
     <inferredMetricsTieBreakers>
         <segue reference="dcW-XL-d9M"/>
         <segue reference="gvy-cC-lvO"/>
-        <segue reference="4Ck-x5-wBe"/>
+        <segue reference="iyg-Pk-zZM"/>
         <segue reference="jvO-ql-lyu"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="arrow.clockwise" catalog="system" width="115" height="128"/>
-        <image name="button_compass" width="128" height="128"/>
         <image name="camera" catalog="system" width="128" height="94"/>
         <image name="camera.metering.center.weighted" catalog="system" width="128" height="93"/>
         <image name="checkmark" catalog="system" width="128" height="114"/>
@@ -1369,6 +1367,7 @@
         <image name="person" catalog="system" width="128" height="117"/>
         <image name="photo" catalog="system" width="128" height="93"/>
         <image name="photo.on.rectangle.angled" catalog="system" width="128" height="101"/>
+        <image name="refresh_button" width="465" height="465"/>
         <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
