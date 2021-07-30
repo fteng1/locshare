@@ -58,7 +58,7 @@
     if (!image) {
         return nil;
     }
-    NSData *imageData = UIImagePNGRepresentation(image);
+    NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
     
     // get image data and check if that is not nil
     if (!imageData) {
