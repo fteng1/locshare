@@ -28,6 +28,12 @@
     self.resultsTableView.delegate = self;
     self.resultsTableView.dataSource = self;
     
+    // Change color of search bar
+    self.searchBar.searchTextField.backgroundColor = [UIColor colorWithRed:250/255.0 green:243/255.0 blue:221/255.0 alpha:1];
+    [self.searchBar setSearchFieldBackgroundImage:[UIImage new] forState:UIControlStateNormal];
+    self.searchBar.searchTextField.layer.cornerRadius = 10;
+    self.searchBar.searchTextField.clipsToBounds = true;
+    
     [self fetchInitialPosts];
 }
 

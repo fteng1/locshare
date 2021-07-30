@@ -48,6 +48,12 @@
     self.pickedPhotosCollectionView.dataSource = self;
     [self setCollectionViewLayout];
     
+    // Change color of search bar
+    self.locationSearchBar.searchTextField.backgroundColor = [UIColor colorWithRed:250/255.0 green:243/255.0 blue:221/255.0 alpha:1];
+    [self.locationSearchBar setSearchFieldBackgroundImage:[UIImage new] forState:UIControlStateNormal];
+    self.locationSearchBar.searchTextField.layer.cornerRadius = 10;
+    self.locationSearchBar.searchTextField.clipsToBounds = true;
+    
     [self.pickedPhotosCollectionView reloadData];
     self.storageView = [UIImageView new];
 }
