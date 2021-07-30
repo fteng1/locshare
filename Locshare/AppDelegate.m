@@ -49,7 +49,7 @@
 
 - (void)configureKeyboardManager {
     [IQKeyboardManager sharedManager].enable = true;
-    [IQKeyboardManager sharedManager].keyboardDistanceFromTextField = 0;
+    [IQKeyboardManager sharedManager].keyboardDistanceFromTextField = 10;
     [IQKeyboardManager sharedManager].enableAutoToolbar = false;
     [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = true;
 }
