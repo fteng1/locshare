@@ -39,9 +39,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Set images for button for liked and not liked states
-    [self.likeButton setImage:[UIImage systemImageNamed:@"heart"] forState:UIControlStateNormal];
-    [self.likeButton setImage:[UIImage systemImageNamed:@"heart.fill"] forState:UIControlStateSelected];
+    [self initializeUI];
     
     [self updateFields];
 
@@ -54,6 +52,15 @@
     [self getAuthorInfoInBackground];
     [self fetchComments];
 }
+
+- (void)initializeUI {
+    // Set images for button for liked and not liked states
+    [self.likeButton setImage:[UIImage systemImageNamed:@"heart"] forState:UIControlStateNormal];
+    [self.likeButton setImage:[UIImage systemImageNamed:@"heart.fill"] forState:UIControlStateSelected];
+    
+    // Make profile image circular
+    self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height / 2;;
+    self.profileImageView.layer.masksToBounds = true;}
 
 - (void)setCollectionViewLayout {
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *) self.photoCollectionView.collectionViewLayout;

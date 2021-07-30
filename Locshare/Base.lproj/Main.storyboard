@@ -630,6 +630,7 @@
                                 <color key="backgroundColor" red="0.7843137255" green="0.83529411760000005" blue="0.72549019609999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="8qa-Y6-VN7" secondAttribute="bottom" constant="100" id="1jS-h7-6fu"/>
+                                    <constraint firstItem="WLr-tY-28c" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="iOg-Ig-bAL" secondAttribute="leading" constant="8" id="CDl-9k-jFe"/>
                                     <constraint firstItem="8qa-Y6-VN7" firstAttribute="centerX" secondItem="iOg-Ig-bAL" secondAttribute="centerX" id="JQZ-Ha-zm7"/>
                                     <constraint firstItem="rSY-TK-Wdk" firstAttribute="leading" secondItem="iOg-Ig-bAL" secondAttribute="leading" id="Yha-Sd-zZ7"/>
                                     <constraint firstItem="WLr-tY-28c" firstAttribute="top" secondItem="iOg-Ig-bAL" secondAttribute="top" constant="8" id="ZyX-dQ-bCS"/>

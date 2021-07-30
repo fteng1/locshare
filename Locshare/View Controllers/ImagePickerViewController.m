@@ -184,12 +184,14 @@
     // Get larger version of each selected image
     for (NSNumber *num in self.selectedPhotos) {
         if (!self.useCamera) {
-            [[PHImageManager defaultManager] requestImageForAsset:self.photosToDisplay[[num intValue]] targetSize:CGSizeMake(400, 300) contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+            PHImageRequestOptions *options = [PHImageRequestOptions new];
+            options.synchronous = true;
+            [[PHImageManager defaultManager] requestImageForAsset:self.photosToDisplay[[num intValue]] targetSize:CGSizeMake(400, 300) contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
                 [imagesToReturn addObject:result];
                 
                 // Check if this is the final image to load
                 if ([imagesToReturn count] == [self.selectedPhotos count]) {
-                    [self.delegate didFinishPicking:imagesToReturn];
+                    [self.delegate didFinishPicking:[imagesToReturn copy]];
                     [self dismissViewControllerAnimated:true completion:nil];
                 }
             }];
@@ -198,7 +200,7 @@
             [imagesToReturn addObject:[UIImage imageWithData:self.photosFromCamera[[num intValue]]]];
             // Check if this is the final image to load
             if ([imagesToReturn count] == [self.selectedPhotos count]) {
-                [self.delegate didFinishPicking:imagesToReturn];
+                [self.delegate didFinishPicking:[imagesToReturn copy]];
                 [self dismissViewControllerAnimated:true completion:nil];
             }
         }

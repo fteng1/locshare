@@ -41,7 +41,7 @@
     self.autocompleteTableView.dataSource = self;
     self.locationSearchBar.delegate = self;
     self.captionTextView.placeholder = @"Write a caption...";
-    self.photosToUpload = [[NSMutableArray alloc] init];
+    self.photosToUpload = [[NSArray alloc] init];
         
     // Initialize CollectionView
     self.pickedPhotosCollectionView.delegate = self;
@@ -95,23 +95,23 @@
 - (IBAction)shareButton:(id)sender {
     if (self.locationSearchBar.text.length != 0) {
         Post *newPost = [Post initPost:self.photosToUpload withCaption:self.captionTextView.text withLocation:self.locationID];
-            // Make new post with the given location ID
-            [Post makePost:newPost completion:^(NSString * userPostID, NSError * _Nullable error) {
-                if (error != nil) {
-                    NSLog(@"Post share failed: %@", error.localizedDescription);
-                }
-                else {
-                    NSLog(@"Post shared successfully");
-                    [Location tagLocation:self.locationID newPost:userPostID completion:^(NSError * _Nonnull error) {
-                        if (error != nil) {
-                            NSLog(@"Location tag failed: %@", error.localizedDescription);
-                        }
-                    }];
-                    PFUser *currentUser = [PFUser currentUser];
-                    [currentUser incrementKey:@"numPosts"];
-                    [currentUser saveInBackground];
-                }
-            }];
+        // Make new post with the given location ID
+        [Post makePost:newPost completion:^(NSString * userPostID, NSError * _Nullable error) {
+            if (error != nil) {
+                NSLog(@"Post share failed: %@", error.localizedDescription);
+            }
+            else {
+                NSLog(@"Post shared successfully");
+                [Location tagLocation:self.locationID newPost:userPostID completion:^(NSError * _Nonnull error) {
+                    if (error != nil) {
+                        NSLog(@"Location tag failed: %@", error.localizedDescription);
+                    }
+                }];
+                PFUser *currentUser = [PFUser currentUser];
+                [currentUser incrementKey:@"numPosts"];
+                [currentUser saveInBackground];
+            }
+        }];
         [self performSegueWithIdentifier:@"afterPostSegue" sender:nil];
     }
     else {
