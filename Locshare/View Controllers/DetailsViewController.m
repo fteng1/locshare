@@ -13,7 +13,7 @@
 #import "Comment.h"
 #import "CommentCell.h"
 
-@interface DetailsViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UITableViewDelegate, UITableViewDelegate, UITableViewDataSource>
+@interface DetailsViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UITableViewDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *commentView;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
@@ -27,13 +27,17 @@
 @property (weak, nonatomic) IBOutlet UITextField *commentTextField;
 @property (weak, nonatomic) IBOutlet UIButton *postCommentButton;
 @property (weak, nonatomic) IBOutlet UITableView *commentTableView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *commentViewBottomConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *commentViewTopConstraint;
 
 @property (strong, nonatomic) PFUser *postAuthor;
 @property (strong, nonatomic) NSMutableArray *comments;
+@property (assign, nonatomic) CGFloat tabBarHeight;
 
 @end
 
 @implementation DetailsViewController
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -48,6 +52,8 @@
     self.photoCollectionView.delegate = self;
     self.commentTableView.dataSource = self;
     self.commentTableView.delegate = self;
+    self.commentTextField.delegate = self;
+    self.tabBarHeight = self.tabBarController.tabBar.frame.size.height;
     
     [self getAuthorInfoInBackground];
     [self fetchComments];

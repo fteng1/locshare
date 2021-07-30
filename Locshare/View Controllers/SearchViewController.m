@@ -8,6 +8,7 @@
 #import "SearchViewController.h"
 #import "UserSearchCell.h"
 #import "ProfileViewController.h"
+#import <IQKeyboardManager/IQKeyboardManager.h>
 
 @interface SearchViewController () <UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource>
 
