@@ -1147,7 +1147,6 @@
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Description" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="XXV-jb-xqs">
                                 <rect key="frame" x="178" y="78" width="197" height="58"/>
-                                <color key="backgroundColor" red="0.89019607840000003" green="0.91764705879999997" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="58" id="PJa-tx-0jb"/>
@@ -1168,7 +1167,7 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="fiE-Ec-Ncu"/>
-                        <color key="backgroundColor" red="0.89019607840000003" green="0.91764705879999997" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.94509803920000002" green="0.95686274510000002" blue="0.92941176469999998" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="sOe-vH-mf4" firstAttribute="leading" secondItem="I68-Xy-AS9" secondAttribute="trailing" constant="7" id="BPl-3I-5sJ"/>
                             <constraint firstItem="fiE-Ec-Ncu" firstAttribute="trailing" secondItem="obh-d4-xvP" secondAttribute="trailing" constant="50" id="IU4-A7-PD6"/>
