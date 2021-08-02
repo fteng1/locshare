@@ -34,7 +34,9 @@
     [self setCollectionViewLayout];
     self.selectedPhotos = [NSMutableArray new];
     self.photosFromCamera = [NSMutableArray new];
-    
+}
+
+- (void)viewDidAppear:(BOOL)animated {
     if (!self.useCamera) {
         // Select photos from photo library
         // Check if app has authorization to access photos, and request authorization if it does not
@@ -87,33 +89,50 @@
 
 - (void)takePhotos {
     AVCaptureSession *captureSession = [[AVCaptureSession alloc] init];
-    [self initializeSessionConfiguration:captureSession];
-    
-    // Show a camera preview of the photos that will be taken
-    self.previewView.hidden = false;
-    AVCaptureVideoPreviewLayer *previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:captureSession];
-    previewLayer.frame = self.previewView.bounds;
-    [self.previewView.layer insertSublayer:previewLayer atIndex:0];
-    
-    [captureSession startRunning];
+    AVCaptureDevice *camera = [self findCamera];
+    if (camera) {
+        [self initializeSessionConfiguration:captureSession camera:camera];
+        
+        // Show a camera preview of the photos that will be taken
+        self.previewView.hidden = false;
+        AVCaptureVideoPreviewLayer *previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:captureSession];
+        previewLayer.frame = self.previewView.bounds;
+        [self.previewView.layer insertSublayer:previewLayer atIndex:0];
+        
+        [captureSession startRunning];
+    }
+    else {
+        [self dismissViewControllerAnimated:true completion:nil];
+        // Make alert for when no camera is available
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Cannot Take Photo" message:@"Camera is not available on this device" preferredStyle:(UIAlertControllerStyleAlert)];
+        // create an OK action
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}];
+        // add the OK action to the alert controller
+        [alert addAction:okAction];
+        [self presentViewController:alert animated:YES completion:^{}];
+    }
 }
 
-- (void)initializeSessionConfiguration:(AVCaptureSession *)session {
-    [session beginConfiguration];
-    
+- (AVCaptureDevice *)findCamera {
     // Search for rear camera of phone and set it to be capture device
     AVCaptureDevice *inputDevice = nil;
     AVCaptureDeviceDiscoverySession *captureDeviceDiscoverySession = [AVCaptureDeviceDiscoverySession discoverySessionWithDeviceTypes:@[AVCaptureDeviceTypeBuiltInWideAngleCamera]
                                           mediaType:AVMediaTypeVideo
                                            position:AVCaptureDevicePositionBack];
     NSArray *cameras = [captureDeviceDiscoverySession devices];
+    
     for (AVCaptureDevice *camera in cameras) {
         if([camera position] == AVCaptureDevicePositionBack) {
             inputDevice = camera;
             break;
         }
     }
-    
+    return inputDevice;
+}
+
+- (void)initializeSessionConfiguration:(AVCaptureSession *)session camera:(AVCaptureDevice *)inputDevice {
+    [session beginConfiguration];
+
     // Configure the input to be the rear camera and add to session
     AVCaptureDeviceInput *videoInput = [AVCaptureDeviceInput deviceInputWithDevice:inputDevice error:nil];
     if (videoInput) {
