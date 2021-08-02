@@ -27,6 +27,7 @@
     self.searchBar.delegate = self;
     self.resultsTableView.delegate = self;
     self.resultsTableView.dataSource = self;
+    self.resultsTableView.tableFooterView = [UIView new];
     
     [self initializeUI];
     [self fetchInitialPosts];

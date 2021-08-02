@@ -24,6 +24,7 @@
     
     self.requestTableView.delegate = self;
     self.requestTableView.dataSource = self;
+    self.requestTableView.tableFooterView = [UIView new];
     
     [self fetchRequests];
 }

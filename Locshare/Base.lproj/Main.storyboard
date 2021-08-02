@@ -936,7 +936,6 @@
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="170" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Bxf-Oi-t9p">
                                 <rect key="frame" x="0.0" y="44" width="390" height="629"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <color key="sectionIndexBackgroundColor" red="0.94509803920000002" green="0.95686274510000002" blue="0.92941176469999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="UserSearchCell" rowHeight="127" id="4xv-jC-8ow" customClass="UserSearchCell">
@@ -1155,9 +1154,9 @@
                                 <fontDescription key="fontDescription" name="KohinoorDevanagari-Regular" family="Kohinoor Devanagari" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ODo-ho-d6a">
-                                <rect key="frame" x="191" y="142.66666666666666" width="68" height="34"/>
-                                <fontDescription key="fontDescription" name="KohinoorDevanagari-Regular" family="Kohinoor Devanagari" pointSize="17"/>
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ODo-ho-d6a">
+                                <rect key="frame" x="191" y="142.66666666666666" width="61" height="31"/>
+                                <fontDescription key="fontDescription" name="KohinoorDevanagari-Regular" family="Kohinoor Devanagari" pointSize="15"/>
                                 <color key="tintColor" red="0.40784313729999999" green="0.69019607839999997" blue="0.6705882353" alpha="1" colorSpace="calibratedRGB"/>
                                 <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
                                 <state key="normal" title=" Friend "/>
@@ -1193,7 +1192,7 @@
                             <constraint firstItem="1hg-M9-fQL" firstAttribute="top" secondItem="fiE-Ec-Ncu" secondAttribute="top" constant="15" id="Xg3-gu-eoe"/>
                             <constraint firstItem="fiE-Ec-Ncu" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ODo-ho-d6a" secondAttribute="trailing" constant="28" id="YDC-M5-eG6"/>
                             <constraint firstItem="ODo-ho-d6a" firstAttribute="top" secondItem="XXV-jb-xqs" secondAttribute="bottom" constant="6.6699999999999999" id="aOn-kV-ma9"/>
-                            <constraint firstItem="LYn-Lf-JBE" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1hg-M9-fQL" secondAttribute="trailing" constant="171" id="ac3-Mu-o67"/>
+                            <constraint firstItem="LYn-Lf-JBE" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1hg-M9-fQL" secondAttribute="trailing" constant="20" id="ac3-Mu-o67"/>
                             <constraint firstItem="vqH-vT-f2X" firstAttribute="bottom" secondItem="fiE-Ec-Ncu" secondAttribute="bottom" id="cKy-Z4-8xx"/>
                             <constraint firstItem="fiE-Ec-Ncu" firstAttribute="bottom" secondItem="RTy-8Q-C8a" secondAttribute="bottom" constant="10" id="cg7-Xv-rWq"/>
                             <constraint firstItem="RQZ-VY-IbK" firstAttribute="top" secondItem="fiE-Ec-Ncu" secondAttribute="top" constant="40" id="cqs-Lb-rLc"/>
@@ -1253,7 +1252,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fc0-mN-Tdg">
                                 <rect key="frame" x="0.0" y="0.0" width="390" height="673"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" red="0.94509803920000002" green="0.95686274510000002" blue="0.92941176469999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RequestCell" rowHeight="127" id="O8C-sI-rcw" customClass="UserSearchCell">
                                         <rect key="frame" x="0.0" y="24.333333969116211" width="390" height="127"/>
@@ -1357,7 +1356,7 @@
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="n9X-3m-7ZI"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" red="0.94509803920000002" green="0.95686274510000002" blue="0.92941176469999998" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="fc0-mN-Tdg" firstAttribute="leading" secondItem="n9X-3m-7ZI" secondAttribute="leading" id="9DV-PT-CQs"/>
                             <constraint firstItem="fc0-mN-Tdg" firstAttribute="top" secondItem="n9X-3m-7ZI" secondAttribute="top" id="IPg-sf-tMl"/>
