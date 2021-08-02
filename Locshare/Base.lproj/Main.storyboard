@@ -1165,10 +1165,21 @@
                                     <action selector="onFriendTap:" destination="0vV-1o-gEl" eventType="touchUpInside" id="G8j-a0-Pps"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LYn-Lf-JBE">
+                                <rect key="frame" x="348" y="10" width="32" height="33"/>
+                                <fontDescription key="fontDescription" name="KohinoorDevanagari-Regular" family="Kohinoor Devanagari" pointSize="15"/>
+                                <state key="normal" title="Save">
+                                    <color key="titleColor" red="0.2901960784" green="0.48627450979999998" blue="0.34901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="onSaveTap:" destination="0vV-1o-gEl" eventType="touchUpInside" id="dV7-Co-S9c"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="fiE-Ec-Ncu"/>
                         <color key="backgroundColor" red="0.94509803920000002" green="0.95686274510000002" blue="0.92941176469999998" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="fiE-Ec-Ncu" firstAttribute="trailing" secondItem="LYn-Lf-JBE" secondAttribute="trailing" constant="10" id="56M-7h-OFv"/>
                             <constraint firstItem="sOe-vH-mf4" firstAttribute="leading" secondItem="I68-Xy-AS9" secondAttribute="trailing" constant="7" id="BPl-3I-5sJ"/>
                             <constraint firstItem="fiE-Ec-Ncu" firstAttribute="trailing" secondItem="obh-d4-xvP" secondAttribute="trailing" constant="50" id="IU4-A7-PD6"/>
                             <constraint firstItem="I68-Xy-AS9" firstAttribute="top" secondItem="1hg-M9-fQL" secondAttribute="bottom" constant="25" id="K0T-5u-wOj"/>
@@ -1182,10 +1193,12 @@
                             <constraint firstItem="1hg-M9-fQL" firstAttribute="top" secondItem="fiE-Ec-Ncu" secondAttribute="top" constant="15" id="Xg3-gu-eoe"/>
                             <constraint firstItem="fiE-Ec-Ncu" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ODo-ho-d6a" secondAttribute="trailing" constant="28" id="YDC-M5-eG6"/>
                             <constraint firstItem="ODo-ho-d6a" firstAttribute="top" secondItem="XXV-jb-xqs" secondAttribute="bottom" constant="6.6699999999999999" id="aOn-kV-ma9"/>
+                            <constraint firstItem="LYn-Lf-JBE" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1hg-M9-fQL" secondAttribute="trailing" constant="171" id="ac3-Mu-o67"/>
                             <constraint firstItem="vqH-vT-f2X" firstAttribute="bottom" secondItem="fiE-Ec-Ncu" secondAttribute="bottom" id="cKy-Z4-8xx"/>
                             <constraint firstItem="fiE-Ec-Ncu" firstAttribute="bottom" secondItem="RTy-8Q-C8a" secondAttribute="bottom" constant="10" id="cg7-Xv-rWq"/>
                             <constraint firstItem="RQZ-VY-IbK" firstAttribute="top" secondItem="fiE-Ec-Ncu" secondAttribute="top" constant="40" id="cqs-Lb-rLc"/>
                             <constraint firstItem="0Si-Pq-MvS" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="sOe-vH-mf4" secondAttribute="trailing" constant="10" id="f0c-zn-6pT"/>
+                            <constraint firstItem="LYn-Lf-JBE" firstAttribute="top" secondItem="fiE-Ec-Ncu" secondAttribute="top" constant="10" id="f2N-rK-1j7"/>
                             <constraint firstItem="fiE-Ec-Ncu" firstAttribute="trailing" secondItem="RQZ-VY-IbK" secondAttribute="trailing" constant="15" id="g2Z-cm-R5c"/>
                             <constraint firstItem="1hg-M9-fQL" firstAttribute="leading" secondItem="fiE-Ec-Ncu" secondAttribute="leading" constant="15" id="i7c-kF-u6O"/>
                             <constraint firstItem="ODo-ho-d6a" firstAttribute="leading" secondItem="1hg-M9-fQL" secondAttribute="trailing" constant="28" id="kMN-c7-pZS"/>
@@ -1198,10 +1211,10 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Profile" id="302-at-7jT">
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="vD5-s6-ISU">
+                        <barButtonItem key="rightBarButtonItem" image="archivebox" catalog="system" id="vD5-s6-ISU">
                             <color key="tintColor" red="0.2901960784" green="0.48627450979999998" blue="0.34901960780000002" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <action selector="onSaveTap:" destination="0vV-1o-gEl" id="eA6-gM-Gj2"/>
+                                <action selector="onRequestsTap:" destination="0vV-1o-gEl" id="hlH-Bb-XpE"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1213,7 +1226,7 @@
                         <outlet property="postCountLabel" destination="0Si-Pq-MvS" id="VjD-Cq-eGv"/>
                         <outlet property="postLabel" destination="obh-d4-xvP" id="aVv-qV-Wyi"/>
                         <outlet property="profilePictureView" destination="1hg-M9-fQL" id="jpp-sp-kld"/>
-                        <outlet property="saveButton" destination="vD5-s6-ISU" id="zCK-JP-faE"/>
+                        <outlet property="saveButton" destination="LYn-Lf-JBE" id="TkB-bU-iRQ"/>
                         <outlet property="userMapView" destination="vqH-vT-f2X" id="cHa-93-V1P"/>
                         <outlet property="usernameLabel" destination="RQZ-VY-IbK" id="m6Q-ZK-XU4"/>
                         <segue destination="L79-Ro-h21" kind="show" identifier="profileLocationSegue" id="4Ck-x5-wBe"/>
@@ -1238,7 +1251,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="673"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fc0-mN-Tdg">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fc0-mN-Tdg">
                                 <rect key="frame" x="0.0" y="0.0" width="390" height="673"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
@@ -1391,9 +1404,10 @@
         <segue reference="dcW-XL-d9M"/>
         <segue reference="gvy-cC-lvO"/>
         <segue reference="4Ck-x5-wBe"/>
-        <segue reference="jvO-ql-lyu"/>
+        <segue reference="ybK-Mk-Bd7"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="archivebox" catalog="system" width="128" height="106"/>
         <image name="camera" catalog="system" width="128" height="94"/>
         <image name="camera.metering.center.weighted" catalog="system" width="128" height="93"/>
         <image name="checkmark" catalog="system" width="128" height="114"/>

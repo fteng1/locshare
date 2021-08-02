@@ -9,7 +9,7 @@
 #import "UserSearchCell.h"
 #import <Parse/Parse.h>
 
-@interface FriendRequestViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface FriendRequestViewController () <UITableViewDelegate, UITableViewDataSource, UserSearchCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *requestTableView;
 
@@ -21,6 +21,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.requestTableView.delegate = self;
+    self.requestTableView.dataSource = self;
+    
+    [self fetchRequests];
 }
 
 - (void)fetchRequests {
@@ -44,9 +49,16 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UserSearchCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RequestCell"];
+    cell.delegate = self;
     cell.user = self.requests[indexPath.row];
+    cell.cellIndex = indexPath.row;
     [cell setFieldsWithUser];
     return cell;
+}
+
+- (void)didFinishRespondingToFriendRequest:(NSInteger)index {
+    [self.requests removeObjectAtIndex:index];
+    [self.requestTableView reloadData];
 }
 
 @end

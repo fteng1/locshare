@@ -10,6 +10,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol UserSearchCellDelegate
+
+- (void)didFinishRespondingToFriendRequest:(NSInteger)index;
+
+@end
+
 @interface UserSearchCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet PFImageView *profileImageView;
@@ -21,6 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *declineRequestButtonWidthConstraint;
 
 @property (strong, nonatomic) PFUser *user;
+@property (nonatomic, weak) id<UserSearchCellDelegate> delegate;
+@property (assign, nonatomic) NSInteger cellIndex;
 
 - (void)setFieldsWithUser;
 

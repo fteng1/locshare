@@ -59,12 +59,13 @@
     [currUser removeObject:self.user.objectId forKey:@"pendingFriends"];
     
     [currUser saveInBackground];
+    [self.delegate didFinishRespondingToFriendRequest:self.cellIndex];
 }
 
 - (IBAction)declineRequest:(id)sender {
     PFUser *currUser = [PFUser currentUser];
     
-    NSDictionary *parameters = @{@"userToEditID": self.user.objectId, @"friend": @(true), @"currentUserID": currUser.objectId};
+    NSDictionary *parameters = @{@"userToEditID": self.user.objectId, @"currentUserID": currUser.objectId};
     // Remove request from list of pending requests
     [PFCloud callFunctionInBackground:@"respondToFriendRequest" withParameters:parameters];
     
@@ -72,6 +73,7 @@
     [currUser removeObject:self.user.objectId forKey:@"pendingFriends"];
     
     [currUser saveInBackground];
+    [self.delegate didFinishRespondingToFriendRequest:self.cellIndex];
 }
 
 @end

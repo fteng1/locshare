@@ -25,7 +25,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *friendCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *postCountLabel;
 @property (weak, nonatomic) IBOutlet GMSMapView *userMapView;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *saveButton;
+@property (weak, nonatomic) IBOutlet UIButton *saveButton;
 @property (weak, nonatomic) IBOutlet UIButton *friendButton;
 @property (weak, nonatomic) IBOutlet UILabel *friendLabel;
 @property (weak, nonatomic) IBOutlet UILabel *postLabel;
@@ -74,7 +74,7 @@
             self.tabBarController.delegate = self;
         }
         self.user = [PFUser currentUser];
-        self.saveButton.title = @"Save";
+        self.saveButton.titleLabel.text = @"Save";
         self.saveButton.enabled = true;
         self.descriptionTextView.editable = true;
         self.profilePictureView.userInteractionEnabled = true;
@@ -83,22 +83,36 @@
     }
     else
     {
-        self.saveButton.title = @"";
+        self.saveButton.titleLabel.text = @"";
         self.saveButton.enabled = false;
         self.descriptionTextView.editable = false;
         self.profilePictureView.userInteractionEnabled = false;
         
         // Handle friend button visibility/enabled state
-        [self.friendButton setTitle:@"Already Friends" forState: UIControlStateSelected];
         [self.friendButton setTitle:@"Friend" forState: UIControlStateNormal];
+        [self.friendButton setTitle:@"Friend Request Sent" forState: UIControlStateSelected];
         if (![self.user.objectId isEqual:[PFUser currentUser].objectId]) {
             self.friendButton.hidden = false;
             NSArray *friendList = [PFUser currentUser][@"friends"];
-            if ([friendList containsObject:self.user.objectId]) {
+            NSArray *requestedList = [PFUser currentUser][@"requestsSent"];
+            NSArray *pendingList = [PFUser currentUser][@"pendingFriends"];
+            if ([pendingList containsObject:self.user.objectId]) {
+                [self.friendButton setTitle:@"Respond to Request" forState: UIControlStateSelected];
                 self.friendButton.selected = true;
+                self.friendButton.userInteractionEnabled = false;
             }
             else {
-                self.friendButton.selected = false;
+                self.friendButton.userInteractionEnabled = true;
+                if ([friendList containsObject:self.user.objectId]) {
+                    [self.friendButton setTitle:@"Already Friends" forState: UIControlStateSelected];
+                    self.friendButton.selected = true;
+                }
+                else if ([requestedList containsObject:self.user.objectId]) {
+                    self.friendButton.selected = true;
+                }
+                else {
+                    self.friendButton.selected = false;
+                }
             }
         }
         else {
@@ -109,21 +123,25 @@
 
 - (IBAction)onFriendTap:(id)sender {
     PFUser *currUser = [PFUser currentUser];
-    NSNumber *incrementFriendAmount = @(1);
     // Update fields in database
     if (!self.friendButton.selected) {
-        [PFCloud callFunctionInBackground:@"friendUser" withParameters:@{@"userToEditID": self.user.objectId, @"friend": @(true), @"currentUserID": currUser.objectId}];
-        [currUser addObject:self.user.objectId forKey:@"friends"];
+        // Send friend request if request not yet sent
+        [PFCloud callFunctionInBackground:@"sendFriendRequest" withParameters:@{@"userToEditID": self.user.objectId, @"friend": @(true), @"currentUserID": currUser.objectId}];
+        [currUser addObject:self.user.objectId forKey:@"requestsSent"];
     }
     else {
-        [PFCloud callFunctionInBackground:@"friendUser" withParameters:@{@"userToEditID": self.user.objectId, @"friend": @(false), @"currentUserID": currUser.objectId}];
-        incrementFriendAmount = @(-1);
-        [currUser removeObject:self.user.objectId forKey:@"friends"];
+        if ([(NSArray *)[PFUser currentUser][@"friends"] containsObject:self.user.objectId]) {
+            [PFCloud callFunctionInBackground:@"friendUser" withParameters:@{@"userToEditID": self.user.objectId, @"friend": @(false), @"currentUserID": currUser.objectId}];
+            [currUser removeObject:self.user.objectId forKey:@"friends"];
+        }
+        else {
+            // Remove friend request if request not yet responded to
+            [PFCloud callFunctionInBackground:@"sendFriendRequest" withParameters:@{@"userToEditID": self.user.objectId, @"friend": @(false), @"currentUserID": currUser.objectId}];
+            [currUser removeObject:self.user.objectId forKey:@"requestsSent"];
+        }
     }
     
     // Update fields locally
-    [self.user incrementKey:@"numFriends" byAmount:incrementFriendAmount];
-    [currUser incrementKey:@"numFriends" byAmount:incrementFriendAmount];
     self.friendButton.selected = !self.friendButton.selected;
     [self updateFields];
     
@@ -251,6 +269,10 @@
 - (IBAction)onRefreshTap:(id)sender {
     [self updateFields];
     [self fetchPosts];
+}
+
+- (IBAction)onRequestsTap:(id)sender {
+    [self performSegueWithIdentifier:@"friendRequestSegue" sender:nil];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
