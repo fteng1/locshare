@@ -9,6 +9,7 @@
 #import "UserSearchCell.h"
 #import <Parse/Parse.h>
 #import "AlertManager.h"
+#import "ProfileViewController.h"
 
 @interface FriendRequestViewController () <UITableViewDelegate, UITableViewDataSource, UserSearchCellDelegate>
 
@@ -58,9 +59,26 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self performSegueWithIdentifier:@"profileFromRequests" sender:nil];
+    [tableView deselectRowAtIndexPath:indexPath animated:true];
+}
+
 - (void)didFinishRespondingToFriendRequest:(NSInteger)index {
     [self.requests removeObjectAtIndex:index];
     [self.requestTableView reloadData];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    UserSearchCell *tappedCell = sender;
+    if ([[segue identifier] isEqualToString:@"profileFromRequests"]) {
+        NSIndexPath *indexPath = [self.requestTableView indexPathForCell:tappedCell];
+        PFUser *userToView = self.requests[indexPath.row];
+        
+        ProfileViewController *profileViewController = [segue destinationViewController];
+        profileViewController.user = userToView;
+    }
+
 }
 
 @end

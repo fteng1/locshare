@@ -31,9 +31,11 @@
 @property (weak, nonatomic) IBOutlet UIButton *friendButton;
 @property (weak, nonatomic) IBOutlet UILabel *friendLabel;
 @property (weak, nonatomic) IBOutlet UILabel *postLabel;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *requestsButton;
 
 @property (strong, nonatomic) NSDictionary *postsByLocationId;
 @property (strong, nonatomic) NSArray *postLocations;
+@property (assign, nonatomic) BOOL isEditable;
 
 @end
 
@@ -43,6 +45,13 @@
     [super viewDidLoad];
     
     self.userMapView.delegate = self;
+    if (self.user == nil) {
+        self.user = [PFUser currentUser];
+        self.isEditable = true;
+    }
+    else {
+        self.isEditable = false;
+    }
     
     [self setDefaultMapLocation];
     [self initializeUI];
@@ -71,24 +80,23 @@
 
 - (void)changeEditability {
     // If user accessed the profile via the tab bar, it is their own profile and they can edit
-    if ([self profileIsEditable]) {
+    if (self.isEditable) {
         if (self.tabBarController.delegate == nil) {
             self.tabBarController.delegate = self;
         }
-        self.user = [PFUser currentUser];
-        self.saveButton.titleLabel.text = @"Save";
-        self.saveButton.enabled = true;
+        self.saveButton.hidden = false;
         self.descriptionTextView.editable = true;
         self.profilePictureView.userInteractionEnabled = true;
         [self.descriptionTextView resignFirstResponder];
         self.friendButton.hidden = true;
+        self.navigationItem.rightBarButtonItem = self.requestsButton;
     }
     else
     {
-        self.saveButton.titleLabel.text = @"";
-        self.saveButton.enabled = false;
+        self.saveButton.hidden = true;
         self.descriptionTextView.editable = false;
         self.profilePictureView.userInteractionEnabled = false;
+        self.navigationItem.rightBarButtonItem = nil;
         
         // Handle friend button visibility/enabled state
         [self.friendButton setTitle:@"Friend" forState: UIControlStateNormal];
@@ -118,6 +126,7 @@
             }
         }
         else {
+            // hide friend button when the user views their own profile
             self.friendButton.hidden = true;
         }
     }
@@ -241,13 +250,10 @@
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
     // If user goes to this screen via the tab bar, the page displays the current user profile
     if ([tabBarController.viewControllers indexOfObject:viewController] == 3) {
+        self.isEditable = true;
         self.user = [PFUser currentUser];
         [self updateFields];
     }
-}
-
-- (BOOL)profileIsEditable {
-    return self.tabBarController.selectedIndex == 3;
 }
 
 // Save currently selected description and profile picture to database
@@ -256,6 +262,7 @@
     self.user[@"profilePicture"] = [Post getPFFileFromImage:self.profilePictureView.image];
     [self.user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         [self updateFields];
+        [AlertManager displayAlertWithTitle:@"Save Successful" text:@"Profile has been saved successfully" presenter:self];
     }];
     [self.descriptionTextView resignFirstResponder];
 }
