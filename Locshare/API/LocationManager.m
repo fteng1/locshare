@@ -7,6 +7,7 @@
 
 #import "LocationManager.h"
 #import "LocationMarker.h"
+#import "AlertManager.h"
 
 @implementation LocationManager
 NSString *gMapsAPIKey;
@@ -96,7 +97,7 @@ NSString *gMapsAPIKey;
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error != nil) {
-           NSLog(@"%@", [error localizedDescription]);
+            [AlertManager displayAlertWithTitle:@"Network Error" text:@"Could not complete network request" presenter:self.delegate];
             completion(nil, error);
         }
         else {

@@ -11,6 +11,7 @@
 #import "Post.h"
 #import "DetailsViewController.h"
 #import <GoogleMaps/GoogleMaps.h>
+#import "AlertManager.h"
 
 @interface LocationViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UITabBarControllerDelegate>
 
@@ -73,7 +74,7 @@
     query.limit = 1;
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (error != nil) {
-            NSLog(@"Error updating location: %@", error);
+            [AlertManager displayAlertWithTitle:@"Error Updating Location" text:@"Could not fetch this location" presenter:self];
         }
         else {
             self.location = objects[0];
@@ -106,7 +107,7 @@
             [self.postCollectionView reloadData];
         }
         else {
-            NSLog(@"Error retrieving posts: %@", error);
+            [AlertManager displayAlertWithTitle:@"Error Retrieving Posts" text:@"Could not fetch posts at this location" presenter:self];
         }
         [self.refreshControl endRefreshing];
     }];

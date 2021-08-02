@@ -35,6 +35,7 @@
 		708793FE26AA064400AB45BA /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 708793FD26AA064400AB45BA /* SearchViewController.m */; };
 		7087940126AA071A00AB45BA /* UserSearchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7087940026AA071A00AB45BA /* UserSearchCell.m */; };
 		70B30743269CFD4500ADFE9E /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 70B30742269CFD4500ADFE9E /* Keys.plist */; };
+		70DBE10226B893A700571DD2 /* AlertManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DBE10126B893A700571DD2 /* AlertManager.m */; };
 		70DD72B9269F93D600D2ACC9 /* PhotoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DD72B8269F93D600D2ACC9 /* PhotoViewCell.m */; };
 		70E26A2226AB667600B702D5 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70E26A2126AB667600B702D5 /* CommentCell.m */; };
 		A7C37B87B1356CCD753A958E /* Pods_LocshareTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB72C41EE9DADFD0AC0170F5 /* Pods_LocshareTests.framework */; };
@@ -119,6 +120,8 @@
 		708793FF26AA071A00AB45BA /* UserSearchCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserSearchCell.h; sourceTree = "<group>"; };
 		7087940026AA071A00AB45BA /* UserSearchCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserSearchCell.m; sourceTree = "<group>"; };
 		70B30742269CFD4500ADFE9E /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
+		70DBE10026B893A700571DD2 /* AlertManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlertManager.h; sourceTree = "<group>"; };
+		70DBE10126B893A700571DD2 /* AlertManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlertManager.m; sourceTree = "<group>"; };
 		70DD72B7269F93D600D2ACC9 /* PhotoViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotoViewCell.h; sourceTree = "<group>"; };
 		70DD72B8269F93D600D2ACC9 /* PhotoViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotoViewCell.m; sourceTree = "<group>"; };
 		70E26A2026AB667600B702D5 /* CommentCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommentCell.h; sourceTree = "<group>"; };
@@ -190,6 +193,8 @@
 				7075DFB326A5D9790073CB5A /* LocationMarker.m */,
 				7063F67026A77CEC00DE8196 /* ImageManager.h */,
 				7063F67126A77CEC00DE8196 /* ImageManager.m */,
+				70DBE10026B893A700571DD2 /* AlertManager.h */,
+				70DBE10126B893A700571DD2 /* AlertManager.m */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -608,6 +613,7 @@
 				70E26A2226AB667600B702D5 /* CommentCell.m in Sources */,
 				7087940126AA071A00AB45BA /* UserSearchCell.m in Sources */,
 				70571E65269CE69200CE1842 /* DetailsViewController.m in Sources */,
+				70DBE10226B893A700571DD2 /* AlertManager.m in Sources */,
 				70571E5F269CE66F00CE1842 /* ProfileViewController.m in Sources */,
 				70571E12269CA9AE00CE1842 /* SceneDelegate.m in Sources */,
 			);

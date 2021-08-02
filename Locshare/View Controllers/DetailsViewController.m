@@ -12,6 +12,7 @@
 #import "ProfileViewController.h"
 #import "Comment.h"
 #import "CommentCell.h"
+#import "AlertManager.h"
 
 @interface DetailsViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UITableViewDelegate, UITableViewDelegate, UITableViewDataSource>
 
@@ -112,7 +113,7 @@
             [self.commentTableView reloadData];
         }
         else {
-            NSLog(@"Error fetching comments: %@", error);
+            [AlertManager displayAlertWithTitle:@"Error Fetching Comments" text:@"Could not retrieve comments on this post" presenter:self];
         }
     }];
 }
@@ -148,7 +149,7 @@
     [query whereKey:@"objectId" equalTo:self.post.author.objectId];
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (error != nil) {
-            NSLog(@"Issue with obtaining user profile: %@", error);
+            [AlertManager displayAlertWithTitle:@"User Profile Error" text:@"Could not obtain the current user profile" presenter:self];
         }
         else {
             if ([objects count] == 1) {

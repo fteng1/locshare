@@ -8,6 +8,7 @@
 #import "FriendRequestViewController.h"
 #import "UserSearchCell.h"
 #import <Parse/Parse.h>
+#import "AlertManager.h"
 
 @interface FriendRequestViewController () <UITableViewDelegate, UITableViewDataSource, UserSearchCellDelegate>
 
@@ -35,7 +36,7 @@
     [query whereKey:@"objectId" containedIn:requestIDs];
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable users, NSError * _Nullable error) {
         if (error != nil) {
-            NSLog(@"Error fetching requests: %@", error);
+            [AlertManager displayAlertWithTitle:@"Request Error" text:@"Error fetching the user's friend requests" presenter:self];
         }
         else {
             self.requests = [NSMutableArray arrayWithArray:users];

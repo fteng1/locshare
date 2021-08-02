@@ -15,6 +15,7 @@
 #import "LocationViewController.h"
 #import "SceneDelegate.h"
 #import "LoginViewController.h"
+#import "AlertManager.h"
 
 @interface HomeFeedViewController () <CLLocationManagerDelegate, GMSMapViewDelegate>
 @property (weak, nonatomic) IBOutlet GMSMapView *homeMapView;
@@ -106,11 +107,11 @@ GMSPlacesClient *placesClient;
     [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
         // PFUser.current() will now be nil
         if (error != nil) {
-            NSLog(@"User log out failed: %@", error.localizedDescription);
+            [AlertManager displayAlertWithTitle:@"Logout Error" text:@"Could not logout the current user" presenter:self];
         }
         else {
             // After logout, return to login screen
-            NSLog(@"User logged out successfully");
+            [AlertManager displayAlertWithTitle:@"Logout Successful" text:@"User logged out successfully" presenter:self];
             SceneDelegate *sceneDelegate = (SceneDelegate *)self.view.window.windowScene.delegate;
 
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];

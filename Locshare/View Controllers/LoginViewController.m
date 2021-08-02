@@ -7,6 +7,7 @@
 
 #import "LoginViewController.h"
 #import <Parse/Parse.h>
+#import "AlertManager.h"
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *usernameField;
@@ -31,9 +32,9 @@
     // call sign up function on the object
     [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError * error) {
         if (error != nil) {
-            NSLog(@"Error: %@", error.localizedDescription);
+            [AlertManager displayAlertWithTitle:@"Register Error" text:@"Could not register the provided user" presenter:self];
         } else {
-            NSLog(@"User registered successfully");
+            [AlertManager displayAlertWithTitle:@"Registration Successful" text:@"User registered successfully" presenter:self];
             
             // manually segue to logged in view
             [self performSegueWithIdentifier:@"loginSegue" sender:nil];
@@ -49,10 +50,8 @@
     // Check that user is in the Parse database
     [PFUser logInWithUsernameInBackground:username password:password block:^(PFUser * user, NSError *  error) {
         if (error != nil) {
-            NSLog(@"User log in failed: %@", error.localizedDescription);
+            [AlertManager displayAlertWithTitle:@"Login Error" text:@"Could not login the provided user" presenter:self];
         } else {
-            NSLog(@"User logged in successfully");
-            
             // display view controller that needs to shown after successful login
             [self performSegueWithIdentifier:@"loginSegue" sender:nil];
         }

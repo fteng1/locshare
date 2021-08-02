@@ -42,7 +42,6 @@
             }
             completion(nil);
         } else {
-            NSLog(@"%@", error.localizedDescription);
             completion(error);
         }
     }];

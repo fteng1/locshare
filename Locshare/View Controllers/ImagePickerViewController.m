@@ -8,6 +8,7 @@
 #import "ImagePickerViewController.h"
 #import "ImagePickerCell.h"
 #import <Photos/Photos.h>
+#import "AlertManager.h"
 
 @interface ImagePickerViewController () <UICollectionViewDelegate, UICollectionViewDataSource, AVCapturePhotoCaptureDelegate>
 
@@ -103,13 +104,7 @@
     }
     else {
         [self dismissViewControllerAnimated:true completion:nil];
-        // Make alert for when no camera is available
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Cannot Take Photo" message:@"Camera is not available on this device" preferredStyle:(UIAlertControllerStyleAlert)];
-        // create an OK action
-        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}];
-        // add the OK action to the alert controller
-        [alert addAction:okAction];
-        [self presentViewController:alert animated:YES completion:^{}];
+        [AlertManager displayAlertWithTitle:@"Cannot Take Photo" text:@"Camera is not available on this device" presenter:self];
     }
 }
 

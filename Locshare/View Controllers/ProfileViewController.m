@@ -15,6 +15,8 @@
 #import "LocationViewController.h"
 #import "ImageManager.h"
 #import "ImagePickerViewController.h"
+#import "AlertManager.h"
+
 @import Parse;
 
 @interface ProfileViewController () <UITabBarControllerDelegate, GMSMapViewDelegate, ImagePickerControllerDelegate>
@@ -183,7 +185,7 @@
     // Fetch posts of user from database
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable posts, NSError * _Nullable error) {
         if (error != nil) {
-            NSLog(@"Error retrieving posts: %@", error);
+            [AlertManager displayAlertWithTitle:@"Error Retrieving Posts" text:@"Could not fetch posts from server" presenter:self];
         }
         else {
             if ([posts count] >= 1) {

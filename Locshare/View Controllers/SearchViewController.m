@@ -9,6 +9,7 @@
 #import "UserSearchCell.h"
 #import "ProfileViewController.h"
 #import <IQKeyboardManager/IQKeyboardManager.h>
+#import "AlertManager.h"
 
 @interface SearchViewController () <UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource>
 
@@ -30,7 +31,7 @@
     self.resultsTableView.tableFooterView = [UIView new];
     
     [self initializeUI];
-    [self fetchInitialPosts];
+    [self fetchInitialUsers];
 }
 
 - (void)initializeUI {
@@ -42,14 +43,14 @@
     self.searchBar.searchTextField.font = [UIFont fontWithName:@"Kohinoor Devanagari" size:17];
 }
 
-- (void)fetchInitialPosts {
+- (void)fetchInitialUsers {
     // Before searching, fetch users with most posts
     PFQuery *query = [PFQuery queryWithClassName:@"_User"];
     [query orderByDescending:@"numPosts"];
     query.limit = 10;
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable returnedUsers, NSError * _Nullable error) {
         if (error != nil) {
-            NSLog(@"Error performing search: %@", error);
+            [AlertManager displayAlertWithTitle:@"Search Error" text:@"Could not fetch initial users" presenter:self];
         }
         else {
             self.results = returnedUsers;
@@ -66,7 +67,7 @@
     [query whereKey:@"username" matchesRegex:searchBar.text modifiers:@"i"];
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable returnedUsers, NSError * _Nullable error) {
         if (error != nil) {
-            NSLog(@"Error performing search: %@", error);
+            [AlertManager displayAlertWithTitle:@"Search Error" text:@"Could not perform the given search" presenter:self];
         }
         else {
             self.results = returnedUsers;

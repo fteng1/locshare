@@ -14,6 +14,7 @@
 #import "LocationManager.h"
 #import "ImageManager.h"
 #import "ImagePickerViewController.h"
+#import "AlertManager.h"
 
 @interface PostViewController () <ImagePickerControllerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
 
@@ -98,13 +99,12 @@
         // Make new post with the given location ID
         [Post makePost:newPost completion:^(NSString * userPostID, NSError * _Nullable error) {
             if (error != nil) {
-                NSLog(@"Post share failed: %@", error.localizedDescription);
+                [AlertManager displayAlertWithTitle:@"Post Error" text:@"Error sharing the current post" presenter:self];
             }
             else {
-                NSLog(@"Post shared successfully");
                 [Location tagLocation:self.locationID newPost:userPostID completion:^(NSError * _Nonnull error) {
                     if (error != nil) {
-                        NSLog(@"Location tag failed: %@", error.localizedDescription);
+                        [AlertManager displayAlertWithTitle:@"Location Tag Error" text:@"Could not tag the location successfully" presenter:self];
                     }
                 }];
                 PFUser *currentUser = [PFUser currentUser];
