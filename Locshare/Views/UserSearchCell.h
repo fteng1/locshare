@@ -20,7 +20,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIButton *declineRequestButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *declineRequestButtonWidthConstraint;
 
-- (void)setFieldsWithUser:(PFUser *)user;
+@property (strong, nonatomic) PFUser *user;
+
+- (void)setFieldsWithUser;
 
 @end
 

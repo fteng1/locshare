@@ -89,7 +89,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UserSearchCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UserSearchCell"];
-    [cell setFieldsWithUser:self.results[indexPath.row]];
+    cell.user = self.results[indexPath.row];
+    [cell setFieldsWithUser];
     return cell;
 }
 

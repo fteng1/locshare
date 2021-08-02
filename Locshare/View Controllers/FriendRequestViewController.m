@@ -44,7 +44,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UserSearchCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RequestCell"];
-    [cell setFieldsWithUser:self.requests[indexPath.row]];
+    cell.user = self.requests[indexPath.row];
+    [cell setFieldsWithUser];
     return cell;
 }
 

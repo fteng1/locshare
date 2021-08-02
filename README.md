@@ -129,6 +129,8 @@ User
 |friends|Array|Array of objectIds of users that are friends with current user|
 |likedPosts|Array|Array of objectIds of posts that the user liked|
 |profilePicture|File|Profile picture of user|
+|pendingFriends|Array|Array of objectIds of users with friend requests to respond to|
+|requestsSent|Array|Array of objectIds of users that this user sent a request to (awaiting response)|
 |objectId|String|Unique identifier for user (default field)|
 
 Post 

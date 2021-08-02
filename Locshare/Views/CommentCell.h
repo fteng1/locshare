@@ -15,7 +15,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *commentTextLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timestampLabel;
 
-
 @end
 
 NS_ASSUME_NONNULL_END
