@@ -167,18 +167,18 @@
             <objects>
                 <viewController title="Location" id="L79-Ro-h21" customClass="LocationViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="v1v-Bd-LBQ">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="790"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="STk-y4-lsg" customClass="GMSMapView">
-                                <rect key="frame" x="0.0" y="56" width="390" height="194"/>
+                                <rect key="frame" x="0.0" y="88" width="390" height="194"/>
                                 <color key="backgroundColor" systemColor="systemGray2Color"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="194" id="Uxh-ax-YuU"/>
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="3pm-aA-36G">
-                                <rect key="frame" x="0.0" y="250" width="390" height="540"/>
+                                <rect key="frame" x="0.0" y="282" width="390" height="562"/>
                                 <color key="backgroundColor" red="0.98039215690000003" green="0.95294117649999999" blue="0.86666666670000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="tXV-TS-A8o">
                                     <size key="itemSize" width="128" height="128"/>
@@ -240,17 +240,17 @@
             <objects>
                 <viewController title="Details" id="h8p-KT-O4t" customClass="DetailsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="02F-8y-QZK">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="790"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Timestamp" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g1R-hR-Z9d">
-                                <rect key="frame" x="290.33333333333331" y="76" width="84.666666666666686" height="24"/>
+                                <rect key="frame" x="290.66666666666669" y="108" width="84.333333333333314" height="24"/>
                                 <fontDescription key="fontDescription" name="KohinoorDevanagari-Regular" family="Kohinoor Devanagari" pointSize="17"/>
                                 <color key="textColor" red="0.2901960784" green="0.48627450979999998" blue="0.34901960780000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="1Qy-o2-09G">
-                                <rect key="frame" x="16" y="121" width="358" height="300"/>
+                                <rect key="frame" x="16" y="153" width="358" height="300"/>
                                 <color key="backgroundColor" red="0.7843137255" green="0.83529411760000005" blue="0.72549019609999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="300" id="u3X-Fp-igz"/>
@@ -291,7 +291,7 @@
                                 </cells>
                             </collectionView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="aCM-Mu-OLC">
-                                <rect key="frame" x="0.0" y="499" width="390" height="203"/>
+                                <rect key="frame" x="0.0" y="531" width="390" height="225"/>
                                 <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
                                 <color key="sectionIndexBackgroundColor" red="0.98039215690000003" green="0.95294117649999999" blue="0.86666666670000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
@@ -303,7 +303,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fy2-Pt-DNe">
-                                                    <rect key="frame" x="12" y="12" width="80.666666666666671" height="24"/>
+                                                    <rect key="frame" x="12" y="12" width="81" height="24"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="24" id="HkQ-wn-7O3"/>
                                                     </constraints>
@@ -318,7 +318,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Timestamp" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KDD-Od-Gc3">
-                                                    <rect key="frame" x="285.33333333333331" y="13.666666666666664" width="84.666666666666686" height="21"/>
+                                                    <rect key="frame" x="285.66666666666669" y="13.666666666666664" width="84.333333333333314" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="BUF-Mi-6kn"/>
                                                     </constraints>
@@ -350,7 +350,7 @@
                                 </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RiW-23-K3T">
-                                <rect key="frame" x="7" y="63" width="253" height="50"/>
+                                <rect key="frame" x="7" y="95" width="253" height="50"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EMC-Hh-7na" customClass="PFImageView">
                                         <rect key="frame" x="8" y="4" width="42" height="42"/>
@@ -384,13 +384,13 @@
                                 </connections>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bt0-Pe-Mwk">
-                                <rect key="frame" x="52" y="427" width="10" height="24"/>
+                                <rect key="frame" x="52" y="459" width="10" height="24"/>
                                 <fontDescription key="fontDescription" name="KohinoorDevanagari-Regular" family="Kohinoor Devanagari" pointSize="17"/>
                                 <color key="textColor" red="0.2901960784" green="0.48627450979999998" blue="0.34901960780000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Bl-6t-ZN9">
-                                <rect key="frame" x="15" y="428" width="22" height="22"/>
+                                <rect key="frame" x="15" y="460" width="22" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="22" id="er6-MU-fqy"/>
                                     <constraint firstAttribute="height" constant="22" id="huX-3l-Za6"/>
@@ -402,19 +402,19 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Caption" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eRD-SK-8Rt">
-                                <rect key="frame" x="15" y="460" width="360" height="24"/>
+                                <rect key="frame" x="15" y="492" width="360" height="24"/>
                                 <fontDescription key="fontDescription" name="KohinoorDevanagari-Regular" family="Kohinoor Devanagari" pointSize="17"/>
                                 <color key="textColor" red="0.2901960784" green="0.48627450979999998" blue="0.34901960780000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="likes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PQL-PB-4i0">
-                                <rect key="frame" x="69" y="427" width="35.666666666666657" height="24"/>
+                                <rect key="frame" x="69" y="459" width="36" height="24"/>
                                 <fontDescription key="fontDescription" name="KohinoorDevanagari-Regular" family="Kohinoor Devanagari" pointSize="17"/>
                                 <color key="textColor" red="0.2901960784" green="0.48627450979999998" blue="0.34901960780000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yAX-10-XDB">
-                                <rect key="frame" x="0.0" y="702" width="390" height="54"/>
+                                <rect key="frame" x="0.0" y="756" width="390" height="54"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add a comment..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="b4x-RB-uIW">
                                         <rect key="frame" x="15" y="10" width="311" height="34"/>
@@ -448,6 +448,16 @@
                                     <constraint firstAttribute="height" constant="54" id="jNR-Vd-UTI"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xYd-Lp-IgM">
+                                <rect key="frame" x="353" y="460" width="22" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="22" id="2Ac-f5-HJ3"/>
+                                    <constraint firstAttribute="height" constant="22" id="HoW-cs-cw4"/>
+                                </constraints>
+                                <color key="tintColor" red="0.40784313729999999" green="0.69019607839999997" blue="0.6705882353" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" image="lock.open" catalog="system"/>
+                                <state key="selected" image="lock" catalog="system"/>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="I8r-mL-m5b"/>
                         <color key="backgroundColor" red="0.94509803920000002" green="0.95686274510000002" blue="0.92941176469999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -462,19 +472,21 @@
                             <constraint firstItem="I8r-mL-m5b" firstAttribute="trailing" secondItem="1Qy-o2-09G" secondAttribute="trailing" constant="16" id="DsX-Tf-ZB0"/>
                             <constraint firstItem="I8r-mL-m5b" firstAttribute="trailing" secondItem="g1R-hR-Z9d" secondAttribute="trailing" constant="15" id="GLN-cy-IRR"/>
                             <constraint firstItem="aCM-Mu-OLC" firstAttribute="leading" secondItem="I8r-mL-m5b" secondAttribute="leading" id="Jex-dX-4gr"/>
+                            <constraint firstItem="xYd-Lp-IgM" firstAttribute="centerY" secondItem="PQL-PB-4i0" secondAttribute="centerY" id="Ki6-p8-7Rz"/>
                             <constraint firstItem="aCM-Mu-OLC" firstAttribute="trailing" secondItem="I8r-mL-m5b" secondAttribute="trailing" id="Led-ye-zih"/>
                             <constraint firstItem="eRD-SK-8Rt" firstAttribute="leading" secondItem="I8r-mL-m5b" secondAttribute="leading" constant="15" id="PDT-2m-UL3"/>
                             <constraint firstItem="1Qy-o2-09G" firstAttribute="top" secondItem="RiW-23-K3T" secondAttribute="bottom" constant="8" id="T8a-MQ-kA7"/>
                             <constraint firstItem="9Bl-6t-ZN9" firstAttribute="top" secondItem="1Qy-o2-09G" secondAttribute="bottom" constant="7" id="arQ-z5-JaV"/>
                             <constraint firstItem="PQL-PB-4i0" firstAttribute="centerY" secondItem="9Bl-6t-ZN9" secondAttribute="centerY" id="cdN-oz-UHX"/>
                             <constraint firstItem="1Qy-o2-09G" firstAttribute="leading" secondItem="I8r-mL-m5b" secondAttribute="leading" constant="16" id="dAr-dQ-X6o"/>
+                            <constraint firstItem="I8r-mL-m5b" firstAttribute="trailing" secondItem="xYd-Lp-IgM" secondAttribute="trailing" constant="15" id="dEe-JU-ooS"/>
                             <constraint firstItem="g1R-hR-Z9d" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="RiW-23-K3T" secondAttribute="trailing" constant="10" id="eYd-zp-RUb"/>
                             <constraint firstItem="g1R-hR-Z9d" firstAttribute="centerY" secondItem="RiW-23-K3T" secondAttribute="centerY" id="esA-qb-OV6"/>
                             <constraint firstItem="Bt0-Pe-Mwk" firstAttribute="centerY" secondItem="9Bl-6t-ZN9" secondAttribute="centerY" id="g2T-vF-7VA"/>
                             <constraint firstItem="aCM-Mu-OLC" firstAttribute="top" secondItem="eRD-SK-8Rt" secondAttribute="bottom" constant="15" id="gaJ-L9-qZB"/>
                             <constraint firstItem="eRD-SK-8Rt" firstAttribute="top" secondItem="9Bl-6t-ZN9" secondAttribute="bottom" constant="10" id="hlS-Mg-xgA"/>
+                            <constraint firstItem="xYd-Lp-IgM" firstAttribute="leading" secondItem="PQL-PB-4i0" secondAttribute="trailing" priority="900" constant="248" id="id3-H8-wgS"/>
                             <constraint firstItem="9Bl-6t-ZN9" firstAttribute="leading" secondItem="I8r-mL-m5b" secondAttribute="leading" constant="15" id="lna-Pp-Dih"/>
-                            <constraint firstItem="I8r-mL-m5b" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="PQL-PB-4i0" secondAttribute="trailing" constant="20" id="m7H-UD-oxd"/>
                             <constraint firstItem="Bt0-Pe-Mwk" firstAttribute="leading" secondItem="9Bl-6t-ZN9" secondAttribute="trailing" constant="15" id="vIV-zm-66Q"/>
                             <constraint firstItem="I8r-mL-m5b" firstAttribute="trailing" secondItem="eRD-SK-8Rt" secondAttribute="trailing" constant="15" id="xz8-UC-tiS"/>
                             <constraint firstItem="RiW-23-K3T" firstAttribute="leading" secondItem="I8r-mL-m5b" secondAttribute="leading" constant="7" id="yPu-kl-QsN"/>
@@ -492,6 +504,7 @@
                         <outlet property="numLikesLabel" destination="Bt0-Pe-Mwk" id="MPC-F3-GV9"/>
                         <outlet property="photoCollectionView" destination="1Qy-o2-09G" id="yLf-Or-w4c"/>
                         <outlet property="postCommentButton" destination="tih-z6-Hcp" id="PKE-U3-oeg"/>
+                        <outlet property="privateDisplay" destination="xYd-Lp-IgM" id="veU-G1-jA6"/>
                         <outlet property="profileImageView" destination="EMC-Hh-7na" id="F6g-ZT-BtK"/>
                         <outlet property="timestampLabel" destination="g1R-hR-Z9d" id="POU-3L-Zd3"/>
                         <outlet property="usernameLabel" destination="lUE-pr-9Wj" id="sMb-Rp-Z7n"/>
@@ -1103,11 +1116,11 @@
             <objects>
                 <viewController id="0vV-1o-gEl" customClass="ProfileViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tyo-fc-Gy4">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="790"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1hg-M9-fQL" customClass="PFImageView">
-                                <rect key="frame" x="15" y="15" width="148" height="148"/>
+                                <rect key="frame" x="15" y="103" width="148" height="148"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="148" id="Spk-4z-2I9"/>
@@ -1118,41 +1131,41 @@
                                 </connections>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RQZ-VY-IbK">
-                                <rect key="frame" x="182" y="40" width="193" height="28"/>
+                                <rect key="frame" x="182" y="128" width="193" height="28"/>
                                 <fontDescription key="fontDescription" name="KohinoorDevanagari-Semibold" family="Kohinoor Devanagari" pointSize="20"/>
                                 <color key="textColor" red="0.2901960784" green="0.48627450979999998" blue="0.34901960780000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I68-Xy-AS9">
-                                <rect key="frame" x="50" y="188" width="10" height="24"/>
+                                <rect key="frame" x="50" y="276" width="10" height="24"/>
                                 <fontDescription key="fontDescription" name="KohinoorDevanagari-Regular" family="Kohinoor Devanagari" pointSize="17"/>
                                 <color key="textColor" red="0.2901960784" green="0.48627450979999998" blue="0.34901960780000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="friends" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sOe-vH-mf4">
-                                <rect key="frame" x="67" y="188" width="54" height="24"/>
+                                <rect key="frame" x="67" y="276" width="54" height="24"/>
                                 <fontDescription key="fontDescription" name="KohinoorDevanagari-Regular" family="Kohinoor Devanagari" pointSize="17"/>
                                 <color key="textColor" red="0.2901960784" green="0.48627450979999998" blue="0.34901960780000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Si-Pq-MvS">
-                                <rect key="frame" x="281.33333333333331" y="188" width="10" height="24"/>
+                                <rect key="frame" x="281" y="276" width="10" height="24"/>
                                 <fontDescription key="fontDescription" name="KohinoorDevanagari-Regular" family="Kohinoor Devanagari" pointSize="17"/>
                                 <color key="textColor" red="0.2901960784" green="0.48627450979999998" blue="0.34901960780000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="posts" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="obh-d4-xvP">
-                                <rect key="frame" x="298.33333333333331" y="188" width="41.666666666666686" height="24"/>
+                                <rect key="frame" x="298" y="276" width="42" height="24"/>
                                 <fontDescription key="fontDescription" name="KohinoorDevanagari-Regular" family="Kohinoor Devanagari" pointSize="17"/>
                                 <color key="textColor" red="0.2901960784" green="0.48627450979999998" blue="0.34901960780000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vqH-vT-f2X" customClass="GMSMapView">
-                                <rect key="frame" x="0.0" y="237" width="390" height="519"/>
+                                <rect key="frame" x="0.0" y="325" width="390" height="485"/>
                                 <color key="backgroundColor" systemColor="systemGray2Color"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RTy-8Q-C8a">
-                                <rect key="frame" x="325" y="691" width="55" height="55"/>
+                                <rect key="frame" x="325" y="745" width="55" height="55"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="55" id="ZFW-kC-rlP"/>
                                     <constraint firstAttribute="width" constant="55" id="grb-wv-QFN"/>
@@ -1163,7 +1176,7 @@
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Description" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="XXV-jb-xqs">
-                                <rect key="frame" x="178" y="78" width="197" height="58"/>
+                                <rect key="frame" x="178" y="166" width="197" height="58"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="58" id="PJa-tx-0jb"/>
@@ -1173,7 +1186,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ODo-ho-d6a">
-                                <rect key="frame" x="191" y="142.66666666666666" width="61" height="31"/>
+                                <rect key="frame" x="191" y="230.66666666666666" width="61" height="30.999999999999972"/>
                                 <fontDescription key="fontDescription" name="KohinoorDevanagari-Regular" family="Kohinoor Devanagari" pointSize="15"/>
                                 <color key="tintColor" red="0.40784313729999999" green="0.69019607839999997" blue="0.6705882353" alpha="1" colorSpace="calibratedRGB"/>
                                 <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
@@ -1183,7 +1196,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LYn-Lf-JBE">
-                                <rect key="frame" x="348" y="10" width="32" height="33"/>
+                                <rect key="frame" x="348" y="98" width="32" height="33"/>
                                 <fontDescription key="fontDescription" name="KohinoorDevanagari-Regular" family="Kohinoor Devanagari" pointSize="15"/>
                                 <state key="normal" title="Save">
                                     <color key="titleColor" red="0.2901960784" green="0.48627450979999998" blue="0.34901960780000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -1266,11 +1279,11 @@
             <objects>
                 <viewController id="kDG-js-6vD" customClass="FriendRequestViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gpn-O2-N8a">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="790"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fc0-mN-Tdg">
-                                <rect key="frame" x="0.0" y="0.0" width="390" height="756"/>
+                                <rect key="frame" x="0.0" y="88" width="390" height="722"/>
                                 <color key="backgroundColor" red="0.94509803920000002" green="0.95686274510000002" blue="0.92941176469999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RequestCell" rowHeight="127" id="O8C-sI-rcw" customClass="UserSearchCell">
@@ -1420,7 +1433,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="3gm-b0-MOc"/>
+        <segue reference="29f-HC-vrl"/>
         <segue reference="cGp-mS-7X1"/>
         <segue reference="4Ck-x5-wBe"/>
         <segue reference="jvO-ql-lyu"/>
@@ -1433,6 +1446,7 @@
         <image name="circle" catalog="system" width="128" height="121"/>
         <image name="heart" catalog="system" width="128" height="109"/>
         <image name="lock" catalog="system" width="128" height="128"/>
+        <image name="lock.open" catalog="system" width="128" height="110"/>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="map" catalog="system" width="128" height="110"/>
         <image name="person" catalog="system" width="128" height="117"/>

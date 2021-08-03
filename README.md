@@ -143,6 +143,7 @@ Post
 |authorUsername|String|Username of author that created the post|
 |createdAt|DateTime|Time at which post was created|
 |numLikes|Number|Number of users that liked the post|
+|private|Boolean|Indicates whether the post is public (visible to everyone) or private (only visible to friends)|
 |objectId|String|Unique identifier for post (default field)|
 
 Location

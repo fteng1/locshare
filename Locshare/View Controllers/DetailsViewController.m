@@ -28,6 +28,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *commentTextField;
 @property (weak, nonatomic) IBOutlet UIButton *postCommentButton;
 @property (weak, nonatomic) IBOutlet UITableView *commentTableView;
+@property (weak, nonatomic) IBOutlet UIButton *privateDisplay;
 
 @property (strong, nonatomic) PFUser *postAuthor;
 @property (strong, nonatomic) NSMutableArray *comments;
@@ -88,6 +89,7 @@
     // Set information about post in page
     self.usernameLabel.text = self.post.authorUsername;
     self.captionLabel.text = self.post.caption;
+    self.privateDisplay.selected = self.post.private;
     NSArray *likedPosts = [PFUser currentUser][@"likedPosts"];
     self.likeButton.selected = [likedPosts containsObject:self.post.objectId];
     if ([self.post.numLikes intValue] == 1) {
