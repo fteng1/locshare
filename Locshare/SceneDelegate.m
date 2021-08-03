@@ -19,6 +19,8 @@
     // If there is currently a user logged in, skip the login screens
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     if (PFUser.currentUser) {
+        // Get most updated copy of user
+        [[PFUser currentUser] fetchInBackground];
         self.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"TabBarController"];
     }
     else {

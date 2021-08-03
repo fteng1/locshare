@@ -162,6 +162,22 @@
     [currUser saveInBackground];
 }
 
+- (void)updateUserValues {
+    // Get new information about the user from the database
+    PFQuery *userQuery = [PFUser query];
+    [userQuery whereKey:@"objectId" equalTo:self.user.objectId];
+    [userQuery findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        if (error) {
+            [AlertManager displayAlertWithTitle:@"User Error" text:@"Error retrieving latest data about user" presenter:self];
+        }
+        else {
+            self.user = [objects firstObject];
+            [self updateFields];
+        }
+    }];
+    [[PFUser currentUser] fetchInBackground];
+}
+
 - (void)updateFields {
     // Set text fields to user's current values
     self.usernameLabel.text = self.user.username;
@@ -285,7 +301,7 @@
 }
 
 - (IBAction)onRefreshTap:(id)sender {
-    [self updateFields];
+    [self updateUserValues];
     [self fetchPosts];
 }
 
