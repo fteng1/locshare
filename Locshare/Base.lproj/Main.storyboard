@@ -756,6 +756,19 @@
                                     <action selector="onPhotoLibraryTap:" destination="t7a-ai-1iy" eventType="touchUpInside" id="teL-dP-YGD"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lock" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="cWl-PN-IoI">
+                                <rect key="frame" x="280" y="100" width="25" height="23"/>
+                                <color key="tintColor" red="0.40784313729999999" green="0.69019607839999997" blue="0.6705882353" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="25" id="Fhh-Ub-ehT"/>
+                                    <constraint firstAttribute="height" constant="25" id="NbL-CP-l17"/>
+                                </constraints>
+                            </imageView>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" title="Private" translatesAutoresizingMaskIntoConstraints="NO" id="eTF-Id-11Q">
+                                <rect key="frame" x="315" y="96" width="51" height="31"/>
+                                <color key="onTintColor" red="0.40784313729999999" green="0.69019607839999997" blue="0.6705882353" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="thumbTintColor" red="0.94509803920000002" green="0.95686274510000002" blue="0.92941176469999998" alpha="1" colorSpace="calibratedRGB"/>
+                            </switch>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="5t6-fY-KVQ">
                                 <rect key="frame" x="15" y="155" width="360" height="300"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -846,19 +859,6 @@
                                 <fontDescription key="fontDescription" name="KohinoorDevanagari-Regular" family="Kohinoor Devanagari" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" title="Private" translatesAutoresizingMaskIntoConstraints="NO" id="eTF-Id-11Q">
-                                <rect key="frame" x="315" y="96" width="51" height="31"/>
-                                <color key="onTintColor" red="0.40784313729999999" green="0.69019607839999997" blue="0.6705882353" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="thumbTintColor" red="0.94509803920000002" green="0.95686274510000002" blue="0.92941176469999998" alpha="1" colorSpace="calibratedRGB"/>
-                            </switch>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lock" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="cWl-PN-IoI">
-                                <rect key="frame" x="280" y="100" width="25" height="23"/>
-                                <color key="tintColor" red="0.40784313729999999" green="0.69019607839999997" blue="0.6705882353" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="25" id="Fhh-Ub-ehT"/>
-                                    <constraint firstAttribute="height" constant="25" id="NbL-CP-l17"/>
-                                </constraints>
-                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="e4Y-Zb-Imu"/>
                         <color key="backgroundColor" red="0.94509803920000002" green="0.95686274510000002" blue="0.92941176469999998" alpha="1" colorSpace="calibratedRGB"/>

@@ -103,7 +103,7 @@
                 [AlertManager displayAlertWithTitle:@"Post Error" text:@"Error sharing the current post" presenter:self];
             }
             else {
-                [Location tagLocation:self.locationID newPost:userPostID completion:^(NSError * _Nonnull error) {
+                [Location tagLocation:self.locationID newPost:newPost completion:^(NSError * _Nonnull error) {
                     if (error != nil) {
                         [AlertManager displayAlertWithTitle:@"Location Tag Error" text:@"Could not tag the location successfully" presenter:self];
                     }

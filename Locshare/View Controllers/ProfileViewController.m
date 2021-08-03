@@ -191,6 +191,12 @@
     PFQuery *query = [PFQuery queryWithClassName:@"Post"];
     [query whereKey:@"author" equalTo:self.user];
     [query orderByDescending:@"createdAt"];
+    NSMutableArray *friendsOfSelf = [PFUser currentUser][@"friends"];
+    [friendsOfSelf addObject:[PFUser currentUser].objectId];
+    if ([friendsOfSelf containsObject:self.user.objectId]) {
+        // If this profile's user is not friends with the current user, only display public posts
+        [query whereKey:@"private" equalTo:@(false)];
+    }
     
     // Fetch posts of user from database
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable posts, NSError * _Nullable error) {
