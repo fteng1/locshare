@@ -79,16 +79,29 @@ GMSPlacesClient *placesClient;
     PFGeoPoint *northEast = [PFGeoPoint geoPointWithLatitude:currentlyVisible.northEast.latitude longitude:currentlyVisible.northEast.longitude];
     
     // Set query to find locations that fall within the visible region on the map and have posts
-    PFQuery *query = [PFQuery queryWithClassName:@"Location"];
-    [query whereKey:@"coordinate" withinGeoBoxFromSouthwest:southWest toNortheast:northEast];
-    [query whereKey:@"numPosts" greaterThanOrEqualTo:@(0)];
-    NSMutableArray *friendsWithSelf = [PFUser currentUser][@"friends"];
-    [friendsWithSelf addObject:[PFUser currentUser].objectId];
-    [query whereKey:@"usersWithPosts" containedIn:friendsWithSelf];
+    PFQuery *geoQuery = [PFQuery queryWithClassName:@"Location"];
+    [geoQuery whereKey:@"coordinate" withinGeoBoxFromSouthwest:southWest toNortheast:northEast];
+    [geoQuery whereKey:@"numPosts" greaterThanOrEqualTo:@(0)];
     
     // Retrieve results from Parse using asynchronous call
-    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable locations, NSError * _Nullable error) {
-        [[LocationManager shared] displayLocationsOnMap:self.homeMapView locations:locations userFiltering:false];
+    [geoQuery findObjectsInBackgroundWithBlock:^(NSArray * _Nullable locations, NSError * _Nullable error) {
+        NSMutableSet *friendsWithSelf = [NSMutableSet setWithArray:[PFUser currentUser][@"friends"]];
+        [friendsWithSelf addObject:[PFUser currentUser].objectId];
+        
+        NSMutableArray *visibleLocations = [NSMutableArray new];
+        for (Location *loc in locations) {
+            if (loc.hasPublicPosts) {
+                [visibleLocations addObject:loc];
+            }
+            else {
+                NSSet *usersWithPosts = [NSMutableSet setWithArray:loc.usersWithPosts];
+                if ([friendsWithSelf intersectsSet:usersWithPosts]) {
+                    [visibleLocations addObject:loc];
+                };
+            }
+            
+        }
+        [[LocationManager shared] displayLocationsOnMap:self.homeMapView locations:visibleLocations userFiltering:false];
     }];
 }
 

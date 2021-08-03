@@ -8,6 +8,7 @@
 #import "Location.h"
 #import <Parse/Parse.h>
 #import "LocationManager.h"
+#import "Post.h"
 
 @implementation Location
 
@@ -16,13 +17,14 @@
 @dynamic numPosts;
 @dynamic placeID;
 @dynamic usersWithPosts;
+@dynamic hasPublicPosts;
 
 + (nonnull NSString *)parseClassName {
     return @"Location";
 }
 
 // Function to update Location object in Parse to reflect new post
-+ (void)tagLocation:(NSString *)placeId newPost:(NSString *)userPostId completion:(void (^)(NSError *))completion{
++ (void)tagLocation:(NSString *)placeId newPost:(Post *)post completion:(void (^)(NSError *))completion{
     PFQuery *query = [PFQuery queryWithClassName:@"Location"];
     [query whereKey:@"placeID" equalTo:placeId];
     
@@ -33,12 +35,15 @@
                 // If already exists, increase number of posts by 1
                 Location *loc = place[0];
                 [loc incrementKey:@"numPosts"];
-                [loc addObject:userPostId forKey:@"usersWithPosts"];
+                [loc addObject:post.objectId forKey:@"usersWithPosts"];
+                if (!post.private) {
+                    loc.hasPublicPosts = true;
+                }
                 [loc saveInBackground];
             }
             else {
                 // If does not exist, create new Location
-                [Location initLocation:placeId newPost:userPostId];
+                [Location initLocation:placeId newPost:post];
             }
             completion(nil);
         } else {
@@ -48,7 +53,7 @@
 }
 
 // Create new location given the place ID and author of new post
-+ (void)initLocation:(NSString *)placeId newPost:(NSString *)userPostId {
++ (void)initLocation:(NSString *)placeId newPost:(Post *)post {
     // Get details about location from place ID
     [[LocationManager shared] getPlaceDetails:placeId completion:^(NSDictionary * _Nonnull locInfo, NSError * _Nonnull error) {
         Location *newLoc = [Location new];
@@ -59,7 +64,10 @@
         newLoc.numPosts = @(1);
         newLoc.placeID = placeId;
         newLoc.usersWithPosts = [[NSMutableArray alloc] init];
-        [newLoc.usersWithPosts addObject:userPostId];
+        [newLoc.usersWithPosts addObject:post.objectId];
+        if (!post.private) {
+            newLoc.hasPublicPosts = true;
+        }
         [newLoc saveInBackground];
     }];
 }

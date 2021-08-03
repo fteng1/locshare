@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSNumber *numPosts;
 @property (nonatomic, strong) NSString *placeID;
 @property (nonatomic, strong) NSMutableArray *usersWithPosts;
+@property (nonatomic, assign) BOOL hasPublicPosts;
 
 + (void)tagLocation:(NSString *)placeId newPost:(NSString *)postId completion:(void (^)(NSError *))completion;
 
