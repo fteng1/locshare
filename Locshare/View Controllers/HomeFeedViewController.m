@@ -88,12 +88,14 @@ GMSPlacesClient *placesClient;
         NSMutableSet *friendsWithSelf = [NSMutableSet setWithArray:[PFUser currentUser][@"friends"]];
         [friendsWithSelf addObject:[PFUser currentUser].objectId];
         
+        // Only show locations on the map with posts from friends/current user or have public posts
         NSMutableArray *visibleLocations = [NSMutableArray new];
         for (Location *loc in locations) {
             if (loc.hasPublicPosts) {
                 [visibleLocations addObject:loc];
             }
             else {
+                // Check if any users with posts are the current user or the current user's friends
                 NSSet *usersWithPosts = [NSMutableSet setWithArray:loc.usersWithPosts];
                 if ([friendsWithSelf intersectsSet:usersWithPosts]) {
                     [visibleLocations addObject:loc];
