@@ -193,9 +193,9 @@
     [query orderByDescending:@"createdAt"];
     NSMutableArray *friendsOfSelf = [PFUser currentUser][@"friends"];
     [friendsOfSelf addObject:[PFUser currentUser].objectId];
-    if ([friendsOfSelf containsObject:self.user.objectId]) {
+    if (![friendsOfSelf containsObject:self.user.objectId]) {
         // If this profile's user is not friends with the current user, only display public posts
-        [query whereKey:@"private" equalTo:@(false)];
+        [query whereKey:@"private" equalTo:[NSNumber numberWithBool:false]];
     }
     
     // Fetch posts of user from database
