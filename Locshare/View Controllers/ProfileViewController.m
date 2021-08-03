@@ -144,6 +144,7 @@
         if ([(NSArray *)[PFUser currentUser][@"friends"] containsObject:self.user.objectId]) {
             [PFCloud callFunctionInBackground:@"friendUser" withParameters:@{@"userToEditID": self.user.objectId, @"friend": @(false), @"currentUserID": currUser.objectId}];
             [currUser removeObject:self.user.objectId forKey:@"friends"];
+            [self.friendButton setTitle:@"Friend Request Sent" forState: UIControlStateSelected];
         }
         else {
             // Remove friend request if request not yet responded to
