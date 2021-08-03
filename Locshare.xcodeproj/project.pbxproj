@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		70007451269E33A600F10FE1 /* LocationAutocompleteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70007450269E33A600F10FE1 /* LocationAutocompleteCell.m */; };
+		7018A72C26B8B6FB00DCC1C0 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 7018A72B26B8B6FB00DCC1C0 /* Constants.m */; };
 		701B1CE126AF13F2002CD8F3 /* ImagePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 701B1CE026AF13F2002CD8F3 /* ImagePickerViewController.m */; };
 		701B1CE426AF1A48002CD8F3 /* ImagePickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 701B1CE326AF1A48002CD8F3 /* ImagePickerCell.m */; };
 		7049025D26B4B23E00046A0C /* FriendRequestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7049025C26B4B23E00046A0C /* FriendRequestViewController.m */; };
@@ -67,6 +68,8 @@
 		3E74B4E92CD0CD0E2DEC2DDC /* Pods-LocshareTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocshareTests.release.xcconfig"; path = "Target Support Files/Pods-LocshareTests/Pods-LocshareTests.release.xcconfig"; sourceTree = "<group>"; };
 		7000744F269E33A600F10FE1 /* LocationAutocompleteCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationAutocompleteCell.h; sourceTree = "<group>"; };
 		70007450269E33A600F10FE1 /* LocationAutocompleteCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationAutocompleteCell.m; sourceTree = "<group>"; };
+		7018A72B26B8B6FB00DCC1C0 /* Constants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		7018A72F26B8B9C800DCC1C0 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		701B1CDF26AF13F2002CD8F3 /* ImagePickerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImagePickerViewController.h; sourceTree = "<group>"; };
 		701B1CE026AF13F2002CD8F3 /* ImagePickerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImagePickerViewController.m; sourceTree = "<group>"; };
 		701B1CE226AF1A48002CD8F3 /* ImagePickerCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImagePickerCell.h; sourceTree = "<group>"; };
@@ -238,6 +241,8 @@
 				70571E1E269CA9AF00CE1842 /* Info.plist */,
 				70571E1F269CA9AF00CE1842 /* main.m */,
 				70B30742269CFD4500ADFE9E /* Keys.plist */,
+				7018A72B26B8B6FB00DCC1C0 /* Constants.m */,
+				7018A72F26B8B9C800DCC1C0 /* Constants.h */,
 			);
 			path = Locshare;
 			sourceTree = "<group>";
@@ -598,6 +603,7 @@
 				70007451269E33A600F10FE1 /* LocationAutocompleteCell.m in Sources */,
 				70571E59269CE62500CE1842 /* PostViewController.m in Sources */,
 				708793FE26AA064400AB45BA /* SearchViewController.m in Sources */,
+				7018A72C26B8B6FB00DCC1C0 /* Constants.m in Sources */,
 				7063F67226A77CEC00DE8196 /* ImageManager.m in Sources */,
 				70571E47269CAF8F00CE1842 /* LoginViewController.m in Sources */,
 				70571E0F269CA9AE00CE1842 /* AppDelegate.m in Sources */,

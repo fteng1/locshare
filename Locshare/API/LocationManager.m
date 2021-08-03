@@ -8,6 +8,7 @@
 #import "LocationManager.h"
 #import "LocationMarker.h"
 #import "AlertManager.h"
+#import "Constants.h"
 
 @implementation LocationManager
 NSString *gMapsAPIKey;
@@ -33,9 +34,9 @@ NSString *gMapsAPIKey;
     [self startUpdatingLocation];
     
     // Get API key from Keys.plist
-    NSString *path = [[NSBundle mainBundle] pathForResource: @"Keys" ofType: @"plist"];
+    NSString *path = [[NSBundle mainBundle] pathForResource: KEYS_FILE_NAME ofType: KEYS_FILE_EXTENSION];
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: path];
-    gMapsAPIKey = [dict objectForKey: @"google_api_key"];
+    gMapsAPIKey = [dict objectForKey: GOOGLE_API_KEY_NAME];
     
     return self;
 }
@@ -46,10 +47,10 @@ NSString *gMapsAPIKey;
     searchQuery = [searchQuery stringByReplacingOccurrencesOfString:@" " withString:@"+"];
     
     // Construct URL and make request
-    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/autocomplete/json?input=%@&key=%@", searchQuery, gMapsAPIKey]];
+    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat: PLACES_AUTOCOMPLETE_URL, searchQuery, gMapsAPIKey]];
     [self makeURLRequest:url completion:^(NSDictionary * dataDictionary, NSError * error) {
         if (error == nil) {
-            completion(dataDictionary[@"predictions"], nil);
+            completion(dataDictionary[PLACES_AUTOCOMPLETE_RETURNED_DATA_KEY], nil);
         }
         else {
             completion(nil, error);
@@ -61,13 +62,12 @@ NSString *gMapsAPIKey;
 - (void)getNearbyLocations:(void (^)(NSArray *, NSError *))completion{
     // Construct URL
     NSString *locationString = [NSString stringWithFormat:@"%f,%f", self.location.coordinate.latitude, self.location.coordinate.longitude];
-    NSString *radiusString = @"1000";
-    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=%@&location=%@&radius=%@", gMapsAPIKey, locationString, radiusString]];
+    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat: PLACES_NEARBY_URL, gMapsAPIKey, locationString, PLACES_NEARBY_RADIUS]];
     
     // Make API request using URL
     [self makeURLRequest:url completion:^(NSDictionary * dataDictionary, NSError * error) {
         if (error == nil) {
-            completion(dataDictionary[@"results"], nil);
+            completion(dataDictionary[PLACES_NEARBY_RETURNED_DATA_KEY], nil);
         }
         else {
             completion(nil, error);
@@ -78,12 +78,12 @@ NSString *gMapsAPIKey;
 // Get details of a specified place given the place id
 - (void)getPlaceDetails:(NSString *)placeId completion:(void (^)(NSDictionary *, NSError *))completion{
     // Construct URL
-    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/details/json?place_id=%@&key=%@", placeId, gMapsAPIKey]];
+    NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:PLACES_DETAILS_URL, placeId, gMapsAPIKey]];
     
     // Make API request using URL
     [self makeURLRequest:url completion:^(NSDictionary *dataDictionary, NSError * error) {
         if (error == nil) {
-            completion(dataDictionary[@"result"], nil);
+            completion(dataDictionary[PLACES_DETAILS_RETURNED_DATA_KEY], nil);
         }
         else {
             completion(nil, error);
@@ -97,7 +97,7 @@ NSString *gMapsAPIKey;
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error != nil) {
-            [AlertManager displayAlertWithTitle:@"Network Error" text:@"Could not complete network request" presenter:self.delegate];
+            [AlertManager displayAlertWithTitle:URL_REQUEST_ERROR_TITLE text:URL_REQUEST_ERROR_MESSAGE presenter:self.delegate];
             completion(nil, error);
         }
         else {
