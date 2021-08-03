@@ -21,8 +21,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *authorUsername;
 @property (nonatomic, strong) NSString *location;
 @property (nonatomic, strong) NSMutableArray *comments;
+@property (nonatomic, assign) BOOL private;
 
-+ (Post *) initPost: ( NSArray * _Nullable )images withCaption: ( NSString * _Nullable )caption withLocation: (NSString * _Nullable)loc;
++ (Post *) initPost: ( NSArray * _Nullable )images withCaption: ( NSString * _Nullable )caption withLocation: (NSString * _Nullable)locID private:(BOOL)isPrivate;
 + (void) makePost: (Post *)post completion:(void (^)(NSString *, NSError *))completion;
 + (PFFileObject *)getPFFileFromImage: (UIImage * _Nullable)image;
 

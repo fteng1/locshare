@@ -17,12 +17,13 @@
 @dynamic authorUsername;
 @dynamic location;
 @dynamic comments;
+@dynamic private;
 
 + (nonnull NSString *)parseClassName {
     return @"Post";
 }
 
-+ (Post *) initPost: ( NSArray * _Nullable )images withCaption: ( NSString * _Nullable )caption withLocation: (NSString * _Nullable)locID {
++ (Post *) initPost: ( NSArray * _Nullable )images withCaption: ( NSString * _Nullable )caption withLocation: (NSString * _Nullable)locID private:(BOOL)isPrivate {
     // Initialize fields
     Post *newPost = [Post new];
     newPost.photos = [[NSMutableArray alloc] init];
@@ -37,6 +38,7 @@
     newPost.authorUsername = [PFUser currentUser].username;
     newPost.comments = [[NSMutableArray alloc] init];
     newPost.location = locID;
+    newPost.private = isPrivate;
     return newPost;
 }
 

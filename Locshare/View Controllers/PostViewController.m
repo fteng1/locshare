@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *autocompleteTableView;
 @property (weak, nonatomic) IBOutlet UIImageView *mapImage;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchBarLeadingConstraint;
+@property (weak, nonatomic) IBOutlet UISwitch *privateSwitch;
 
 @property (strong, nonatomic) NSArray *autocompleteResults;
 @property (strong, nonatomic) NSString *locationID;
@@ -95,7 +96,7 @@
 // Make post when share button is pressed
 - (IBAction)shareButton:(id)sender {
     if (self.locationSearchBar.text.length != 0) {
-        Post *newPost = [Post initPost:self.photosToUpload withCaption:self.captionTextView.text withLocation:self.locationID];
+        Post *newPost = [Post initPost:self.photosToUpload withCaption:self.captionTextView.text withLocation:self.locationID private:self.privateSwitch.isOn];
         // Make new post with the given location ID
         [Post makePost:newPost completion:^(NSString * userPostID, NSError * _Nullable error) {
             if (error != nil) {
