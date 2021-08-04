@@ -6,6 +6,7 @@
 //
 
 #import "UserSearchCell.h"
+#import "Constants.h"
 
 @implementation UserSearchCell
 
@@ -13,27 +14,27 @@
     [super awakeFromNib];
     
     // Round borders of accept friend button
-    self.acceptRequestButton.layer.cornerRadius = 5;
-    self.acceptRequestButton.layer.masksToBounds = true;
-    self.acceptRequestButton.layer.borderColor = [[UIColor colorWithRed:104/255.0 green:176/255.0 blue:171/255.0 alpha:1.0] CGColor];
-    self.acceptRequestButton.layer.borderWidth = 1;
+    self.acceptRequestButton.layer.cornerRadius = BUTTON_CORNER_RADIUS;
+    self.acceptRequestButton.layer.masksToBounds = MASKS_TO_BOUNDS;
+    self.acceptRequestButton.layer.borderColor = [ProjectColors tintColor];
+    self.acceptRequestButton.layer.borderWidth = BUTTON_BORDER_WIDTH;
     
     // Round borders of decline friend button
-    self.declineRequestButton.layer.cornerRadius = 5;
-    self.declineRequestButton.layer.masksToBounds = true;
-    self.declineRequestButton.layer.borderColor = [[UIColor colorWithRed:104/255.0 green:176/255.0 blue:171/255.0 alpha:1.0] CGColor];
-    self.declineRequestButton.layer.borderWidth = 1;
+    self.declineRequestButton.layer.cornerRadius = BUTTON_CORNER_RADIUS;
+    self.declineRequestButton.layer.masksToBounds = MASKS_TO_BOUNDS;
+    self.declineRequestButton.layer.borderColor = [ProjectColors tintColor];
+    self.declineRequestButton.layer.borderWidth = BUTTON_BORDER_WIDTH;
     
     // Make profile image circular
-    self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height / 2;;
-    self.profileImageView.layer.masksToBounds = true;
+    self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height / PROFILE_PICTURE_CORNER_RADIUS_RATIO;
+    self.profileImageView.layer.masksToBounds = MASKS_TO_BOUNDS;
     
 }
 
 - (void)setFieldsWithUser {
-    self.usernameLabel.text = self.user[@"username"];
-    self.descriptionLabel.text = self.user[@"tagline"];
-    self.profileImageView.file = self.user[@"profilePicture"];
+    self.usernameLabel.text = self.user[USER_USERNAME_KEY];
+    self.descriptionLabel.text = self.user[USER_TAGLINE_KEY];
+    self.profileImageView.file = self.user[USER_PROFILE_PICTURE_KEY];
     [self.profileImageView loadInBackground];
 }
 
@@ -44,19 +45,19 @@
 - (IBAction)acceptRequest:(id)sender {
     PFUser *currUser = [PFUser currentUser];
     
-    NSDictionary *parameters = @{@"userToEditID": self.user.objectId, @"friend": @(true), @"currentUserID": currUser.objectId};
+    NSDictionary *parameters = @{CLOUD_CODE_USER_TO_EDIT_KEY: self.user.objectId, CLOUD_CODE_FRIEND_KEY: @(true), CLOUD_CODE_CURRENT_USER_KEY: currUser.objectId};
     // Remove request from list of pending requests
-    [PFCloud callFunctionInBackground:@"respondToFriendRequest" withParameters:parameters];
+    [PFCloud callFunctionInBackground:CLOUD_CODE_FRIEND_REQUEST_RESPONSE_FUNCTION withParameters:parameters];
     
-    NSNumber *incrementFriendAmount = @(1);
+    NSNumber *incrementFriendAmount = [ProjectNumbers one];
     // Update both users' friends list
-    [PFCloud callFunctionInBackground:@"friendUser" withParameters:parameters];
-    [currUser addObject:self.user.objectId forKey:@"friends"];
+    [PFCloud callFunctionInBackground:CLOUD_CODE_FRIEND_USER_FUNCTION withParameters:parameters];
+    [currUser addObject:self.user.objectId forKey:USER_FRIENDS_KEY];
     
     // Update fields locally
-    [self.user incrementKey:@"numFriends" byAmount:incrementFriendAmount];
-    [currUser incrementKey:@"numFriends" byAmount:incrementFriendAmount];
-    [currUser removeObject:self.user.objectId forKey:@"pendingFriends"];
+    [self.user incrementKey:USER_NUM_FRIENDS_KEY byAmount:incrementFriendAmount];
+    [currUser incrementKey:USER_NUM_FRIENDS_KEY byAmount:incrementFriendAmount];
+    [currUser removeObject:self.user.objectId forKey:USER_PENDING_FRIENDS_KEY];
     
     [currUser saveInBackground];
     [self.delegate didFinishRespondingToFriendRequest:self.cellIndex];
@@ -65,12 +66,12 @@
 - (IBAction)declineRequest:(id)sender {
     PFUser *currUser = [PFUser currentUser];
     
-    NSDictionary *parameters = @{@"userToEditID": self.user.objectId, @"currentUserID": currUser.objectId};
+    NSDictionary *parameters = @{CLOUD_CODE_USER_TO_EDIT_KEY: self.user.objectId, CLOUD_CODE_CURRENT_USER_KEY: currUser.objectId};
     // Remove request from list of pending requests
-    [PFCloud callFunctionInBackground:@"respondToFriendRequest" withParameters:parameters];
+    [PFCloud callFunctionInBackground:CLOUD_CODE_FRIEND_REQUEST_RESPONSE_FUNCTION withParameters:parameters];
     
     // Update fields locally
-    [currUser removeObject:self.user.objectId forKey:@"pendingFriends"];
+    [currUser removeObject:self.user.objectId forKey:USER_PENDING_FRIENDS_KEY];
     
     [currUser saveInBackground];
     [self.delegate didFinishRespondingToFriendRequest:self.cellIndex];

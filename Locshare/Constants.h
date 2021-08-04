@@ -7,6 +7,8 @@
 
 #ifndef Constants_h
 #define Constants_h
+#import <UIKit/UIKit.h>
+#import <GoogleMaps/GoogleMaps.h>
 
 // LocationManager.m
 extern NSString * const KEYS_FILE_NAME;
@@ -21,5 +23,85 @@ extern NSString * const PLACES_DETAILS_URL;
 extern NSString * const PLACES_DETAILS_RETURNED_DATA_KEY;
 extern NSString * const URL_REQUEST_ERROR_TITLE;
 extern NSString * const URL_REQUEST_ERROR_MESSAGE;
+
+// AlertManager.m
+extern NSString * const OK_ACTION_TITLE;
+
+// UserSearchCell.m
+extern CGFloat const BUTTON_CORNER_RADIUS;
+extern BOOL const MASKS_TO_BOUNDS;
+extern CGFloat const BUTTON_BORDER_WIDTH;
+extern CGFloat const PROFILE_PICTURE_CORNER_RADIUS_RATIO;
+
+// Post.m
+extern NSString * const POST_PARSE_CLASS_NAME;
+extern NSNumber * const ZERO;
+extern CGFloat const IMAGE_COMPRESSION_QUALITY;
+extern NSString * const IMAGE_DEFAULT_NAME;
+extern NSString * const POST_AUTHOR_KEY;
+extern NSString * const POST_CREATED_AT_KEY;
+extern NSString * const POST_PRIVATE_KEY;
+
+// Location.m
+extern NSString * const LOCATION_PARSE_CLASS_NAME;
+extern NSString * const LOCATION_PLACE_ID_KEY;
+
+// User properties
+extern NSString * const USER_PARSE_CLASS_NAME;
+extern NSString * const USER_USERNAME_KEY;
+extern NSString * const USER_TAGLINE_KEY;
+extern NSString * const USER_PROFILE_PICTURE_KEY;
+extern NSString * const CLOUD_CODE_USER_TO_EDIT_KEY;
+extern NSString * const CLOUD_CODE_CURRENT_USER_KEY;
+extern NSString * const CLOUD_CODE_FRIEND_KEY;
+extern NSString * const CLOUD_CODE_FRIEND_USER_FUNCTION;
+extern NSString * const CLOUD_CODE_FRIEND_REQUEST_RESPONSE_FUNCTION;
+extern NSString * const CLOUD_CODE_SEND_FRIEND_REQUEST_FUNCTION;
+extern NSString * const USER_NUM_FRIENDS_KEY;
+extern NSString * const USER_PENDING_FRIENDS_KEY;
+extern NSString * const USER_FRIENDS_KEY;
+extern NSString * const USER_REQUESTS_SENT_KEY;
+extern NSString * const USER_OBJECT_ID_KEY;
+extern NSString * const USER_NUM_POSTS_KEY;
+
+// ProfileViewController.m
+extern NSString * const FRIEND_BUTTON_TITLE_DEFAULT;
+extern NSString * const FRIEND_BUTTON_REQUEST_SENT;
+extern NSString * const FRIEND_BUTTON_RESPOND_TO_REQUEST;
+extern NSString * const FRIEND_BUTTON_ALREADY_FRIENDS;
+extern NSString * const UPDATE_USER_ERROR_TITLE;
+extern NSString * const UPDATE_USER_ERROR_MESSAGE;
+extern NSString * const FRIEND_LABEL_SINGULAR;
+extern NSString * const FRIEND_LABEL_PLURAL;
+extern NSString * const POST_LABEL_SINGULAR;
+extern NSString * const POST_LABEL_PLURAL;
+extern NSString * const DEFAULT_PROFILE_PICTURE_NAME;
+extern NSString * const RETRIEVING_POSTS_ERROR_TITLE;
+extern NSString * const RETRIEVING_POSTS_ERROR_MESSAGE;
+extern NSString * const MOST_RECENT_POST_PREDICATE;
+extern CGFloat const DEFAULT_ZOOM;
+extern NSString * const GROUP_POSTS_KEY_PATH;
+extern NSString * const POSTS_AT_LOCATION_PREDICATE;
+extern NSString * const PROFILE_TO_LOCATION_SEGUE;
+extern NSInteger const PROFILE_TAB_INDEX;
+extern NSString * const SAVE_SUCCESSFUL_TITLE;
+extern NSString * const SAVE_SUCCESSFUL_MESSAGE;
+extern NSString * const CHOOSE_PROFILE_PHOTO_SEGUE;
+extern NSString * const PROFILE_TO_FRIEND_REQUESTS_SEGUE;
+extern NSInteger const MAX_NUM_PROFILE_PHOTO_SELECTION;
+
+@interface ProjectColors : NSObject
++ (CGColorRef)tintColor;
+@end
+
+@interface ProjectNumbers : NSObject
++ (NSNumber *)zero;
++ (NSNumber *)one;
++ (NSNumber *)negativeOne;
+@end
+
+@interface ProjectLocations : NSObject
++ (GMSCameraPosition *)defaultLocation;
+@end
 
 #endif /* Constants_h */

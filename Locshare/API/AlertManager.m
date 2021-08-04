@@ -6,6 +6,7 @@
 //
 
 #import "AlertManager.h"
+#import "Constants.h"
 
 @interface AlertManager ()
 
@@ -21,7 +22,7 @@
     // Make alert for when no camera is available
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:text preferredStyle:(UIAlertControllerStyleAlert)];
     // create an OK action
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:OK_ACTION_TITLE style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {}];
     // add the OK action to the alert controller
     [alert addAction:okAction];
     [presenter presentViewController:alert animated:YES completion:^{}];

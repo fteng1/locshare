@@ -6,6 +6,7 @@
 //
 #import <Foundation/Foundation.h>
 #import "Constants.h"
+#import <UIKit/UIKit.h>
 
 // LocationManager.m
 NSString * const KEYS_FILE_NAME = @"Keys";
@@ -20,5 +21,102 @@ NSString * const PLACES_DETAILS_URL = @"https://maps.googleapis.com/maps/api/pla
 NSString * const PLACES_DETAILS_RETURNED_DATA_KEY = @"result";
 NSString * const URL_REQUEST_ERROR_TITLE = @"Network Error";
 NSString * const URL_REQUEST_ERROR_MESSAGE = @"Could not complete network request";
+
+// AlertManager.m
+NSString * const OK_ACTION_TITLE = @"OK";
+
+// UserSearchCell.m
+CGFloat const BUTTON_CORNER_RADIUS = 5;
+BOOL const MASKS_TO_BOUNDS = true;
+CGFloat const BUTTON_BORDER_WIDTH = 1;
+CGFloat const PROFILE_PICTURE_CORNER_RADIUS_RATIO = 2;
+
+// Post.m
+NSString * const POST_PARSE_CLASS_NAME = @"Post";
+CGFloat const IMAGE_COMPRESSION_QUALITY = 1.0;
+NSString * const IMAGE_DEFAULT_NAME = @"image.png";
+NSString * const POST_AUTHOR_KEY = @"author";
+NSString * const POST_CREATED_AT_KEY = @"createdAt";
+NSString * const POST_PRIVATE_KEY = @"private";
+
+// Location.m
+NSString * const LOCATION_PARSE_CLASS_NAME = @"Location";
+NSString * const LOCATION_PLACE_ID_KEY = @"placeID";
+
+// User properties
+NSString * const USER_PARSE_CLASS_NAME = @"_User";
+NSString * const USER_USERNAME_KEY = @"username";
+NSString * const USER_TAGLINE_KEY = @"tagline";
+NSString * const USER_PROFILE_PICTURE_KEY = @"profilePicture";
+NSString * const CLOUD_CODE_USER_TO_EDIT_KEY = @"userToEditID";
+NSString * const CLOUD_CODE_CURRENT_USER_KEY = @"currentUserID";
+NSString * const CLOUD_CODE_FRIEND_KEY = @"friend";
+NSString * const CLOUD_CODE_FRIEND_USER_FUNCTION = @"friendUser";
+NSString * const CLOUD_CODE_FRIEND_REQUEST_RESPONSE_FUNCTION = @"respondToFriendRequest";
+NSString * const CLOUD_CODE_SEND_FRIEND_REQUEST_FUNCTION = @"sendFriendRequest";
+NSString * const USER_NUM_FRIENDS_KEY = @"numFriends";
+NSString * const USER_PENDING_FRIENDS_KEY = @"pendingFriends";
+NSString * const USER_FRIENDS_KEY = @"friends";
+NSString * const USER_REQUESTS_SENT_KEY = @"requestsSent";
+NSString * const USER_OBJECT_ID_KEY = @"objectId";
+NSString * const USER_NUM_POSTS_KEY = @"numPosts";
+
+// ProfileViewController.m
+NSString * const FRIEND_BUTTON_TITLE_DEFAULT = @"Friend";
+NSString * const FRIEND_BUTTON_REQUEST_SENT = @"Friend Request Sent";
+NSString * const FRIEND_BUTTON_RESPOND_TO_REQUEST = @"Respond to Request";
+NSString * const FRIEND_BUTTON_ALREADY_FRIENDS = @"Already Friends";
+NSString * const UPDATE_USER_ERROR_TITLE = @"Update User Error";
+NSString * const UPDATE_USER_ERROR_MESSAGE = @"Error retrieving latest data about user";
+NSString * const FRIEND_LABEL_SINGULAR = @"friend";
+NSString * const FRIEND_LABEL_PLURAL = @"friends";
+NSString * const POST_LABEL_SINGULAR = @"post";
+NSString * const POST_LABEL_PLURAL = @"posts";
+NSString * const DEFAULT_PROFILE_PICTURE_NAME = @"photo";
+NSString * const RETRIEVING_POSTS_ERROR_TITLE = @"Error Retrieving Posts";
+NSString * const RETRIEVING_POSTS_ERROR_MESSAGE = @"Could not fetch posts from server";
+NSString * const MOST_RECENT_POST_PREDICATE = @"placeID like %@";
+CGFloat const DEFAULT_ZOOM = 10.0;
+NSString * const GROUP_POSTS_KEY_PATH = @"@distinctUnionOfObjects.location";
+NSString * const POSTS_AT_LOCATION_PREDICATE = @"location like %@";
+NSString * const PROFILE_TO_LOCATION_SEGUE = @"profileLocationSegue";
+NSInteger const PROFILE_TAB_INDEX = 3;
+NSString * const SAVE_SUCCESSFUL_TITLE = @"Save Successful";
+NSString * const SAVE_SUCCESSFUL_MESSAGE = @"Profile has been saved successfully";
+NSString * const CHOOSE_PROFILE_PHOTO_SEGUE = @"chooseProfileSegue";
+NSString * const PROFILE_TO_FRIEND_REQUESTS_SEGUE = @"friendRequestSegue";
+NSInteger const MAX_NUM_PROFILE_PHOTO_SELECTION = 1;
+
+@implementation ProjectColors
+
++ (CGColorRef)tintColor {
+    return [[UIColor colorWithRed:104/255.0 green:176/255.0 blue:171/255.0 alpha:1.0] CGColor];
+}
+
+@end
+
+@implementation ProjectNumbers
+
++ (NSNumber *)zero {
+    return [NSNumber numberWithInteger:0];
+};
+
++ (NSNumber *)one {
+    return [NSNumber numberWithInteger:1];
+};
++ (NSNumber *)negativeOne {
+    return [NSNumber numberWithInteger:-1];
+};
+
+@end
+
+@implementation ProjectLocations
+
++ (GMSCameraPosition *)defaultLocation {
+    return [GMSCameraPosition cameraWithLatitude:40.745028 longitude:-100.657394 zoom:1.0];
+}
+
+@end
+
 
 

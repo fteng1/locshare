@@ -16,6 +16,7 @@
 #import "ImageManager.h"
 #import "ImagePickerViewController.h"
 #import "AlertManager.h"
+#import "Constants.h"
 
 @import Parse;
 
@@ -62,20 +63,20 @@
 
 - (void)setDefaultMapLocation {
     // Set default location of map to be the center of the US
-    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:40.745028 longitude:-100.657394 zoom:1.0];
+    GMSCameraPosition *camera = [ProjectLocations defaultLocation];
     [self.userMapView setCamera:camera];
 }
 
 - (void)initializeUI {
     // Make profile image circular
-    self.profilePictureView.layer.cornerRadius = self.profilePictureView.frame.size.height / 2;;
-    self.profilePictureView.layer.masksToBounds = true;
+    self.profilePictureView.layer.cornerRadius = self.profilePictureView.frame.size.height / PROFILE_PICTURE_CORNER_RADIUS_RATIO;
+    self.profilePictureView.layer.masksToBounds = MASKS_TO_BOUNDS;
     
     // Round borders of friend button
-    self.friendButton.layer.cornerRadius = 5;
-    self.friendButton.layer.masksToBounds = true;
-    self.friendButton.layer.borderColor = [[UIColor colorWithRed:104/255.0 green:176/255.0 blue:171/255.0 alpha:1.0] CGColor];
-    self.friendButton.layer.borderWidth = 1;
+    self.friendButton.layer.cornerRadius = BUTTON_CORNER_RADIUS;
+    self.friendButton.layer.masksToBounds = MASKS_TO_BOUNDS;
+    self.friendButton.layer.borderColor = [ProjectColors tintColor];
+    self.friendButton.layer.borderWidth = BUTTON_BORDER_WIDTH;
 }
 
 - (void)changeEditability {
@@ -99,22 +100,22 @@
         self.navigationItem.rightBarButtonItem = nil;
         
         // Handle friend button visibility/enabled state
-        [self.friendButton setTitle:@"Friend" forState: UIControlStateNormal];
-        [self.friendButton setTitle:@"Friend Request Sent" forState: UIControlStateSelected];
+        [self.friendButton setTitle:FRIEND_BUTTON_TITLE_DEFAULT forState: UIControlStateNormal];
+        [self.friendButton setTitle:FRIEND_BUTTON_REQUEST_SENT forState: UIControlStateSelected];
         if (![self.user.objectId isEqual:[PFUser currentUser].objectId]) {
             self.friendButton.hidden = false;
-            NSArray *friendList = [PFUser currentUser][@"friends"];
-            NSArray *requestedList = [PFUser currentUser][@"requestsSent"];
-            NSArray *pendingList = [PFUser currentUser][@"pendingFriends"];
+            NSArray *friendList = [PFUser currentUser][USER_FRIENDS_KEY];
+            NSArray *requestedList = [PFUser currentUser][USER_REQUESTS_SENT_KEY];
+            NSArray *pendingList = [PFUser currentUser][USER_PENDING_FRIENDS_KEY];
             if ([pendingList containsObject:self.user.objectId]) {
-                [self.friendButton setTitle:@"Respond to Request" forState: UIControlStateSelected];
+                [self.friendButton setTitle:FRIEND_BUTTON_RESPOND_TO_REQUEST forState: UIControlStateSelected];
                 self.friendButton.selected = true;
                 self.friendButton.userInteractionEnabled = false;
             }
             else {
                 self.friendButton.userInteractionEnabled = true;
                 if ([friendList containsObject:self.user.objectId]) {
-                    [self.friendButton setTitle:@"Already Friends" forState: UIControlStateSelected];
+                    [self.friendButton setTitle:FRIEND_BUTTON_ALREADY_FRIENDS forState: UIControlStateSelected];
                     self.friendButton.selected = true;
                 }
                 else if ([requestedList containsObject:self.user.objectId]) {
@@ -137,21 +138,21 @@
     // Update fields in database
     if (!self.friendButton.selected) {
         // Send friend request if request not yet sent
-        [PFCloud callFunctionInBackground:@"sendFriendRequest" withParameters:@{@"userToEditID": self.user.objectId, @"friend": @(true), @"currentUserID": currUser.objectId}];
-        [currUser addObject:self.user.objectId forKey:@"requestsSent"];
+        [PFCloud callFunctionInBackground:CLOUD_CODE_SEND_FRIEND_REQUEST_FUNCTION withParameters:@{CLOUD_CODE_USER_TO_EDIT_KEY: self.user.objectId, CLOUD_CODE_FRIEND_KEY: @(true), CLOUD_CODE_CURRENT_USER_KEY: currUser.objectId}];
+        [currUser addObject:self.user.objectId forKey:USER_REQUESTS_SENT_KEY];
     }
     else {
-        if ([(NSArray *)[PFUser currentUser][@"friends"] containsObject:self.user.objectId]) {
-            [PFCloud callFunctionInBackground:@"friendUser" withParameters:@{@"userToEditID": self.user.objectId, @"friend": @(false), @"currentUserID": currUser.objectId}];
-            [currUser removeObject:self.user.objectId forKey:@"friends"];
-            [currUser incrementKey:@"numFriends" byAmount:@(-1)];
-            [self.user incrementKey:@"numFriends" byAmount:@(-1)];
-            [self.friendButton setTitle:@"Friend Request Sent" forState: UIControlStateSelected];
+        if ([(NSArray *)[PFUser currentUser][USER_FRIENDS_KEY] containsObject:self.user.objectId]) {
+            [PFCloud callFunctionInBackground:CLOUD_CODE_FRIEND_USER_FUNCTION withParameters:@{CLOUD_CODE_USER_TO_EDIT_KEY: self.user.objectId, CLOUD_CODE_FRIEND_KEY: @(false), CLOUD_CODE_CURRENT_USER_KEY: currUser.objectId}];
+            [currUser removeObject:self.user.objectId forKey:USER_FRIENDS_KEY];
+            [currUser incrementKey:USER_NUM_FRIENDS_KEY byAmount:[ProjectNumbers negativeOne]];
+            [self.user incrementKey:USER_NUM_FRIENDS_KEY byAmount:[ProjectNumbers negativeOne]];
+            [self.friendButton setTitle:FRIEND_BUTTON_REQUEST_SENT forState: UIControlStateSelected];
         }
         else {
             // Remove friend request if request not yet responded to
-            [PFCloud callFunctionInBackground:@"sendFriendRequest" withParameters:@{@"userToEditID": self.user.objectId, @"friend": @(false), @"currentUserID": currUser.objectId}];
-            [currUser removeObject:self.user.objectId forKey:@"requestsSent"];
+            [PFCloud callFunctionInBackground:CLOUD_CODE_SEND_FRIEND_REQUEST_FUNCTION withParameters:@{CLOUD_CODE_USER_TO_EDIT_KEY: self.user.objectId, CLOUD_CODE_FRIEND_KEY: @(false), CLOUD_CODE_CURRENT_USER_KEY: currUser.objectId}];
+            [currUser removeObject:self.user.objectId forKey:USER_REQUESTS_SENT_KEY];
         }
     }
     
@@ -165,10 +166,10 @@
 - (void)updateUserValues {
     // Get new information about the user from the database
     PFQuery *userQuery = [PFUser query];
-    [userQuery whereKey:@"objectId" equalTo:self.user.objectId];
+    [userQuery whereKey:USER_OBJECT_ID_KEY equalTo:self.user.objectId];
     [userQuery findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (error) {
-            [AlertManager displayAlertWithTitle:@"User Error" text:@"Error retrieving latest data about user" presenter:self];
+            [AlertManager displayAlertWithTitle:UPDATE_USER_ERROR_TITLE text:UPDATE_USER_ERROR_MESSAGE presenter:self];
         }
         else {
             self.user = [objects firstObject];
@@ -181,49 +182,49 @@
 - (void)updateFields {
     // Set text fields to user's current values
     self.usernameLabel.text = self.user.username;
-    self.descriptionTextView.text = self.user[@"tagline"];
-    self.friendCountLabel.text = [NSString stringWithFormat:@"%@", self.user[@"numFriends"]];
+    self.descriptionTextView.text = self.user[USER_TAGLINE_KEY];
+    self.friendCountLabel.text = [NSString stringWithFormat:@"%@", self.user[USER_NUM_FRIENDS_KEY]];
     // Check if text should be plural or singular
-    if ([self.friendCountLabel.text isEqual:@"1"]) {
-        self.friendLabel.text = @"friend";
+    if ([self.user[USER_NUM_FRIENDS_KEY] isEqual:[ProjectNumbers one]]) {
+        self.friendLabel.text = FRIEND_LABEL_SINGULAR;
     }
     else {
-        self.friendLabel.text = @"friends";
+        self.friendLabel.text = FRIEND_LABEL_PLURAL;
     }
-    self.postCountLabel.text = [NSString stringWithFormat:@"%@", self.user[@"numPosts"]];
-    if ([self.postCountLabel.text isEqual:@"1"]) {
-        self.postLabel.text = @"post";
+    self.postCountLabel.text = [NSString stringWithFormat:@"%@", self.user[USER_NUM_POSTS_KEY]];
+    if ([self.user[USER_NUM_POSTS_KEY] isEqual:[ProjectNumbers one]]) {
+        self.postLabel.text = POST_LABEL_SINGULAR;
     }
     else {
-        self.postLabel.text = @"posts";
+        self.postLabel.text = POST_LABEL_PLURAL;
     }
     
     // Load profile picture
-    PFFileObject *imageToDisplay = self.user[@"profilePicture"];
-    self.profilePictureView.image = [UIImage systemImageNamed:@"photo"];
+    PFFileObject *imageToDisplay = self.user[USER_PROFILE_PICTURE_KEY];
+    self.profilePictureView.image = [UIImage systemImageNamed:DEFAULT_PROFILE_PICTURE_NAME];
     self.profilePictureView.file = imageToDisplay;
     [self.profilePictureView loadInBackground];
 }
 
 - (void)fetchPosts {
-    PFQuery *query = [PFQuery queryWithClassName:@"Post"];
-    [query whereKey:@"author" equalTo:self.user];
-    [query orderByDescending:@"createdAt"];
-    NSMutableArray *friendsOfSelf = [PFUser currentUser][@"friends"];
+    PFQuery *query = [PFQuery queryWithClassName:POST_PARSE_CLASS_NAME];
+    [query whereKey:POST_AUTHOR_KEY equalTo:self.user];
+    [query orderByDescending:POST_CREATED_AT_KEY];
+    NSMutableArray *friendsOfSelf = [PFUser currentUser][USER_FRIENDS_KEY];
     [friendsOfSelf addObject:[PFUser currentUser].objectId];
     if (![friendsOfSelf containsObject:self.user.objectId]) {
         // If this profile's user is not friends with the current user, only display public posts
-        [query whereKey:@"private" equalTo:[NSNumber numberWithBool:false]];
+        [query whereKey:POST_PRIVATE_KEY equalTo:[NSNumber numberWithBool:false]];
     }
     
     // Fetch posts of user from database
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable posts, NSError * _Nullable error) {
         if (error != nil) {
-            [AlertManager displayAlertWithTitle:@"Error Retrieving Posts" text:@"Could not fetch posts from server" presenter:self];
+            [AlertManager displayAlertWithTitle:RETRIEVING_POSTS_ERROR_TITLE text:RETRIEVING_POSTS_ERROR_MESSAGE presenter:self];
         }
         else {
             if ([posts count] >= 1) {
-                Post *mostRecentPost = posts[0];
+                Post *mostRecentPost = [posts firstObject];
                 NSMutableArray *locationIds = [[NSMutableArray alloc] init];
                 for (Post *post in posts) {
                     if (![locationIds containsObject:post.location]) {
@@ -232,8 +233,8 @@
                 }
                 
                 // Fetch relevant locations from database
-                PFQuery *locQuery = [PFQuery queryWithClassName:@"Location"];
-                [locQuery whereKey:@"placeID" containedIn:locationIds];
+                PFQuery *locQuery = [PFQuery queryWithClassName:LOCATION_PARSE_CLASS_NAME];
+                [locQuery whereKey:LOCATION_PLACE_ID_KEY containedIn:locationIds];
                 [locQuery findObjectsInBackgroundWithBlock:^(NSArray * _Nullable locations, NSError * _Nullable error) {
                     self.postLocations = locations;
                     self.postsByLocationId = [self groupByLocation:posts];
@@ -241,10 +242,10 @@
                     [[LocationManager shared] displayLocationsOnMap:self.userMapView locations:locations userFiltering:true];
                     
                     // Set camera to be at location of most recent post
-                    NSArray *filteredLocation = [self.postLocations filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"placeID like %@", mostRecentPost.location]];
+                    NSArray *filteredLocation = [self.postLocations filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:MOST_RECENT_POST_PREDICATE, mostRecentPost.location]];
                     if ([filteredLocation count] > 0) {
-                        Location *mostRecentLocation = filteredLocation[0];
-                        GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:mostRecentLocation.coordinate.latitude longitude:mostRecentLocation.coordinate.longitude zoom:10.0];
+                        Location *mostRecentLocation = [filteredLocation firstObject];
+                        GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:mostRecentLocation.coordinate.latitude longitude:mostRecentLocation.coordinate.longitude zoom:DEFAULT_ZOOM];
                         [self.userMapView setCamera:camera];
                     }
                 }];
@@ -255,12 +256,12 @@
 
 - (NSDictionary *)groupByLocation:(NSArray *)posts {
     // Get all distinct place IDs
-    NSArray *postGroups = [posts valueForKeyPath:@"@distinctUnionOfObjects.location"];
+    NSArray *postGroups = [posts valueForKeyPath:GROUP_POSTS_KEY_PATH];
     NSMutableDictionary *groupedById = [[NSMutableDictionary alloc] init];
     
     // Get array of posts with the given place ID and create a key-value pair in the dictionary
     for (NSString *placeID in postGroups) {
-        NSArray *postsAtPlace = [posts filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"location like %@", placeID]];
+        NSArray *postsAtPlace = [posts filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:POSTS_AT_LOCATION_PREDICATE, placeID]];
         [groupedById setObject:postsAtPlace forKey:placeID];
     }
     return groupedById;
@@ -268,13 +269,13 @@
 
 // Perform segue to view posts at location screen when marker is tapped
 - (BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker {
-    [self performSegueWithIdentifier:@"profileLocationSegue" sender:marker];
+    [self performSegueWithIdentifier:PROFILE_TO_LOCATION_SEGUE sender:marker];
     return true;
 }
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
     // If user goes to this screen via the tab bar, the page displays the current user profile
-    if ([tabBarController.viewControllers indexOfObject:viewController] == 3) {
+    if ([tabBarController.viewControllers indexOfObject:viewController] == PROFILE_TAB_INDEX) {
         self.isEditable = true;
         self.user = [PFUser currentUser];
         [self updateFields];
@@ -283,17 +284,17 @@
 
 // Save currently selected description and profile picture to database
 - (IBAction)onSaveTap:(id)sender {
-    self.user[@"tagline"] = self.descriptionTextView.text;
-    self.user[@"profilePicture"] = [Post getPFFileFromImage:self.profilePictureView.image];
+    self.user[USER_TAGLINE_KEY] = self.descriptionTextView.text;
+    self.user[USER_PROFILE_PICTURE_KEY] = [Post getPFFileFromImage:self.profilePictureView.image];
     [self.user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         [self updateFields];
-        [AlertManager displayAlertWithTitle:@"Save Successful" text:@"Profile has been saved successfully" presenter:self];
+        [AlertManager displayAlertWithTitle:SAVE_SUCCESSFUL_TITLE text:SAVE_SUCCESSFUL_MESSAGE presenter:self];
     }];
     [self.descriptionTextView resignFirstResponder];
 }
 
 - (IBAction)onProfilePictureTap:(id)sender {
-    [self performSegueWithIdentifier:@"chooseProfileSegue" sender:nil];
+    [self performSegueWithIdentifier:CHOOSE_PROFILE_PHOTO_SEGUE sender:nil];
 }
 
 - (void)didFinishPicking:(NSArray *)images {
@@ -306,12 +307,12 @@
 }
 
 - (IBAction)onRequestsTap:(id)sender {
-    [self performSegueWithIdentifier:@"friendRequestSegue" sender:nil];
+    [self performSegueWithIdentifier:PROFILE_TO_FRIEND_REQUESTS_SEGUE sender:nil];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Bring up location view screen if marker is tapped
-    if ([[segue identifier] isEqualToString:@"profileLocationSegue"]) {
+    if ([[segue identifier] isEqualToString:PROFILE_TO_LOCATION_SEGUE]) {
         LocationMarker *marker = sender;
         LocationViewController *locationViewController = [segue destinationViewController];
         locationViewController.location = marker.location;
@@ -320,11 +321,11 @@
         locationViewController.isUserFiltered = marker.userFiltered;
     }
     // Bring up image picker screen if profile picture is tapped
-    if ([[segue identifier] isEqualToString:@"chooseProfileSegue"]) {
+    if ([[segue identifier] isEqualToString:CHOOSE_PROFILE_PHOTO_SEGUE]) {
         ImagePickerViewController *imagePicker = [segue destinationViewController];
         imagePicker.delegate = self;
         imagePicker.useCamera = false;
-        imagePicker.limitSelection = 1;
+        imagePicker.limitSelection = MAX_NUM_PROFILE_PHOTO_SELECTION;
     }
 }
 

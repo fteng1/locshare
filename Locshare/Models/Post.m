@@ -6,6 +6,7 @@
 //
 
 #import "Post.h"
+#import "Constants.h"
 
 @implementation Post
 
@@ -20,7 +21,7 @@
 @dynamic private;
 
 + (nonnull NSString *)parseClassName {
-    return @"Post";
+    return POST_PARSE_CLASS_NAME;
 }
 
 + (Post *) initPost: ( NSArray * _Nullable )images withCaption: ( NSString * _Nullable )caption withLocation: (NSString * _Nullable)locID private:(BOOL)isPrivate {
@@ -33,8 +34,8 @@
     }
     newPost.author = [PFUser currentUser];
     newPost.caption = caption;
-    newPost.numLikes = @(0);
-    newPost.numComments = @(0);
+    newPost.numLikes = [ProjectNumbers zero];
+    newPost.numComments = [ProjectNumbers zero];
     newPost.authorUsername = [PFUser currentUser].username;
     newPost.comments = [[NSMutableArray alloc] init];
     newPost.location = locID;
@@ -60,13 +61,13 @@
     if (!image) {
         return nil;
     }
-    NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
+    NSData *imageData = UIImageJPEGRepresentation(image, IMAGE_COMPRESSION_QUALITY);
     
     // get image data and check if that is not nil
     if (!imageData) {
         return nil;
     }
-    return [PFFileObject fileObjectWithName:@"image.png" data:imageData];
+    return [PFFileObject fileObjectWithName:IMAGE_DEFAULT_NAME data:imageData];
 }
 
 @end
