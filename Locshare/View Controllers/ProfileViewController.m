@@ -185,7 +185,7 @@
     // Set text fields to user's current values
     self.usernameLabel.text = self.user.username;
     self.descriptionTextView.text = self.user[USER_TAGLINE_KEY];
-    self.friendCountLabel.text = [NSString stringWithFormat:@"%@", self.user[USER_NUM_FRIENDS_KEY]];
+    self.friendCountLabel.text = [NSString stringWithFormat:OBJECT_STRING, self.user[USER_NUM_FRIENDS_KEY]];
     // Check if text should be plural or singular
     if ([self.user[USER_NUM_FRIENDS_KEY] isEqual:[ProjectNumbers one]]) {
         self.friendLabel.text = FRIEND_LABEL_SINGULAR;
@@ -193,7 +193,7 @@
     else {
         self.friendLabel.text = FRIEND_LABEL_PLURAL;
     }
-    self.postCountLabel.text = [NSString stringWithFormat:@"%@", self.user[USER_NUM_POSTS_KEY]];
+    self.postCountLabel.text = [NSString stringWithFormat:OBJECT_STRING, self.user[USER_NUM_POSTS_KEY]];
     if ([self.user[USER_NUM_POSTS_KEY] isEqual:[ProjectNumbers one]]) {
         self.postLabel.text = POST_LABEL_SINGULAR;
     }

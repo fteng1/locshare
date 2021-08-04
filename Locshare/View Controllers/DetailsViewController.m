@@ -104,7 +104,7 @@
     else {
         self.likesLabel.text = LIKE_LABEL_PLURAL;
     }
-    self.numLikesLabel.text = [NSString stringWithFormat:@"%@", self.post.numLikes];
+    self.numLikesLabel.text = [NSString stringWithFormat:OBJECT_STRING, self.post.numLikes];
     
     self.timestampLabel.text = [self formatDate:self.post.createdAt.description];
     

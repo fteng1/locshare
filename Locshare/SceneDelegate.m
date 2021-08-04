@@ -7,6 +7,7 @@
 
 #import "SceneDelegate.h"
 #import <Parse/Parse.h>
+#import "Constants.h"
 
 @interface SceneDelegate ()
 
@@ -17,14 +18,14 @@
 
 - (void)scene:(UIScene *)scene willConnectToSession:(UISceneSession *)session options:(UISceneConnectionOptions *)connectionOptions {
     // If there is currently a user logged in, skip the login screens
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:STORYBOARD_NAME bundle:nil];
     if (PFUser.currentUser) {
         // Get most updated copy of user
         [[PFUser currentUser] fetchInBackground];
-        self.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"TabBarController"];
+        self.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:TAB_BAR_CONTROLLER_IDENTIFIER];
     }
     else {
-        self.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        self.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:LOGIN_VIEW_CONTROLLER_IDENTIFIER];
     }
 }
 

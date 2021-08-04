@@ -61,7 +61,7 @@ NSString *gMapsAPIKey;
 // Get recommended locations from Places API based on current location
 - (void)getNearbyLocations:(void (^)(NSArray *, NSError *))completion{
     // Construct URL
-    NSString *locationString = [NSString stringWithFormat:@"%f,%f", self.location.coordinate.latitude, self.location.coordinate.longitude];
+    NSString *locationString = [NSString stringWithFormat:LOCATION_STRING, self.location.coordinate.latitude, self.location.coordinate.longitude];
     NSURL *url = [NSURL URLWithString: [NSString stringWithFormat: PLACES_NEARBY_URL, gMapsAPIKey, locationString, PLACES_NEARBY_RADIUS]];
     
     // Make API request using URL
@@ -93,7 +93,7 @@ NSString *gMapsAPIKey;
 
 // Handles the url request given a url parameter
 - (void)makeURLRequest:(NSURL *)url completion:(void (^)(NSDictionary *, NSError *))completion {
-    NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:URL_TIMEOUT_INTERVAL];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error != nil) {

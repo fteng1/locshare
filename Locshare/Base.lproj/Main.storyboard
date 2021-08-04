@@ -768,6 +768,9 @@
                                 <rect key="frame" x="315" y="96" width="51" height="31"/>
                                 <color key="onTintColor" red="0.40784313729999999" green="0.69019607839999997" blue="0.6705882353" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="thumbTintColor" red="0.94509803920000002" green="0.95686274510000002" blue="0.92941176469999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="onSwitch:" destination="t7a-ai-1iy" eventType="valueChanged" id="eWA-J6-r1m"/>
+                                </connections>
                             </switch>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="5t6-fY-KVQ">
                                 <rect key="frame" x="15" y="155" width="360" height="300"/>
@@ -903,6 +906,7 @@
                         <outlet property="autocompleteTableView" destination="qZr-bq-9WV" id="efP-tD-aj2"/>
                         <outlet property="captionTextView" destination="oZA-dj-V8Y" id="XJa-id-MOG"/>
                         <outlet property="locationSearchBar" destination="0zq-jz-3KE" id="1FF-Vt-vA1"/>
+                        <outlet property="lockImageView" destination="cWl-PN-IoI" id="wen-cg-onb"/>
                         <outlet property="mapImage" destination="bkZ-zw-KOA" id="o4X-yb-MBd"/>
                         <outlet property="pickedPhotosCollectionView" destination="5t6-fY-KVQ" id="irF-oa-t1c"/>
                         <outlet property="privateSwitch" destination="eTF-Id-11Q" id="vXt-eZ-wbX"/>
@@ -1282,7 +1286,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fc0-mN-Tdg">
-                                <rect key="frame" x="0.0" y="56" width="390" height="700"/>
+                                <rect key="frame" x="0.0" y="0.0" width="390" height="756"/>
                                 <color key="backgroundColor" red="0.94509803920000002" green="0.95686274510000002" blue="0.92941176469999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RequestCell" rowHeight="127" id="O8C-sI-rcw" customClass="UserSearchCell">

@@ -61,13 +61,13 @@
     if (!image) {
         return nil;
     }
-    NSData *imageData = UIImageJPEGRepresentation(image, IMAGE_COMPRESSION_QUALITY);
+    NSData *imageData = UIImageJPEGRepresentation(image, POST_IMAGE_COMPRESSION_QUALITY);
     
     // get image data and check if that is not nil
     if (!imageData) {
         return nil;
     }
-    return [PFFileObject fileObjectWithName:IMAGE_DEFAULT_NAME data:imageData];
+    return [PFFileObject fileObjectWithName:POST_IMAGE_DEFAULT_NAME data:imageData];
 }
 
 @end

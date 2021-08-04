@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *mapImage;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchBarLeadingConstraint;
 @property (weak, nonatomic) IBOutlet UISwitch *privateSwitch;
+@property (weak, nonatomic) IBOutlet UIImageView *lockImageView;
 
 @property (strong, nonatomic) NSArray *autocompleteResults;
 @property (strong, nonatomic) NSString *locationID;
@@ -241,6 +242,15 @@
     }
     else {
         return numItems;
+    }
+}
+
+- (IBAction)onSwitch:(id)sender {
+    if (self.privateSwitch.on) {
+        self.lockImageView.image = [UIImage systemImageNamed:@"lock"];
+    }
+    else {
+        self.lockImageView.image = [UIImage systemImageNamed:@"lock.open"];
     }
 }
 

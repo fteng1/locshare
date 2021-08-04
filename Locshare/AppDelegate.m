@@ -10,6 +10,7 @@
 #import <GoogleMaps/GoogleMaps.h>
 #import <GooglePlaces/GooglePlaces.h>
 #import <IQKeyboardManager/IQKeyboardManager.h>
+#import "Constants.h"
 
 @interface AppDelegate ()
 
@@ -20,20 +21,20 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Read keys from Keys.plist
-    NSString *path = [[NSBundle mainBundle] pathForResource: @"Keys" ofType: @"plist"];
+    NSString *path = [[NSBundle mainBundle] pathForResource: KEYS_FILE_NAME ofType: KEYS_FILE_EXTENSION];
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: path];
     
-    NSString *extractedExpr = @"application_id";
+    NSString *extractedExpr = APPLICATION_ID_NAME;
     NSString *appID = [dict objectForKey: extractedExpr];
-    NSString *clientKey = [dict objectForKey: @"client_key"];
-    NSString *gmapsAPIKey = [dict objectForKey:@"google_api_key"];
+    NSString *clientKey = [dict objectForKey: CLIENT_KEY_NAME];
+    NSString *gmapsAPIKey = [dict objectForKey:GOOGLE_API_KEY_NAME];
     
     // Initialize Parse server
     ParseClientConfiguration *config = [ParseClientConfiguration  configurationWithBlock:^(id<ParseMutableClientConfiguration> configuration) {
         
         configuration.applicationId = appID;
         configuration.clientKey = clientKey;
-        configuration.server = @"https://parseapi.back4app.com";
+        configuration.server = SERVER_URL;
     }];
     
     [Parse initializeWithConfiguration:config];
@@ -45,15 +46,15 @@
     [self configureKeyboardManager];
     
     // Set font of tab bar and navigation bar
-    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Kohinoor Devanagari" size:12], NSFontAttributeName, nil] forState:UIControlStateNormal];
-    [[UIBarButtonItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"Kohinoor Devanagari" size:17], NSFontAttributeName, nil] forState:UIControlStateNormal];
+    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[ProjectFonts tabBarFont], NSFontAttributeName, nil] forState:UIControlStateNormal];
+    [[UIBarButtonItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[ProjectFonts navigationBarFont], NSFontAttributeName, nil] forState:UIControlStateNormal];
 
     return YES;
 }
 
 - (void)configureKeyboardManager {
     [IQKeyboardManager sharedManager].enable = true;
-    [IQKeyboardManager sharedManager].keyboardDistanceFromTextField = 10;
+    [IQKeyboardManager sharedManager].keyboardDistanceFromTextField = KEYBOARD_DISTANCE_FROM_TEXT_FIELD;
     [IQKeyboardManager sharedManager].enableAutoToolbar = false;
     [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = true;
 }
