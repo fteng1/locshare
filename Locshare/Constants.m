@@ -147,6 +147,15 @@ NSString * const PROFILE_ERROR_MESSAGE = @"Could not obtain the current user pro
 NSString * const HEADER_TO_PROFILE_SEGUE = @"profileSegue";
 NSString * const COMMENT_CELL_IDENTIFIER = @"CommentCell";
 
+// SearchViewController.m
+NSInteger const INITIAL_USER_QUERY_LIMIT = 10;
+NSString * const SEARCH_ERROR_INITIAL_USERS_TITLE = @"Search Error";
+NSString * const SEARCH_ERROR_INITIAL_USERS_MESSAGE = @"Could not fetch initial users";
+NSString * const SEARCH_BAR_REGEX_MODIFIERS = @"i";
+NSString * const PERFORM_SEARCH_ERROR_TITLE = @"Search Error";
+NSString * const PERFORM_SEARCH_ERROR_MESSAGE = @"Could not perform the given search";
+NSString * const SEARCH_CELL_IDENTIFIER = @"UserSearchCell";
+
 @implementation ProjectColors
 
 + (CGColorRef)tintColor {

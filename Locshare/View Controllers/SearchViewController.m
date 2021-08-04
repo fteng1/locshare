@@ -10,6 +10,7 @@
 #import "ProfileViewController.h"
 #import <IQKeyboardManager/IQKeyboardManager.h>
 #import "AlertManager.h"
+#import "Constants.h"
 
 @interface SearchViewController () <UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource>
 
@@ -36,21 +37,21 @@
 
 - (void)initializeUI {
     // Change color of search bar
-    self.searchBar.searchTextField.backgroundColor = [UIColor colorWithRed:250/255.0 green:243/255.0 blue:221/255.0 alpha:1];
+    self.searchBar.searchTextField.backgroundColor = [ProjectColors tanBackgroundColor];
     [self.searchBar setSearchFieldBackgroundImage:[UIImage new] forState:UIControlStateNormal];
-    self.searchBar.searchTextField.layer.cornerRadius = 10;
-    self.searchBar.searchTextField.clipsToBounds = true;
-    self.searchBar.searchTextField.font = [UIFont fontWithName:@"Kohinoor Devanagari" size:17];
+    self.searchBar.searchTextField.layer.cornerRadius = TEXT_FIELD_CORNER_RADIUS;
+    self.searchBar.searchTextField.clipsToBounds = CLIPS_TO_BOUNDS;
+    self.searchBar.searchTextField.font = [ProjectFonts searchBarFont];
 }
 
 - (void)fetchInitialUsers {
     // Before searching, fetch users with most posts
-    PFQuery *query = [PFQuery queryWithClassName:@"_User"];
-    [query orderByDescending:@"numPosts"];
-    query.limit = 10;
+    PFQuery *query = [PFQuery queryWithClassName:USER_PARSE_CLASS_NAME];
+    [query orderByDescending:USER_NUM_POSTS_KEY];
+    query.limit = INITIAL_USER_QUERY_LIMIT;
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable returnedUsers, NSError * _Nullable error) {
         if (error != nil) {
-            [AlertManager displayAlertWithTitle:@"Search Error" text:@"Could not fetch initial users" presenter:self];
+            [AlertManager displayAlertWithTitle:SEARCH_ERROR_INITIAL_USERS_TITLE text:SEARCH_ERROR_INITIAL_USERS_MESSAGE presenter:self];
         }
         else {
             self.results = returnedUsers;
@@ -63,11 +64,11 @@
     // Searches for users with username matching the inputted query
     searchBar.showsCancelButton = false;
     [searchBar resignFirstResponder];
-    PFQuery *query = [PFQuery queryWithClassName:@"_User"];
-    [query whereKey:@"username" matchesRegex:searchBar.text modifiers:@"i"];
+    PFQuery *query = [PFQuery queryWithClassName:USER_PARSE_CLASS_NAME];
+    [query whereKey:USER_USERNAME_KEY matchesRegex:searchBar.text modifiers:SEARCH_BAR_REGEX_MODIFIERS];
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable returnedUsers, NSError * _Nullable error) {
         if (error != nil) {
-            [AlertManager displayAlertWithTitle:@"Search Error" text:@"Could not perform the given search" presenter:self];
+            [AlertManager displayAlertWithTitle:PERFORM_SEARCH_ERROR_TITLE text:PERFORM_SEARCH_ERROR_MESSAGE presenter:self];
         }
         else {
             self.results = returnedUsers;
@@ -90,7 +91,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UserSearchCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UserSearchCell"];
+    UserSearchCell *cell = [tableView dequeueReusableCellWithIdentifier:SEARCH_CELL_IDENTIFIER];
     cell.user = self.results[indexPath.row];
     [cell setFieldsWithUser];
     return cell;

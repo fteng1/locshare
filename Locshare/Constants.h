@@ -150,6 +150,15 @@ extern NSString * const PROFILE_ERROR_MESSAGE;
 extern NSString * const HEADER_TO_PROFILE_SEGUE;
 extern NSString * const COMMENT_CELL_IDENTIFIER;
 
+// SearchViewController.m
+extern NSInteger const INITIAL_USER_QUERY_LIMIT;
+extern NSString * const SEARCH_ERROR_INITIAL_USERS_TITLE;
+extern NSString * const SEARCH_ERROR_INITIAL_USERS_MESSAGE;
+extern NSString * const SEARCH_BAR_REGEX_MODIFIERS;
+extern NSString * const PERFORM_SEARCH_ERROR_TITLE;
+extern NSString * const PERFORM_SEARCH_ERROR_MESSAGE;
+extern NSString * const SEARCH_CELL_IDENTIFIER;
+
 @interface ProjectColors : NSObject
 + (CGColorRef)tintColor;
 + (UIColor *)tanBackgroundColor;
