@@ -8,7 +8,6 @@
 #import "Location.h"
 #import <Parse/Parse.h>
 #import "LocationManager.h"
-#import "Post.h"
 
 @implementation Location
 

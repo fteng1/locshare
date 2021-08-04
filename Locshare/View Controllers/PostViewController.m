@@ -15,6 +15,7 @@
 #import "ImageManager.h"
 #import "ImagePickerViewController.h"
 #import "AlertManager.h"
+#import "Constants.h"
 
 @interface PostViewController () <ImagePickerControllerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
 
@@ -42,7 +43,7 @@
     self.autocompleteTableView.delegate = self;
     self.autocompleteTableView.dataSource = self;
     self.locationSearchBar.delegate = self;
-    self.captionTextView.placeholder = @"Write a caption...";
+    self.captionTextView.placeholder = CAPTION_PLACEHOLDER_TEXT;
     self.photosToUpload = [[NSArray alloc] init];
         
     // Initialize CollectionView
@@ -58,24 +59,24 @@
 
 - (void)initializeUI {
     // Change color of search bar
-    self.locationSearchBar.searchTextField.backgroundColor = [UIColor colorWithRed:250/255.0 green:243/255.0 blue:221/255.0 alpha:1];
+    self.locationSearchBar.searchTextField.backgroundColor = [ProjectColors tanBackgroundColor];
     [self.locationSearchBar setSearchFieldBackgroundImage:[UIImage new] forState:UIControlStateNormal];
-    self.locationSearchBar.searchTextField.layer.cornerRadius = 10;
-    self.locationSearchBar.searchTextField.clipsToBounds = true;
-    self.locationSearchBar.searchTextField.font = [UIFont fontWithName:@"Kohinoor Devanagari" size:17];
+    self.locationSearchBar.searchTextField.layer.cornerRadius = TEXT_FIELD_CORNER_RADIUS;
+    self.locationSearchBar.searchTextField.clipsToBounds = CLIPS_TO_BOUNDS;
+    self.locationSearchBar.searchTextField.font = [ProjectFonts searchBarFont];
         
     // Add border to autocompleted results table view
-    self.autocompleteTableView.layer.borderWidth = 0.5;
+    self.autocompleteTableView.layer.borderWidth = TABLE_VIEW_BORDER_WIDTH;
     self.autocompleteTableView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     
-    self.captionTextView.layer.cornerRadius = 10;
-    self.captionTextView.clipsToBounds = true;
+    self.captionTextView.layer.cornerRadius = TEXT_FIELD_CORNER_RADIUS;
+    self.captionTextView.clipsToBounds = CLIPS_TO_BOUNDS;
 }
 
 - (void)setCollectionViewLayout {
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *) self.pickedPhotosCollectionView.collectionViewLayout;
-    layout.minimumInteritemSpacing = 1;
-    layout.minimumLineSpacing = 1;
+    layout.minimumInteritemSpacing = COLLECTION_VIEW_SPACING;
+    layout.minimumLineSpacing = COLLECTION_VIEW_SPACING;
     
     // size of posts depends on device size
     CGFloat itemWidth = self.pickedPhotosCollectionView.collectionViewLayout.collectionViewContentSize.width;
@@ -85,12 +86,12 @@
 
 // Take photo using the phone camera when the camera icon is tapped, if available
 - (IBAction)onCameraTap:(id)sender {
-    [self performSegueWithIdentifier:@"cameraSegue" sender:nil];
+    [self performSegueWithIdentifier:CAMERA_SEGUE sender:nil];
 }
 
 // Choose multiple photos from the photo library
 - (IBAction)onPhotoLibraryTap:(id)sender {
-    [self performSegueWithIdentifier:@"imagePickerSegue" sender:nil];
+    [self performSegueWithIdentifier:IMAGE_PICKER_SEGUE sender:nil];
 }
 
 // Make post when share button is pressed
@@ -100,24 +101,24 @@
         // Make new post with the given location ID
         [Post makePost:newPost completion:^(NSString * userPostID, NSError * _Nullable error) {
             if (error != nil) {
-                [AlertManager displayAlertWithTitle:@"Post Error" text:@"Error sharing the current post" presenter:self];
+                [AlertManager displayAlertWithTitle:POST_ERROR_TITLE text:POST_ERROR_MESSAGE presenter:self];
             }
             else {
                 [Location tagLocation:self.locationID newPost:newPost completion:^(NSError * _Nonnull error) {
                     if (error != nil) {
-                        [AlertManager displayAlertWithTitle:@"Location Tag Error" text:@"Could not tag the location successfully" presenter:self];
+                        [AlertManager displayAlertWithTitle:LOCATION_TAG_TITLE text:LOCATION_TAG_MESSAGE presenter:self];
                     }
                 }];
                 PFUser *currentUser = [PFUser currentUser];
-                [currentUser incrementKey:@"numPosts"];
+                [currentUser incrementKey:USER_NUM_POSTS_KEY];
                 [currentUser saveInBackground];
             }
         }];
-        [self performSegueWithIdentifier:@"afterPostSegue" sender:nil];
+        [self performSegueWithIdentifier:AFTER_POST_SEGUE sender:nil];
     }
     else {
         // Make alert for when no location is inputted
-        [AlertManager displayAlertWithTitle:@"Cannot Make Post" text:@"User must select a valid location to make a post" presenter:self];
+        [AlertManager displayAlertWithTitle:POST_FAILED_TITLE text:POST_FAILED_MESSAGE presenter:self];
     }
 }
 
@@ -135,15 +136,15 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    LocationAutocompleteCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LocationAutocompleteCell"];
+    LocationAutocompleteCell *cell = [tableView dequeueReusableCellWithIdentifier:AUTOCOMPLETE_CELL_IDENTIFIER];
     
     // List name of suggested location in the cell
     NSDictionary *loc = self.autocompleteResults[indexPath.row];
-    if (loc[@"description"] != nil) {
-        cell.locationLabel.text = loc[@"description"];
+    if (loc[AUTOCOMPLETE_RESULT_DESCRIPTION_KEY] != nil) {
+        cell.locationLabel.text = loc[AUTOCOMPLETE_RESULT_DESCRIPTION_KEY];
     }
     else {
-        cell.locationLabel.text = loc[@"name"];
+        cell.locationLabel.text = loc[AUTOCOMPLETE_RESULT_NAME_KEY];
     }
     
     return cell;
@@ -151,7 +152,7 @@
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
     // Expand search bar
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:SEARCH_BAR_ANIMATION_DURATION animations:^{
         [self.view layoutIfNeeded];
         [self animateSearchBar:true];
     }];
@@ -173,13 +174,13 @@
     self.mapImage.hidden = showSearchBar;
     [self.view removeConstraint:self.searchBarLeadingConstraint];
     if (showSearchBar) {
-        self.searchBarLeadingConstraint = [NSLayoutConstraint constraintWithItem:self.locationSearchBar attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view.safeAreaLayoutGuide attribute:NSLayoutAttributeLeading multiplier:1 constant:10];
+        self.searchBarLeadingConstraint = [NSLayoutConstraint constraintWithItem:self.locationSearchBar attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view.safeAreaLayoutGuide attribute:NSLayoutAttributeLeading multiplier:SEARCH_BAR_CONSTRAINT_MULTIPLIER constant:SEARCH_BAR_CONSTRAINT_CONSTANT];
         [self.view addConstraint:self.searchBarLeadingConstraint];
     }
     else {
-        self.searchBarLeadingConstraint = [NSLayoutConstraint constraintWithItem:self.locationSearchBar attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.mapImage attribute:NSLayoutAttributeTrailing multiplier:1 constant:10];
+        self.searchBarLeadingConstraint = [NSLayoutConstraint constraintWithItem:self.locationSearchBar attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.mapImage attribute:NSLayoutAttributeTrailing multiplier:SEARCH_BAR_CONSTRAINT_MULTIPLIER constant:SEARCH_BAR_CONSTRAINT_CONSTANT];
     }
-    self.searchBarLeadingConstraint.priority = 1000;
+    self.searchBarLeadingConstraint.priority = SEARCH_BAR_CONSTRAINT_PRIORITY;
     [self.view addConstraint:self.searchBarLeadingConstraint];
     [self.view layoutIfNeeded];
 }
@@ -211,18 +212,18 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Once a suggested location is selected, update text in search bar
-    if (self.autocompleteResults[indexPath.row][@"description"] != nil) {
-        self.locationSearchBar.text = self.autocompleteResults[indexPath.row][@"description"];
+    if (self.autocompleteResults[indexPath.row][AUTOCOMPLETE_RESULT_DESCRIPTION_KEY] != nil) {
+        self.locationSearchBar.text = self.autocompleteResults[indexPath.row][AUTOCOMPLETE_RESULT_DESCRIPTION_KEY];
     }
     else {
-        self.locationSearchBar.text = self.autocompleteResults[indexPath.row][@"name"];
+        self.locationSearchBar.text = self.autocompleteResults[indexPath.row][AUTOCOMPLETE_RESULT_NAME_KEY];
     }
-    self.locationID = self.autocompleteResults[indexPath.row][@"place_id"];
+    self.locationID = self.autocompleteResults[indexPath.row][LOCATION_PLACE_ID_KEY];
     self.autocompleteTableView.hidden = true;
     self.locationSearchBar.showsCancelButton = NO;
     
     // Shrink search bar
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:SEARCH_BAR_ANIMATION_DURATION animations:^{
         [self.view layoutIfNeeded];
         [self animateSearchBar:false];
     }];}
@@ -245,7 +246,7 @@
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     // Set image for given cell
-    PhotoViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PhotoViewCell" forIndexPath:indexPath];
+    PhotoViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:PHOTO_CELL_IDENTIFIER forIndexPath:indexPath];
     if ([self.photosToUpload count] != 0) {
         cell.photoImageView.image = self.photosToUpload[indexPath.item];
     }
@@ -259,11 +260,11 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Bring up image picker view if photo or camera button is pressed
-    if ([[segue identifier] isEqualToString:@"imagePickerSegue"] || [[segue identifier] isEqualToString:@"cameraSegue"]) {
+    if ([[segue identifier] isEqualToString:IMAGE_PICKER_SEGUE] || [[segue identifier] isEqualToString:CAMERA_SEGUE]) {
         ImagePickerViewController *imagePickerController = [segue destinationViewController];
         imagePickerController.delegate = self;
-        imagePickerController.limitSelection = 6;
-        if ([[segue identifier] isEqualToString:@"cameraSegue"]) {
+        imagePickerController.limitSelection = MAX_NUM_POST_PHOTO_SELECTION;
+        if ([[segue identifier] isEqualToString:CAMERA_SEGUE]) {
             imagePickerController.useCamera = true;
         }
         else {

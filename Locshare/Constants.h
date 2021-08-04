@@ -90,8 +90,35 @@ extern NSString * const CHOOSE_PROFILE_PHOTO_SEGUE;
 extern NSString * const PROFILE_TO_FRIEND_REQUESTS_SEGUE;
 extern NSInteger const MAX_NUM_PROFILE_PHOTO_SELECTION;
 
+// PostViewController.m
+extern NSString * const CAPTION_PLACEHOLDER_TEXT;
+extern CGFloat const TEXT_FIELD_CORNER_RADIUS;
+extern BOOL const CLIPS_TO_BOUNDS;
+extern CGFloat const TABLE_VIEW_BORDER_WIDTH;
+extern CGFloat const COLLECTION_VIEW_SPACING;
+extern NSString * const CAMERA_SEGUE;
+extern NSString * const IMAGE_PICKER_SEGUE;
+extern NSString * const POST_ERROR_TITLE;
+extern NSString * const POST_ERROR_MESSAGE;
+extern NSString * const LOCATION_TAG_TITLE;
+extern NSString * const LOCATION_TAG_MESSAGE;
+extern NSString * const AFTER_POST_SEGUE;
+extern NSString * const POST_FAILED_TITLE;
+extern NSString * const POST_FAILED_MESSAGE;
+extern NSString * const AUTOCOMPLETE_CELL_IDENTIFIER;
+extern NSString * const AUTOCOMPLETE_RESULT_DESCRIPTION_KEY;
+extern NSString * const AUTOCOMPLETE_RESULT_NAME_KEY;
+extern CGFloat const SEARCH_BAR_ANIMATION_DURATION;
+extern CGFloat const SEARCH_BAR_CONSTRAINT_MULTIPLIER;
+extern CGFloat const SEARCH_BAR_CONSTRAINT_CONSTANT;
+extern CGFloat const SEARCH_BAR_CONSTRAINT_PRIORITY;
+extern NSString * const AUTOCOMPLETE_RESULT_PLACE_ID_KEY;
+extern NSString * const PHOTO_CELL_IDENTIFIER;
+extern NSInteger const MAX_NUM_POST_PHOTO_SELECTION;
+
 @interface ProjectColors : NSObject
 + (CGColorRef)tintColor;
++ (UIColor *)tanBackgroundColor;
 @end
 
 @interface ProjectNumbers : NSObject
@@ -102,6 +129,10 @@ extern NSInteger const MAX_NUM_PROFILE_PHOTO_SELECTION;
 
 @interface ProjectLocations : NSObject
 + (GMSCameraPosition *)defaultLocation;
+@end
+
+@interface ProjectFonts : NSObject
++ (UIFont *)searchBarFont;
 @end
 
 #endif /* Constants_h */

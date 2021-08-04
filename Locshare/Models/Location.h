@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
+#import "Post.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSMutableArray *usersWithPosts;
 @property (nonatomic, assign) BOOL hasPublicPosts;
 
-+ (void)tagLocation:(NSString *)placeId newPost:(NSString *)postId completion:(void (^)(NSError *))completion;
++ (void)tagLocation:(NSString *)placeId newPost:(Post *)post completion:(void (^)(NSError *))completion;
 
 @end
 

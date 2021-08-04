@@ -79,7 +79,7 @@ NSString * const MOST_RECENT_POST_PREDICATE = @"placeID like %@";
 CGFloat const DEFAULT_ZOOM = 10.0;
 NSString * const GROUP_POSTS_KEY_PATH = @"@distinctUnionOfObjects.location";
 NSString * const POSTS_AT_LOCATION_PREDICATE = @"location like %@";
-NSString * const PROFILE_TO_LOCATION_SEGUE = @"profileLocationSegue";
+NSString * const PROFILE_TO_LOCATIONs_SEGUE = @"profileLocationSegue";
 NSInteger const PROFILE_TAB_INDEX = 3;
 NSString * const SAVE_SUCCESSFUL_TITLE = @"Save Successful";
 NSString * const SAVE_SUCCESSFUL_MESSAGE = @"Profile has been saved successfully";
@@ -87,10 +87,40 @@ NSString * const CHOOSE_PROFILE_PHOTO_SEGUE = @"chooseProfileSegue";
 NSString * const PROFILE_TO_FRIEND_REQUESTS_SEGUE = @"friendRequestSegue";
 NSInteger const MAX_NUM_PROFILE_PHOTO_SELECTION = 1;
 
+// PostViewController.m
+NSString * const CAPTION_PLACEHOLDER_TEXT = @"Write a caption...";
+CGFloat const TEXT_FIELD_CORNER_RADIUS = 10.0;
+BOOL const CLIPS_TO_BOUNDS = true;
+CGFloat const TABLE_VIEW_BORDER_WIDTH = 0.5;
+CGFloat const COLLECTION_VIEW_SPACING = 1;
+NSString * const CAMERA_SEGUE = @"cameraSegue";
+NSString * const IMAGE_PICKER_SEGUE = @"imagePickerSegue";
+NSString * const POST_ERROR_TITLE = @"Post Error";
+NSString * const POST_ERROR_MESSAGE = @"Error sharing the current post";
+NSString * const LOCATION_TAG_TITLE = @"Location Tag Error";
+NSString * const LOCATION_TAG_MESSAGE = @"Could not tag the location successfully";
+NSString * const AFTER_POST_SEGUE = @"afterPostSegue";
+NSString * const POST_FAILED_TITLE = @"Cannot Make Post";
+NSString * const POST_FAILED_MESSAGE = @"User must select a valid location to make a post";
+NSString * const AUTOCOMPLETE_CELL_IDENTIFIER = @"LocationAutocompleteCell";
+NSString * const AUTOCOMPLETE_RESULT_DESCRIPTION_KEY = @"description";
+NSString * const AUTOCOMPLETE_RESULT_NAME_KEY = @"name";
+CGFloat const SEARCH_BAR_ANIMATION_DURATION = 0.3;
+CGFloat const SEARCH_BAR_CONSTRAINT_MULTIPLIER = 1;
+CGFloat const SEARCH_BAR_CONSTRAINT_CONSTANT = 10;
+CGFloat const SEARCH_BAR_CONSTRAINT_PRIORITY = 1000;
+NSString * const AUTOCOMPLETE_RESULT_PLACE_ID_KEY = @"place_id";
+NSString * const PHOTO_CELL_IDENTIFIER = @"PhotoViewCell";
+NSInteger const MAX_NUM_POST_PHOTO_SELECTION = 6;
+
 @implementation ProjectColors
 
 + (CGColorRef)tintColor {
     return [[UIColor colorWithRed:104/255.0 green:176/255.0 blue:171/255.0 alpha:1.0] CGColor];
+}
+
++ (UIColor *)tanBackgroundColor {
+    return [UIColor colorWithRed:250/255.0 green:243/255.0 blue:221/255.0 alpha:1];
 }
 
 @end
@@ -114,6 +144,14 @@ NSInteger const MAX_NUM_PROFILE_PHOTO_SELECTION = 1;
 
 + (GMSCameraPosition *)defaultLocation {
     return [GMSCameraPosition cameraWithLatitude:40.745028 longitude:-100.657394 zoom:1.0];
+}
+
+@end
+
+@implementation ProjectFonts
+
++ (UIFont *)searchBarFont {
+    return [UIFont fontWithName:@"Kohinoor Devanagari" size:17];
 }
 
 @end
