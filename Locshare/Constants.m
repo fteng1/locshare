@@ -156,6 +156,15 @@ NSString * const PERFORM_SEARCH_ERROR_TITLE = @"Search Error";
 NSString * const PERFORM_SEARCH_ERROR_MESSAGE = @"Could not perform the given search";
 NSString * const SEARCH_CELL_IDENTIFIER = @"UserSearchCell";
 
+// LoginViewController.m
+NSString * const REGISTER_ERROR_TITLE = @"Register Error";
+NSString * const REGISTER_ERROR_MESSAGE = @"Could not register the provided user";
+NSString * const REGISTRATION_SUCCESS_TITLE = @"Registration Successful";
+NSString * const REGISTRATION_SUCCESS_MESSAGE = @"User registered successfully";
+NSString * const LOGGED_IN_SEGUE = @"loginSegue";
+NSString * const LOGIN_ERROR_TITLE = @"Login Error";
+NSString * const LOGIN_ERROR_MESSAGE = @"Could not login the provided user";
+
 @implementation ProjectColors
 
 + (CGColorRef)tintColor {

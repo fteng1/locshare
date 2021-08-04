@@ -159,6 +159,15 @@ extern NSString * const PERFORM_SEARCH_ERROR_TITLE;
 extern NSString * const PERFORM_SEARCH_ERROR_MESSAGE;
 extern NSString * const SEARCH_CELL_IDENTIFIER;
 
+// LoginViewController.m
+extern NSString * const REGISTER_ERROR_TITLE;
+extern NSString * const REGISTER_ERROR_MESSAGE;
+extern NSString * const REGISTRATION_SUCCESS_TITLE;
+extern NSString * const REGISTRATION_SUCCESS_MESSAGE;
+extern NSString * const LOGGED_IN_SEGUE;
+extern NSString * const LOGIN_ERROR_TITLE;
+extern NSString * const LOGIN_ERROR_MESSAGE;
+
 @interface ProjectColors : NSObject
 + (CGColorRef)tintColor;
 + (UIColor *)tanBackgroundColor;
