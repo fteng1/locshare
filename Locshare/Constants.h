@@ -179,6 +179,19 @@ extern NSString * const LOGOUT_SUCCESS_MESSAGE;
 extern NSString * const STORYBOARD_NAME;
 extern NSString * const LOGIN_VIEW_CONTROLLER_IDENTIFIER;
 
+// ImagePickerViewController.m
+extern NSString * const PHOTO_CREATION_DATE_KEY;
+extern NSInteger const IMAGE_PICKER_PHOTOS_PER_LINE;
+extern NSInteger const IMAGE_PICKER_COLLECTION_VIEW_SPACING;
+extern NSString * const CAMERA_UNAVAILABLE_TITLE;
+extern NSString * const CAMERA_UNAVAILABLE_MESSAGE;
+extern CGFloat const CAPTURE_PHOTO_ANIMATION_DURATION;
+extern CGFloat const FULL_IMAGE_WIDTH;
+extern CGFloat const FULL_IMAGE_HEIGHT;
+extern CGFloat const IMAGE_THUMBNAIL_WIDTH;
+extern CGFloat const IMAGE_THUMBNAIL_HEIGHT;
+extern NSString * const IMAGE_PICKER_CELL_IDENTIFIER;
+
 @interface ProjectColors : NSObject
 + (CGColorRef)tintColor;
 + (UIColor *)tanBackgroundColor;

@@ -176,6 +176,19 @@ NSString * const LOGOUT_SUCCESS_MESSAGE = @"Logout Successful";
 NSString * const STORYBOARD_NAME = @"Main";
 NSString * const LOGIN_VIEW_CONTROLLER_IDENTIFIER = @"LoginViewController";
 
+// ImagePickerViewController.m
+NSString * const PHOTO_CREATION_DATE_KEY = @"creationDate";
+NSInteger const IMAGE_PICKER_PHOTOS_PER_LINE = 5;
+NSInteger const IMAGE_PICKER_COLLECTION_VIEW_SPACING = 1;
+NSString * const CAMERA_UNAVAILABLE_TITLE = @"Cannot Take Photo";
+NSString * const CAMERA_UNAVAILABLE_MESSAGE = @"Camera is not available on this device";
+CGFloat const CAPTURE_PHOTO_ANIMATION_DURATION = 0.05;
+CGFloat const FULL_IMAGE_WIDTH = 400;
+CGFloat const FULL_IMAGE_HEIGHT = 300;
+CGFloat const IMAGE_THUMBNAIL_WIDTH = 128;
+CGFloat const IMAGE_THUMBNAIL_HEIGHT = 128;
+NSString * const IMAGE_PICKER_CELL_IDENTIFIER = @"ImagePickerCell";
+
 @implementation ProjectColors
 
 + (CGColorRef)tintColor {

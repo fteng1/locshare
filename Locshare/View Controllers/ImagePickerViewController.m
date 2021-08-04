@@ -9,6 +9,7 @@
 #import "ImagePickerCell.h"
 #import <Photos/Photos.h>
 #import "AlertManager.h"
+#import "Constants.h"
 
 @interface ImagePickerViewController () <UICollectionViewDelegate, UICollectionViewDataSource, AVCapturePhotoCaptureDelegate>
 
@@ -67,7 +68,7 @@
 - (void)fetchPhotos {
     // Order retrieved photos by date of creation
     PHFetchOptions *options = [PHFetchOptions new];
-    options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:true]];
+    options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:PHOTO_CREATION_DATE_KEY ascending:true]];
     
     // Fetch photos from photo library
     self.photosToDisplay = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:options];
@@ -78,11 +79,11 @@
     // Set layout settings for the collectionView
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *) self.libraryCollectionView.collectionViewLayout;
     
-    layout.minimumInteritemSpacing = 1;
-    layout.minimumLineSpacing = 1;
+    layout.minimumInteritemSpacing = IMAGE_PICKER_COLLECTION_VIEW_SPACING;
+    layout.minimumLineSpacing = IMAGE_PICKER_COLLECTION_VIEW_SPACING;
     
     // size of photos depends on device size
-    CGFloat photosPerLine = 5;
+    CGFloat photosPerLine = IMAGE_PICKER_PHOTOS_PER_LINE;
     CGFloat itemWidth = (self.libraryCollectionView.frame.size.width - layout.minimumInteritemSpacing * (photosPerLine - 1)) / photosPerLine;
     CGFloat itemHeight = itemWidth;
     layout.itemSize = CGSizeMake(itemWidth, itemHeight);
@@ -104,7 +105,7 @@
     }
     else {
         [self dismissViewControllerAnimated:true completion:nil];
-        [AlertManager displayAlertWithTitle:@"Cannot Take Photo" text:@"Camera is not available on this device" presenter:self];
+        [AlertManager displayAlertWithTitle:CAMERA_UNAVAILABLE_TITLE text:CAMERA_UNAVAILABLE_MESSAGE presenter:self];
     }
 }
 
@@ -146,10 +147,10 @@
 
 - (IBAction)capturePhoto:(id)sender {
     // Animate to show that picture has been taken
-    [UIView transitionWithView:self.previewView duration:0.05 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+    [UIView transitionWithView:self.previewView duration:CAPTURE_PHOTO_ANIMATION_DURATION options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
         self.blackScreen.hidden = false;
     } completion:^(BOOL finished) {
-        [UIView transitionWithView:self.previewView duration:0.05 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+        [UIView transitionWithView:self.previewView duration:CAPTURE_PHOTO_ANIMATION_DURATION options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
             self.blackScreen.hidden = true;
         } completion:nil];
     }];
@@ -200,7 +201,7 @@
         if (!self.useCamera) {
             PHImageRequestOptions *options = [PHImageRequestOptions new];
             options.synchronous = true;
-            [[PHImageManager defaultManager] requestImageForAsset:self.photosToDisplay[[num intValue]] targetSize:CGSizeMake(400, 300) contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+            [[PHImageManager defaultManager] requestImageForAsset:self.photosToDisplay[[num intValue]] targetSize:CGSizeMake(FULL_IMAGE_WIDTH, FULL_IMAGE_HEIGHT) contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
                 [imagesToReturn addObject:result];
                 
                 // Check if this is the final image to load
@@ -226,12 +227,12 @@
 }
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    ImagePickerCell *cell = [self.libraryCollectionView dequeueReusableCellWithReuseIdentifier:@"ImagePickerCell" forIndexPath:indexPath];
+    ImagePickerCell *cell = [self.libraryCollectionView dequeueReusableCellWithReuseIdentifier:IMAGE_PICKER_CELL_IDENTIFIER forIndexPath:indexPath];
     
     if (!self.useCamera) {
         // Get indicated PHAsset from array of assets and display its thumbnail in the image view
         PHAsset *toDisplay = self.photosToDisplay[indexPath.item];
-        [[PHImageManager defaultManager] requestImageForAsset:toDisplay targetSize:CGSizeMake(128, 128) contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+        [[PHImageManager defaultManager] requestImageForAsset:toDisplay targetSize:CGSizeMake(IMAGE_THUMBNAIL_WIDTH, IMAGE_THUMBNAIL_HEIGHT) contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
             cell.imageView.image = result;
         }];
     }
