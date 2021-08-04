@@ -45,6 +45,8 @@ NSString * const POST_NUM_LIKES_KEY = @"numLikes";
 NSString * const LOCATION_PARSE_CLASS_NAME = @"Location";
 NSString * const LOCATION_PLACE_ID_KEY = @"placeID";
 NSString * const LOCATION_OBJECT_ID_KEY = @"objectId";
+NSString * const LOCATION_COORDINATE_KEY = @"coordinate";
+NSString * const LOCATION_NUM_POSTS_KEY = @"numPosts";
 
 // Comment.m
 NSString * const COMMENT_PARSE_CLASS_NAME = @"Comment";
@@ -164,6 +166,15 @@ NSString * const REGISTRATION_SUCCESS_MESSAGE = @"User registered successfully";
 NSString * const LOGGED_IN_SEGUE = @"loginSegue";
 NSString * const LOGIN_ERROR_TITLE = @"Login Error";
 NSString * const LOGIN_ERROR_MESSAGE = @"Could not login the provided user";
+
+// HomeFeedViewController.m
+NSString * const HOME_TO_LOCATION_SEGUE = @"locationSegue";
+NSString * const LOGOUT_ERROR_TITLE = @"Logout Error";
+NSString * const LOGOUT_ERROR_MESSAGE = @"Could not logout the current user";
+NSString * const LOGOUT_SUCCESS_TITLE = @"Logout Successful";
+NSString * const LOGOUT_SUCCESS_MESSAGE = @"Logout Successful";
+NSString * const STORYBOARD_NAME = @"Main";
+NSString * const LOGIN_VIEW_CONTROLLER_IDENTIFIER = @"LoginViewController";
 
 @implementation ProjectColors
 

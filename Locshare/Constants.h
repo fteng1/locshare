@@ -48,6 +48,8 @@ extern NSString * const POST_NUM_LIKES_KEY;
 extern NSString * const LOCATION_PARSE_CLASS_NAME;
 extern NSString * const LOCATION_PLACE_ID_KEY;
 extern NSString * const LOCATION_OBJECT_ID_KEY;
+extern NSString * const LOCATION_COORDINATE_KEY;
+extern NSString * const LOCATION_NUM_POSTS_KEY;
 
 // Comment.m
 extern NSString * const COMMENT_PARSE_CLASS_NAME;
@@ -167,6 +169,15 @@ extern NSString * const REGISTRATION_SUCCESS_MESSAGE;
 extern NSString * const LOGGED_IN_SEGUE;
 extern NSString * const LOGIN_ERROR_TITLE;
 extern NSString * const LOGIN_ERROR_MESSAGE;
+
+// HomeFeedViewController.m
+extern NSString * const HOME_TO_LOCATION_SEGUE;
+extern NSString * const LOGOUT_ERROR_TITLE;
+extern NSString * const LOGOUT_ERROR_MESSAGE;
+extern NSString * const LOGOUT_SUCCESS_TITLE;
+extern NSString * const LOGOUT_SUCCESS_MESSAGE;
+extern NSString * const STORYBOARD_NAME;
+extern NSString * const LOGIN_VIEW_CONTROLLER_IDENTIFIER;
 
 @interface ProjectColors : NSObject
 + (CGColorRef)tintColor;

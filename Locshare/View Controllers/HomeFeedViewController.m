@@ -16,6 +16,7 @@
 #import "SceneDelegate.h"
 #import "LoginViewController.h"
 #import "AlertManager.h"
+#import "Constants.h"
 
 @interface HomeFeedViewController () <CLLocationManagerDelegate, GMSMapViewDelegate>
 @property (weak, nonatomic) IBOutlet GMSMapView *homeMapView;
@@ -50,7 +51,7 @@ GMSPlacesClient *placesClient;
     GMSCameraPosition *camera = nil;
     if (currentLocation != nil) {
         // Set camera of map to be at current position
-        camera = [GMSCameraPosition cameraWithLatitude:currentLocation.coordinate.latitude longitude:currentLocation.coordinate.longitude zoom:10.0];
+        camera = [GMSCameraPosition cameraWithLatitude:currentLocation.coordinate.latitude longitude:currentLocation.coordinate.longitude zoom:MAP_FEED_DEFAULT_ZOOM];
 
         // Display current location on map
         self.homeMapView.myLocationEnabled = YES;
@@ -58,7 +59,7 @@ GMSPlacesClient *placesClient;
     }
     else {
         // Set default location to be center of US
-        camera = [GMSCameraPosition cameraWithLatitude:40.745028 longitude:-100.657394 zoom:1.0];
+        camera = [ProjectLocations defaultLocation];
     }
     [self.homeMapView setCamera:camera];
     self.homeMapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -79,13 +80,13 @@ GMSPlacesClient *placesClient;
     PFGeoPoint *northEast = [PFGeoPoint geoPointWithLatitude:currentlyVisible.northEast.latitude longitude:currentlyVisible.northEast.longitude];
     
     // Set query to find locations that fall within the visible region on the map and have posts
-    PFQuery *geoQuery = [PFQuery queryWithClassName:@"Location"];
-    [geoQuery whereKey:@"coordinate" withinGeoBoxFromSouthwest:southWest toNortheast:northEast];
-    [geoQuery whereKey:@"numPosts" greaterThanOrEqualTo:@(0)];
+    PFQuery *geoQuery = [PFQuery queryWithClassName:LOCATION_PARSE_CLASS_NAME];
+    [geoQuery whereKey:LOCATION_COORDINATE_KEY withinGeoBoxFromSouthwest:southWest toNortheast:northEast];
+    [geoQuery whereKey:LOCATION_NUM_POSTS_KEY greaterThanOrEqualTo:[ProjectNumbers zero]];
     
     // Retrieve results from Parse using asynchronous call
     [geoQuery findObjectsInBackgroundWithBlock:^(NSArray * _Nullable locations, NSError * _Nullable error) {
-        NSMutableSet *friendsWithSelf = [NSMutableSet setWithArray:[PFUser currentUser][@"friends"]];
+        NSMutableSet *friendsWithSelf = [NSMutableSet setWithArray:[PFUser currentUser][USER_FRIENDS_KEY]];
         [friendsWithSelf addObject:[PFUser currentUser].objectId];
         
         // Only show locations on the map with posts from friends/current user or have public posts
@@ -109,7 +110,7 @@ GMSPlacesClient *placesClient;
 
 // Perform segue to view posts at location screen when marker is tapped
 - (BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker {
-    [self performSegueWithIdentifier:@"locationSegue" sender:marker];
+    [self performSegueWithIdentifier:HOME_TO_LOCATION_SEGUE sender:marker];
     return true;
 }
 
@@ -122,15 +123,15 @@ GMSPlacesClient *placesClient;
     [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
         // PFUser.current() will now be nil
         if (error != nil) {
-            [AlertManager displayAlertWithTitle:@"Logout Error" text:@"Could not logout the current user" presenter:self];
+            [AlertManager displayAlertWithTitle:LOGOUT_ERROR_TITLE text:LOGOUT_ERROR_MESSAGE presenter:self];
         }
         else {
             // After logout, return to login screen
-            [AlertManager displayAlertWithTitle:@"Logout Successful" text:@"User logged out successfully" presenter:self];
+            [AlertManager displayAlertWithTitle:LOGOUT_SUCCESS_TITLE text:LOGOUT_SUCCESS_MESSAGE presenter:self];
             SceneDelegate *sceneDelegate = (SceneDelegate *)self.view.window.windowScene.delegate;
 
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            LoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:STORYBOARD_NAME bundle:nil];
+            LoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:LOGIN_VIEW_CONTROLLER_IDENTIFIER];
             sceneDelegate.window.rootViewController = loginViewController;
         }
     }];
@@ -138,7 +139,7 @@ GMSPlacesClient *placesClient;
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Bring up location view screen if marker is tapped
-    if ([[segue identifier] isEqualToString:@"locationSegue"]) {
+    if ([[segue identifier] isEqualToString:HOME_TO_LOCATION_SEGUE]) {
         LocationMarker *marker = sender;
         LocationViewController *locationViewController = [segue destinationViewController];
         locationViewController.location = marker.location;
