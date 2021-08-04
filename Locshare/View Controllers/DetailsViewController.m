@@ -40,9 +40,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self initializeUI];
-    
+        
     [self updateFields];
 
     self.photoCollectionView.dataSource = self;
@@ -50,6 +48,8 @@
     self.commentTableView.dataSource = self;
     self.commentTableView.delegate = self;
     
+    [self initializeUI];
+
     [self getAuthorInfoInBackground];
     [self fetchComments];
 }
@@ -61,7 +61,12 @@
     
     // Make profile image circular
     self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height / 2;;
-    self.profileImageView.layer.masksToBounds = true;}
+    self.profileImageView.layer.masksToBounds = true;
+    
+    self.commentTableView.tableFooterView = [UIView new];
+    
+    [self setCollectionViewLayout];
+}
 
 - (void)setCollectionViewLayout {
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *) self.photoCollectionView.collectionViewLayout;
