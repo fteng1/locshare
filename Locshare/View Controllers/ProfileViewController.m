@@ -247,7 +247,7 @@
                     NSArray *filteredLocation = [self.postLocations filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:MOST_RECENT_POST_PREDICATE, mostRecentPost.location]];
                     if ([filteredLocation count] > 0) {
                         Location *mostRecentLocation = [filteredLocation firstObject];
-                        GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:mostRecentLocation.coordinate.latitude longitude:mostRecentLocation.coordinate.longitude zoom:DEFAULT_ZOOM];
+                        GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:mostRecentLocation.coordinate.latitude longitude:mostRecentLocation.coordinate.longitude zoom:MAP_FEED_DEFAULT_ZOOM];
                         [self.userMapView setCamera:camera];
                     }
                 }];

@@ -41,10 +41,12 @@ extern NSString * const IMAGE_DEFAULT_NAME;
 extern NSString * const POST_AUTHOR_KEY;
 extern NSString * const POST_CREATED_AT_KEY;
 extern NSString * const POST_PRIVATE_KEY;
+extern NSString * const POST_LOCATION_KEY;
 
 // Location.m
 extern NSString * const LOCATION_PARSE_CLASS_NAME;
 extern NSString * const LOCATION_PLACE_ID_KEY;
+extern NSString * const LOCATION_OBJECT_ID_KEY;
 
 // User properties
 extern NSString * const USER_PARSE_CLASS_NAME;
@@ -79,7 +81,7 @@ extern NSString * const DEFAULT_PROFILE_PICTURE_NAME;
 extern NSString * const RETRIEVING_POSTS_ERROR_TITLE;
 extern NSString * const RETRIEVING_POSTS_ERROR_MESSAGE;
 extern NSString * const MOST_RECENT_POST_PREDICATE;
-extern CGFloat const DEFAULT_ZOOM;
+extern CGFloat const MAP_FEED_DEFAULT_ZOOM;
 extern NSString * const GROUP_POSTS_KEY_PATH;
 extern NSString * const POSTS_AT_LOCATION_PREDICATE;
 extern NSString * const PROFILE_TO_LOCATION_SEGUE;
@@ -95,7 +97,7 @@ extern NSString * const CAPTION_PLACEHOLDER_TEXT;
 extern CGFloat const TEXT_FIELD_CORNER_RADIUS;
 extern BOOL const CLIPS_TO_BOUNDS;
 extern CGFloat const TABLE_VIEW_BORDER_WIDTH;
-extern CGFloat const COLLECTION_VIEW_SPACING;
+extern CGFloat const PHOTO_PREVIEW_COLLECTION_VIEW_SPACING;
 extern NSString * const CAMERA_SEGUE;
 extern NSString * const IMAGE_PICKER_SEGUE;
 extern NSString * const POST_ERROR_TITLE;
@@ -115,6 +117,18 @@ extern CGFloat const SEARCH_BAR_CONSTRAINT_PRIORITY;
 extern NSString * const AUTOCOMPLETE_RESULT_PLACE_ID_KEY;
 extern NSString * const PHOTO_CELL_IDENTIFIER;
 extern NSInteger const MAX_NUM_POST_PHOTO_SELECTION;
+
+// LocationViewController.m
+extern CGFloat const POST_PREVIEW_COLLECTION_VIEW_SPACING;
+extern CGFloat const POST_PREVIEW_COLLECTION_VIEW_POSTS_PER_LINE;
+extern CGFloat const LOCATION_VIEW_DEFAULT_ZOOM;
+extern NSString * const UPDATE_LOCATION_ERROR_TITLE;
+extern NSString * const UPDATE_LOCATION_ERROR_MESSAGE;
+extern NSString * const RETRIEVE_POSTS_ERROR_TITLE;
+extern NSString * const RETRIEVE_POSTS_ERROR_MESSAGE;
+extern NSString * const POST_CELL_IDENTIFIER;
+extern NSString * const DEFAULT_POST_PREVIEW_IMAGE_NAME;
+extern NSString * const DETAIL_SEGUE;
 
 @interface ProjectColors : NSObject
 + (CGColorRef)tintColor;

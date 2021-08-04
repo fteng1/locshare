@@ -75,8 +75,8 @@
 
 - (void)setCollectionViewLayout {
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *) self.pickedPhotosCollectionView.collectionViewLayout;
-    layout.minimumInteritemSpacing = COLLECTION_VIEW_SPACING;
-    layout.minimumLineSpacing = COLLECTION_VIEW_SPACING;
+    layout.minimumInteritemSpacing = PHOTO_PREVIEW_COLLECTION_VIEW_SPACING;
+    layout.minimumLineSpacing = PHOTO_PREVIEW_COLLECTION_VIEW_SPACING;
     
     // size of posts depends on device size
     CGFloat itemWidth = self.pickedPhotosCollectionView.collectionViewLayout.collectionViewContentSize.width;

@@ -12,6 +12,7 @@
 #import "DetailsViewController.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import "AlertManager.h"
+#import "Constants.h"
 
 @interface LocationViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UITabBarControllerDelegate>
 
@@ -49,11 +50,11 @@
     // Set layout settings for the collectionView
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *) self.postCollectionView.collectionViewLayout;
     
-    layout.minimumInteritemSpacing = 2;
-    layout.minimumLineSpacing = 2;
+    layout.minimumInteritemSpacing = POST_PREVIEW_COLLECTION_VIEW_SPACING;
+    layout.minimumLineSpacing = POST_PREVIEW_COLLECTION_VIEW_SPACING;
     
     // size of posts depends on device size
-    CGFloat postsPerLine = 3;
+    CGFloat postsPerLine = POST_PREVIEW_COLLECTION_VIEW_POSTS_PER_LINE;
     CGFloat itemWidth = (self.postCollectionView.frame.size.width - layout.minimumInteritemSpacing * (postsPerLine - 1)) / postsPerLine;
     CGFloat itemHeight = itemWidth;
     layout.itemSize = CGSizeMake(itemWidth, itemHeight);
@@ -63,21 +64,21 @@
 - (void)setMapLocation {
     GMSMarker *marker = [GMSMarker markerWithPosition:CLLocationCoordinate2DMake(self.location.coordinate.latitude, self.location.coordinate.longitude)];
     marker.map = self.mapView;
-    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:marker.position.latitude longitude:marker.position.longitude zoom:12.0];
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:marker.position.latitude longitude:marker.position.longitude zoom:LOCATION_VIEW_DEFAULT_ZOOM];
     [self.mapView setCamera:camera];
 }
 
 - (void)refreshPage {
     // Get new array of posts for current location
-    PFQuery *query = [PFQuery queryWithClassName:@"Location"];
-    [query whereKey:@"objectId" equalTo:self.location.objectId];
+    PFQuery *query = [PFQuery queryWithClassName:LOCATION_PARSE_CLASS_NAME];
+    [query whereKey:LOCATION_OBJECT_ID_KEY equalTo:self.location.objectId];
     query.limit = 1;
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (error != nil) {
-            [AlertManager displayAlertWithTitle:@"Error Updating Location" text:@"Could not fetch this location" presenter:self];
+            [AlertManager displayAlertWithTitle:UPDATE_LOCATION_ERROR_TITLE text:UPDATE_LOCATION_ERROR_MESSAGE presenter:self];
         }
         else {
-            self.location = objects[0];
+            self.location = [objects firstObject];
             [self loadPosts];
         }
     }];
@@ -85,20 +86,20 @@
 
 - (void)loadPosts {
     // Get posts with location matching the current location and matching the current user, if relevant
-    PFQuery *query = [PFQuery queryWithClassName:@"Post"];
-    [query whereKey:@"location" equalTo:self.location.placeID];
+    PFQuery *query = [PFQuery queryWithClassName:POST_PARSE_CLASS_NAME];
+    [query whereKey:POST_LOCATION_KEY equalTo:self.location.placeID];
     if (self.isUserFiltered) {
-        [query whereKey:@"author" equalTo:self.userToFilter];
+        [query whereKey:POST_AUTHOR_KEY equalTo:self.userToFilter];
         
     }
-    [query orderByDescending:@"createdAt"];
+    [query orderByDescending:POST_CREATED_AT_KEY];
     
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable postsAtLocation, NSError * _Nullable error) {
         if (error == nil) {
             NSMutableArray *visiblePosts = [NSMutableArray new];
             
             // Only retrieve posts from user's friends and user, or public posts
-            NSMutableArray *friendsWithSelf = [PFUser currentUser][@"friends"];
+            NSMutableArray *friendsWithSelf = [PFUser currentUser][USER_FRIENDS_KEY];
             [friendsWithSelf addObject:[PFUser currentUser].objectId];
             
             for (Post *post in postsAtLocation) {
@@ -110,7 +111,7 @@
             [self.postCollectionView reloadData];
         }
         else {
-            [AlertManager displayAlertWithTitle:@"Error Retrieving Posts" text:@"Could not fetch posts at this location" presenter:self];
+            [AlertManager displayAlertWithTitle:RETRIEVE_POSTS_ERROR_TITLE text:RETRIEVE_POSTS_ERROR_MESSAGE presenter:self];
         }
         [self.refreshControl endRefreshing];
     }];
@@ -121,10 +122,10 @@
 }
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    PostLocationCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PostLocationCell" forIndexPath:indexPath];
+    PostLocationCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:POST_CELL_IDENTIFIER forIndexPath:indexPath];
     Post *post = self.postsToDisplay[indexPath.item];
     PFFileObject *imageToDisplay = [post.photos firstObject];
-    cell.postImageView.image = [UIImage systemImageNamed:@"photo"];
+    cell.postImageView.image = [UIImage systemImageNamed:DEFAULT_POST_PREVIEW_IMAGE_NAME];
     cell.postImageView.file = imageToDisplay;
     [cell.postImageView loadInBackground];
     
@@ -132,12 +133,12 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    [self performSegueWithIdentifier:@"detailSegue" sender:self.postsToDisplay[indexPath.item]];
+    [self performSegueWithIdentifier:DETAIL_SEGUE sender:self.postsToDisplay[indexPath.item]];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Bring up post details screen if post is tapped
-    if ([[segue identifier] isEqualToString:@"detailSegue"]) {
+    if ([[segue identifier] isEqualToString:DETAIL_SEGUE]) {
         Post *post = sender;
         DetailsViewController *detailsViewController = [segue destinationViewController];
         detailsViewController.post = post;

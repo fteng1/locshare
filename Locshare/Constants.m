@@ -38,10 +38,12 @@ NSString * const IMAGE_DEFAULT_NAME = @"image.png";
 NSString * const POST_AUTHOR_KEY = @"author";
 NSString * const POST_CREATED_AT_KEY = @"createdAt";
 NSString * const POST_PRIVATE_KEY = @"private";
+NSString * const POST_LOCATION_KEY = @"location";
 
 // Location.m
 NSString * const LOCATION_PARSE_CLASS_NAME = @"Location";
 NSString * const LOCATION_PLACE_ID_KEY = @"placeID";
+NSString * const LOCATION_OBJECT_ID_KEY = @"objectId";
 
 // User properties
 NSString * const USER_PARSE_CLASS_NAME = @"_User";
@@ -76,7 +78,7 @@ NSString * const DEFAULT_PROFILE_PICTURE_NAME = @"photo";
 NSString * const RETRIEVING_POSTS_ERROR_TITLE = @"Error Retrieving Posts";
 NSString * const RETRIEVING_POSTS_ERROR_MESSAGE = @"Could not fetch posts from server";
 NSString * const MOST_RECENT_POST_PREDICATE = @"placeID like %@";
-CGFloat const DEFAULT_ZOOM = 10.0;
+CGFloat const MAP_FEED_DEFAULT_ZOOM = 10.0;
 NSString * const GROUP_POSTS_KEY_PATH = @"@distinctUnionOfObjects.location";
 NSString * const POSTS_AT_LOCATION_PREDICATE = @"location like %@";
 NSString * const PROFILE_TO_LOCATIONs_SEGUE = @"profileLocationSegue";
@@ -92,7 +94,7 @@ NSString * const CAPTION_PLACEHOLDER_TEXT = @"Write a caption...";
 CGFloat const TEXT_FIELD_CORNER_RADIUS = 10.0;
 BOOL const CLIPS_TO_BOUNDS = true;
 CGFloat const TABLE_VIEW_BORDER_WIDTH = 0.5;
-CGFloat const COLLECTION_VIEW_SPACING = 1;
+CGFloat const PHOTO_PREVIEW_COLLECTION_VIEW_SPACING = 1;
 NSString * const CAMERA_SEGUE = @"cameraSegue";
 NSString * const IMAGE_PICKER_SEGUE = @"imagePickerSegue";
 NSString * const POST_ERROR_TITLE = @"Post Error";
@@ -112,6 +114,18 @@ CGFloat const SEARCH_BAR_CONSTRAINT_PRIORITY = 1000;
 NSString * const AUTOCOMPLETE_RESULT_PLACE_ID_KEY = @"place_id";
 NSString * const PHOTO_CELL_IDENTIFIER = @"PhotoViewCell";
 NSInteger const MAX_NUM_POST_PHOTO_SELECTION = 6;
+
+// LocationViewController.m
+CGFloat const POST_PREVIEW_COLLECTION_VIEW_SPACING = 2;
+CGFloat const POST_PREVIEW_COLLECTION_VIEW_POSTS_PER_LINE;
+CGFloat const LOCATION_VIEW_DEFAULT_ZOOM = 12.0;
+NSString * const UPDATE_LOCATION_ERROR_TITLE = @"Error Updating Location";
+NSString * const UPDATE_LOCATION_ERROR_MESSAGE = @"Could not fetch this location";
+NSString * const RETRIEVE_POSTS_ERROR_TITLE = @"Error Retrieving Posts";
+NSString * const RETRIEVE_POSTS_ERROR_MESSAGE = @"Could not fetch posts at this location";
+NSString * const POST_CELL_IDENTIFIER = @"PostLocationCell";
+NSString * const DEFAULT_POST_PREVIEW_IMAGE_NAME = @"photo";
+NSString * const DETAIL_SEGUE = @"detailSegue";
 
 @implementation ProjectColors
 
