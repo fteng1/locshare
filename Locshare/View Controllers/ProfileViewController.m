@@ -99,37 +99,41 @@
         self.profilePictureView.userInteractionEnabled = false;
         self.navigationItem.rightBarButtonItem = nil;
         
-        // Handle friend button visibility/enabled state
-        [self.friendButton setTitle:FRIEND_BUTTON_TITLE_DEFAULT forState: UIControlStateNormal];
-        [self.friendButton setTitle:FRIEND_BUTTON_REQUEST_SENT forState: UIControlStateSelected];
-        if (![self.user.objectId isEqual:[PFUser currentUser].objectId]) {
-            self.friendButton.hidden = false;
-            NSArray *friendList = [PFUser currentUser][USER_FRIENDS_KEY];
-            NSArray *requestedList = [PFUser currentUser][USER_REQUESTS_SENT_KEY];
-            NSArray *pendingList = [PFUser currentUser][USER_PENDING_FRIENDS_KEY];
-            if ([pendingList containsObject:self.user.objectId]) {
-                [self.friendButton setTitle:FRIEND_BUTTON_RESPOND_TO_REQUEST forState: UIControlStateSelected];
-                self.friendButton.selected = true;
-                self.friendButton.userInteractionEnabled = false;
-            }
-            else {
-                self.friendButton.userInteractionEnabled = true;
-                if ([friendList containsObject:self.user.objectId]) {
-                    [self.friendButton setTitle:FRIEND_BUTTON_ALREADY_FRIENDS forState: UIControlStateSelected];
-                    self.friendButton.selected = true;
-                }
-                else if ([requestedList containsObject:self.user.objectId]) {
-                    self.friendButton.selected = true;
-                }
-                else {
-                    self.friendButton.selected = false;
-                }
-            }
+        [self setFriendButtonDisplay];
+    }
+}
+
+- (void)setFriendButtonDisplay {
+    // Handle friend button visibility/enabled state
+    [self.friendButton setTitle:FRIEND_BUTTON_TITLE_DEFAULT forState: UIControlStateNormal];
+    [self.friendButton setTitle:FRIEND_BUTTON_REQUEST_SENT forState: UIControlStateSelected];
+    if (![self.user.objectId isEqual:[PFUser currentUser].objectId]) {
+        self.friendButton.hidden = false;
+        NSArray *friendList = [PFUser currentUser][USER_FRIENDS_KEY];
+        NSArray *requestedList = [PFUser currentUser][USER_REQUESTS_SENT_KEY];
+        NSArray *pendingList = [PFUser currentUser][USER_PENDING_FRIENDS_KEY];
+        if ([pendingList containsObject:self.user.objectId]) {
+            [self.friendButton setTitle:FRIEND_BUTTON_RESPOND_TO_REQUEST forState: UIControlStateSelected];
+            self.friendButton.selected = true;
+            self.friendButton.userInteractionEnabled = false;
         }
         else {
-            // hide friend button when the user views their own profile
-            self.friendButton.hidden = true;
+            self.friendButton.userInteractionEnabled = true;
+            if ([friendList containsObject:self.user.objectId]) {
+                [self.friendButton setTitle:FRIEND_BUTTON_ALREADY_FRIENDS forState: UIControlStateSelected];
+                self.friendButton.selected = true;
+            }
+            else if ([requestedList containsObject:self.user.objectId]) {
+                self.friendButton.selected = true;
+            }
+            else {
+                self.friendButton.selected = false;
+            }
         }
+    }
+    else {
+        // hide friend button when the user views their own profile
+        self.friendButton.hidden = true;
     }
 }
 
@@ -146,8 +150,7 @@
             [PFCloud callFunctionInBackground:CLOUD_CODE_FRIEND_USER_FUNCTION withParameters:@{CLOUD_CODE_USER_TO_EDIT_KEY: self.user.objectId, CLOUD_CODE_FRIEND_KEY: @(false), CLOUD_CODE_CURRENT_USER_KEY: currUser.objectId}];
             [currUser removeObject:self.user.objectId forKey:USER_FRIENDS_KEY];
             [currUser incrementKey:USER_NUM_FRIENDS_KEY byAmount:[ProjectNumbers negativeOne]];
-            [self.user incrementKey:USER_NUM_FRIENDS_KEY byAmount:[ProjectNumbers negativeOne]];
-            [self.friendButton setTitle:FRIEND_BUTTON_REQUEST_SENT forState: UIControlStateSelected];
+            [self updateUserValues];
         }
         else {
             // Remove friend request if request not yet responded to
@@ -158,6 +161,7 @@
     
     // Update fields locally
     self.friendButton.selected = !self.friendButton.selected;
+    [self setFriendButtonDisplay];
     [self updateFields];
     
     [currUser saveInBackground];
@@ -165,15 +169,13 @@
 
 - (void)updateUserValues {
     // Get new information about the user from the database
-    PFQuery *userQuery = [PFUser query];
-    [userQuery whereKey:USER_OBJECT_ID_KEY equalTo:self.user.objectId];
-    [userQuery findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+    [self.user fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
         if (error) {
             [AlertManager displayAlertWithTitle:UPDATE_USER_ERROR_TITLE text:UPDATE_USER_ERROR_MESSAGE presenter:self];
         }
         else {
-            self.user = [objects firstObject];
             [self updateFields];
+            [self setFriendButtonDisplay];
         }
     }];
     [[PFUser currentUser] fetchInBackground];
