@@ -42,11 +42,16 @@ extern NSString * const POST_AUTHOR_KEY;
 extern NSString * const POST_CREATED_AT_KEY;
 extern NSString * const POST_PRIVATE_KEY;
 extern NSString * const POST_LOCATION_KEY;
+extern NSString * const POST_NUM_LIKES_KEY;
 
 // Location.m
 extern NSString * const LOCATION_PARSE_CLASS_NAME;
 extern NSString * const LOCATION_PLACE_ID_KEY;
 extern NSString * const LOCATION_OBJECT_ID_KEY;
+
+// Comment.m
+extern NSString * const COMMENT_PARSE_CLASS_NAME;
+extern NSString * const COMMENT_POST_ID_KEY;
 
 // User properties
 extern NSString * const USER_PARSE_CLASS_NAME;
@@ -65,6 +70,7 @@ extern NSString * const USER_FRIENDS_KEY;
 extern NSString * const USER_REQUESTS_SENT_KEY;
 extern NSString * const USER_OBJECT_ID_KEY;
 extern NSString * const USER_NUM_POSTS_KEY;
+extern NSString * const USER_LIKED_POSTS_KEY;
 
 // ProfileViewController.m
 extern NSString * const FRIEND_BUTTON_TITLE_DEFAULT;
@@ -129,6 +135,20 @@ extern NSString * const RETRIEVE_POSTS_ERROR_MESSAGE;
 extern NSString * const POST_CELL_IDENTIFIER;
 extern NSString * const DEFAULT_POST_PREVIEW_IMAGE_NAME;
 extern NSString * const DETAIL_SEGUE;
+
+// DetailsViewController.m
+extern NSString * const LIKE_BUTTON_IMAGE_NORMAL;
+extern NSString * const LIKE_BUTTON_IMAGE_SELECTED;
+extern NSString * const DATE_FORMAT;
+extern NSString * const LIKE_LABEL_SINGULAR;
+extern NSString * const LIKE_LABEL_PLURAL;
+extern NSString * const FETCH_COMMENT_ERROR_TITLE;
+extern NSString * const FETCH_COMMENT_ERROR_MESSAGE;
+extern NSString * const EMPTY_STRING;
+extern NSString * const PROFILE_ERROR_TITLE;
+extern NSString * const PROFILE_ERROR_MESSAGE;
+extern NSString * const HEADER_TO_PROFILE_SEGUE;
+extern NSString * const COMMENT_CELL_IDENTIFIER;
 
 @interface ProjectColors : NSObject
 + (CGColorRef)tintColor;

@@ -13,6 +13,7 @@
 #import "Comment.h"
 #import "CommentCell.h"
 #import "AlertManager.h"
+#import "Constants.h"
 
 @interface DetailsViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UITableViewDelegate, UITableViewDelegate, UITableViewDataSource>
 
@@ -56,12 +57,12 @@
 
 - (void)initializeUI {
     // Set images for button for liked and not liked states
-    [self.likeButton setImage:[UIImage systemImageNamed:@"heart"] forState:UIControlStateNormal];
-    [self.likeButton setImage:[UIImage systemImageNamed:@"heart.fill"] forState:UIControlStateSelected];
+    [self.likeButton setImage:[UIImage systemImageNamed:LIKE_BUTTON_IMAGE_NORMAL] forState:UIControlStateNormal];
+    [self.likeButton setImage:[UIImage systemImageNamed:LIKE_BUTTON_IMAGE_SELECTED] forState:UIControlStateSelected];
     
     // Make profile image circular
-    self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height / 2;;
-    self.profileImageView.layer.masksToBounds = true;
+    self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.height / PROFILE_PICTURE_CORNER_RADIUS_RATIO;;
+    self.profileImageView.layer.masksToBounds = MASKS_TO_BOUNDS;
     
     self.commentTableView.tableFooterView = [UIView new];
     
@@ -70,8 +71,8 @@
 
 - (void)setCollectionViewLayout {
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *) self.photoCollectionView.collectionViewLayout;
-    layout.minimumInteritemSpacing = 1;
-    layout.minimumLineSpacing = 1;
+    layout.minimumInteritemSpacing = POST_PREVIEW_COLLECTION_VIEW_SPACING;
+    layout.minimumLineSpacing = POST_PREVIEW_COLLECTION_VIEW_SPACING;
     
     // size of posts depends on device size
     CGFloat itemWidth = self.photoCollectionView.collectionViewLayout.collectionViewContentSize.width;
@@ -83,7 +84,7 @@
     // Format createdAt date string
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     // Configure the input format to parse the date string
-    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss Z";
+    formatter.dateFormat = DATE_FORMAT;
     // Convert String to Date
     NSDate *date = [formatter dateFromString:creationTime];
     NSString *timestamp = date.shortTimeAgoSinceNow;
@@ -95,13 +96,13 @@
     self.usernameLabel.text = self.post.authorUsername;
     self.captionLabel.text = self.post.caption;
     self.privateDisplay.selected = self.post.private;
-    NSArray *likedPosts = [PFUser currentUser][@"likedPosts"];
+    NSArray *likedPosts = [PFUser currentUser][USER_LIKED_POSTS_KEY];
     self.likeButton.selected = [likedPosts containsObject:self.post.objectId];
     if ([self.post.numLikes intValue] == 1) {
-        self.likesLabel.text = @"like";
+        self.likesLabel.text = LIKE_LABEL_SINGULAR;
     }
     else {
-        self.likesLabel.text = @"likes";
+        self.likesLabel.text = LIKE_LABEL_PLURAL;
     }
     self.numLikesLabel.text = [NSString stringWithFormat:@"%@", self.post.numLikes];
     
@@ -112,15 +113,15 @@
 
 - (void)fetchComments {
     // Make query to retrieve comments on post from the database
-    PFQuery *query = [PFQuery queryWithClassName:@"Comment"];
-    [query whereKey:@"postID" equalTo:self.post.objectId];
+    PFQuery *query = [PFQuery queryWithClassName:COMMENT_PARSE_CLASS_NAME];
+    [query whereKey:COMMENT_POST_ID_KEY equalTo:self.post.objectId];
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable postComments, NSError * _Nullable error) {
         if (error == nil) {
             self.comments = [postComments mutableCopy];
             [self.commentTableView reloadData];
         }
         else {
-            [AlertManager displayAlertWithTitle:@"Error Fetching Comments" text:@"Could not retrieve comments on this post" presenter:self];
+            [AlertManager displayAlertWithTitle:FETCH_COMMENT_ERROR_TITLE text:FETCH_COMMENT_ERROR_MESSAGE presenter:self];
         }
     }];
 }
@@ -132,7 +133,7 @@
         [newComment saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
             [self.commentTableView reloadData];
         }];
-        self.commentTextField.text = @"";
+        self.commentTextField.text = EMPTY_STRING;
         [self.commentTextField resignFirstResponder];
     }
 }
@@ -142,9 +143,9 @@
 }
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    PhotoViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PhotoViewCell" forIndexPath:indexPath];
+    PhotoViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:PHOTO_CELL_IDENTIFIER forIndexPath:indexPath];
     PFFileObject *photo = self.post.photos[indexPath.item];
-    cell.photoImageView.image = [UIImage systemImageNamed:@"photo"];
+    cell.photoImageView.image = [UIImage systemImageNamed:DEFAULT_PROFILE_PICTURE_NAME];
     cell.photoImageView.file = photo;
     [cell.photoImageView loadInBackground];
     return cell;
@@ -152,16 +153,16 @@
 
 - (void)getAuthorInfoInBackground {
     // Get information about post author from database
-    PFQuery *query = [PFQuery queryWithClassName:@"_User"];
-    [query whereKey:@"objectId" equalTo:self.post.author.objectId];
+    PFQuery *query = [PFQuery queryWithClassName:USER_PARSE_CLASS_NAME];
+    [query whereKey:USER_OBJECT_ID_KEY equalTo:self.post.author.objectId];
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         if (error != nil) {
-            [AlertManager displayAlertWithTitle:@"User Profile Error" text:@"Could not obtain the current user profile" presenter:self];
+            [AlertManager displayAlertWithTitle:PROFILE_ERROR_TITLE text:PROFILE_ERROR_MESSAGE presenter:self];
         }
         else {
             if ([objects count] == 1) {
-                self.postAuthor = objects[0];
-                self.profileImageView.file = self.postAuthor[@"profilePicture"];
+                self.postAuthor = [objects firstObject];
+                self.profileImageView.file = self.postAuthor[USER_PROFILE_PICTURE_KEY];
                 [self.profileImageView loadInBackground];
             }
         }
@@ -169,22 +170,22 @@
 }
 
 - (IBAction)onHeaderTap:(id)sender {
-    [self performSegueWithIdentifier:@"profileSegue" sender:self.postAuthor];
+    [self performSegueWithIdentifier:HEADER_TO_PROFILE_SEGUE sender:self.postAuthor];
 }
 
 - (IBAction)onLikeTap:(id)sender {
-    NSNumber *amountToIncrementLikes = @(1);
+    NSNumber *amountToIncrementLikes = [ProjectNumbers one];
     PFUser *currUser = [PFUser currentUser];
     if (!self.likeButton.selected) {
         // Occurs when the post is liked
-        [currUser addObject:self.post.objectId forKey:@"likedPosts"];
+        [currUser addObject:self.post.objectId forKey:USER_LIKED_POSTS_KEY];
     }
     else {
         // Occurs when the post is unliked
-        amountToIncrementLikes = @(-1);
-        [currUser removeObject:self.post.objectId forKey:@"likedPosts"];
+        amountToIncrementLikes = [ProjectNumbers negativeOne];
+        [currUser removeObject:self.post.objectId forKey:USER_LIKED_POSTS_KEY];
     }
-    [self.post incrementKey:@"numLikes" byAmount:amountToIncrementLikes];
+    [self.post incrementKey:POST_NUM_LIKES_KEY byAmount:amountToIncrementLikes];
     self.likeButton.selected = !self.likeButton.selected;
     [self updateFields];
     
@@ -198,7 +199,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CommentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CommentCell"];
+    CommentCell *cell = [tableView dequeueReusableCellWithIdentifier:COMMENT_CELL_IDENTIFIER];
     Comment *comment = self.comments[indexPath.row];
     cell.commentTextLabel.text = comment.text;
     cell.usernameLabel.text = comment.username;
@@ -208,7 +209,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Bring up profile view screen if username is tapped
-    if ([[segue identifier] isEqualToString:@"profileSegue"]) {
+    if ([[segue identifier] isEqualToString:HEADER_TO_PROFILE_SEGUE]) {
         PFUser *user = sender;
         ProfileViewController *profileViewController = [segue destinationViewController];
         profileViewController.user = user;

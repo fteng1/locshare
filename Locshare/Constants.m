@@ -39,11 +39,16 @@ NSString * const POST_AUTHOR_KEY = @"author";
 NSString * const POST_CREATED_AT_KEY = @"createdAt";
 NSString * const POST_PRIVATE_KEY = @"private";
 NSString * const POST_LOCATION_KEY = @"location";
+NSString * const POST_NUM_LIKES_KEY = @"numLikes";
 
 // Location.m
 NSString * const LOCATION_PARSE_CLASS_NAME = @"Location";
 NSString * const LOCATION_PLACE_ID_KEY = @"placeID";
 NSString * const LOCATION_OBJECT_ID_KEY = @"objectId";
+
+// Comment.m
+NSString * const COMMENT_PARSE_CLASS_NAME = @"Comment";
+NSString * const COMMENT_POST_ID_KEY = @"postID";
 
 // User properties
 NSString * const USER_PARSE_CLASS_NAME = @"_User";
@@ -62,6 +67,7 @@ NSString * const USER_FRIENDS_KEY = @"friends";
 NSString * const USER_REQUESTS_SENT_KEY = @"requestsSent";
 NSString * const USER_OBJECT_ID_KEY = @"objectId";
 NSString * const USER_NUM_POSTS_KEY = @"numPosts";
+NSString * const USER_LIKED_POSTS_KEY = @"likedPosts";
 
 // ProfileViewController.m
 NSString * const FRIEND_BUTTON_TITLE_DEFAULT = @"Friend";
@@ -126,6 +132,20 @@ NSString * const RETRIEVE_POSTS_ERROR_MESSAGE = @"Could not fetch posts at this 
 NSString * const POST_CELL_IDENTIFIER = @"PostLocationCell";
 NSString * const DEFAULT_POST_PREVIEW_IMAGE_NAME = @"photo";
 NSString * const DETAIL_SEGUE = @"detailSegue";
+
+// DetailsViewController.m
+NSString * const LIKE_BUTTON_IMAGE_NORMAL = @"heart";
+NSString * const LIKE_BUTTON_IMAGE_SELECTED = @"heart.fill";
+NSString * const DATE_FORMAT = @"yyyy-MM-dd HH:mm:ss Z";
+NSString * const LIKE_LABEL_SINGULAR = @"like";
+NSString * const LIKE_LABEL_PLURAL = @"likes";
+NSString * const FETCH_COMMENT_ERROR_TITLE = @"Error Fetching Comments";
+NSString * const FETCH_COMMENT_ERROR_MESSAGE = @"Could not retrieve comments on this post";
+NSString * const EMPTY_STRING = @"";
+NSString * const PROFILE_ERROR_TITLE = @"User Profile Error";
+NSString * const PROFILE_ERROR_MESSAGE = @"Could not obtain the current user profile";
+NSString * const HEADER_TO_PROFILE_SEGUE = @"profileSegue";
+NSString * const COMMENT_CELL_IDENTIFIER = @"CommentCell";
 
 @implementation ProjectColors
 
