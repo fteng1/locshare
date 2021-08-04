@@ -10,6 +10,7 @@
 #import <Parse/Parse.h>
 #import "AlertManager.h"
 #import "ProfileViewController.h"
+#import "Constants.h"
 
 @interface FriendRequestViewController () <UITableViewDelegate, UITableViewDataSource, UserSearchCellDelegate>
 
@@ -32,12 +33,12 @@
 }
 
 - (void)fetchRequests {
-    NSArray *requestIDs = [PFUser currentUser][@"pendingFriends"];
-    PFQuery *query = [PFQuery queryWithClassName:@"_User"];
-    [query whereKey:@"objectId" containedIn:requestIDs];
+    NSArray *requestIDs = [PFUser currentUser][USER_PENDING_FRIENDS_KEY];
+    PFQuery *query = [PFQuery queryWithClassName:USER_PARSE_CLASS_NAME];
+    [query whereKey:USER_OBJECT_ID_KEY containedIn:requestIDs];
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable users, NSError * _Nullable error) {
         if (error != nil) {
-            [AlertManager displayAlertWithTitle:@"Request Error" text:@"Error fetching the user's friend requests" presenter:self];
+            [AlertManager displayAlertWithTitle:FRIEND_REQUESTS_ERROR_TITLE text:FRIEND_REQUESTS_ERROR_MESSAGE presenter:self];
         }
         else {
             self.requests = [NSMutableArray arrayWithArray:users];
@@ -51,7 +52,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UserSearchCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RequestCell"];
+    UserSearchCell *cell = [tableView dequeueReusableCellWithIdentifier:FRIEND_REQUEST_CELL_IDENTIFIER];
     cell.delegate = self;
     cell.user = self.requests[indexPath.row];
     cell.cellIndex = indexPath.row;
@@ -60,7 +61,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self performSegueWithIdentifier:@"profileFromRequests" sender:nil];
+    [self performSegueWithIdentifier:PROFILE_FROM_REQUESTS_SEGUE sender:nil];
     [tableView deselectRowAtIndexPath:indexPath animated:true];
 }
 
@@ -71,7 +72,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     UserSearchCell *tappedCell = sender;
-    if ([[segue identifier] isEqualToString:@"profileFromRequests"]) {
+    if ([[segue identifier] isEqualToString:PROFILE_FROM_REQUESTS_SEGUE]) {
         NSIndexPath *indexPath = [self.requestTableView indexPathForCell:tappedCell];
         PFUser *userToView = self.requests[indexPath.row];
         

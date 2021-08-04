@@ -189,6 +189,12 @@ CGFloat const IMAGE_THUMBNAIL_WIDTH = 128;
 CGFloat const IMAGE_THUMBNAIL_HEIGHT = 128;
 NSString * const IMAGE_PICKER_CELL_IDENTIFIER = @"ImagePickerCell";
 
+// FriendRequestViewController.m
+NSString * const FRIEND_REQUESTS_ERROR_TITLE = @"Request Error";
+NSString * const FRIEND_REQUESTS_ERROR_MESSAGE = @"Error fetching the user's friend requests";
+NSString * const FRIEND_REQUEST_CELL_IDENTIFIER = @"RequestCell";
+NSString * const PROFILE_FROM_REQUESTS_SEGUE = @"profileFromRequests";
+
 @implementation ProjectColors
 
 + (CGColorRef)tintColor {

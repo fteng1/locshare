@@ -192,6 +192,12 @@ extern CGFloat const IMAGE_THUMBNAIL_WIDTH;
 extern CGFloat const IMAGE_THUMBNAIL_HEIGHT;
 extern NSString * const IMAGE_PICKER_CELL_IDENTIFIER;
 
+// FriendRequestViewController.m
+extern NSString * const FRIEND_REQUESTS_ERROR_TITLE;
+extern NSString * const FRIEND_REQUESTS_ERROR_MESSAGE;
+extern NSString * const FRIEND_REQUEST_CELL_IDENTIFIER;
+extern NSString * const PROFILE_FROM_REQUESTS_SEGUE;
+
 @interface ProjectColors : NSObject
 + (CGColorRef)tintColor;
 + (UIColor *)tanBackgroundColor;
