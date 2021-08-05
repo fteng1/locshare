@@ -219,7 +219,7 @@
     else {
         self.locationSearchBar.text = self.autocompleteResults[indexPath.row][AUTOCOMPLETE_RESULT_NAME_KEY];
     }
-    self.locationID = self.autocompleteResults[indexPath.row][LOCATION_PLACE_ID_KEY];
+    self.locationID = self.autocompleteResults[indexPath.row][AUTOCOMPLETE_RESULT_PLACE_ID_KEY];
     self.autocompleteTableView.hidden = true;
     self.locationSearchBar.showsCancelButton = NO;
     
