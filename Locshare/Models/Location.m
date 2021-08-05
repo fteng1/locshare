@@ -64,7 +64,7 @@
         newLoc.numPosts = [ProjectNumbers one];
         newLoc.placeID = placeId;
         newLoc.usersWithPosts = [[NSMutableArray alloc] init];
-        [newLoc.usersWithPosts addObject:post.objectId];
+        [newLoc.usersWithPosts addObject:post.author.objectId];
         if (!post.private) {
             newLoc.hasPublicPosts = true;
         }
