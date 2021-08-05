@@ -17,7 +17,7 @@ NSString * const CLIENT_KEY_NAME = @"client_key";
 NSString * const SERVER_URL = @"https://parseapi.back4app.com";
 CGFloat const URL_TIMEOUT_INTERVAL = 10.0;
 
-// Placees API
+// Places API
 NSString * const PLACES_AUTOCOMPLETE_URL = @"https://maps.googleapis.com/maps/api/place/autocomplete/json?input=%@&key=%@";
 NSString * const PLACES_AUTOCOMPLETE_RETURNED_DATA_KEY = @"predictions";
 NSString * const PLACES_NEARBY_RADIUS = @"1000";
@@ -25,6 +25,14 @@ NSString * const PLACES_NEARBY_URL = @"https://maps.googleapis.com/maps/api/plac
 NSString * const PLACES_NEARBY_RETURNED_DATA_KEY = @"results";
 NSString * const PLACES_DETAILS_URL = @"https://maps.googleapis.com/maps/api/place/details/json?place_id=%@&key=%@";
 NSString * const PLACES_DETAILS_RETURNED_DATA_KEY = @"result";
+NSString * const AUTOCOMPLETE_RESULT_DESCRIPTION_KEY = @"description";
+NSString * const AUTOCOMPLETE_RESULT_NAME_KEY = @"name";
+NSString * const AUTOCOMPLETE_RESULT_PLACE_ID_KEY = @"place_id";
+NSString * const PLACE_DETAILS_NAME_KEY = @"name";
+NSString * const PLACE_DETAILS_GEOMETRY_KEY = @"geometry";
+NSString * const PLACE_DETAILS_LOCATION_KEY = @"location";
+NSString * const PLACE_DETAILS_LATITUDE_KEY = @"lat";
+NSString * const PLACE_DETAILS_LONGITUDE_KEY = @"lng";
 
 // UIAlert Titles
 NSString * const OK_ACTION_TITLE = @"OK";
@@ -42,7 +50,6 @@ NSString * const PROFILE_ERROR_TITLE = @"User Profile Error";
 NSString * const SEARCH_ERROR_INITIAL_USERS_TITLE = @"Search Error";
 NSString * const PERFORM_SEARCH_ERROR_TITLE = @"Search Error";
 NSString * const REGISTER_ERROR_TITLE = @"Register Error";
-NSString * const REGISTRATION_SUCCESS_TITLE = @"Registration Successful";
 NSString * const LOGIN_ERROR_TITLE = @"Login Error";
 NSString * const LOGOUT_ERROR_TITLE = @"Logout Error";
 NSString * const LOGOUT_SUCCESS_TITLE = @"Logout Successful";
@@ -64,7 +71,6 @@ NSString * const PROFILE_ERROR_MESSAGE = @"Could not obtain the current user pro
 NSString * const SEARCH_ERROR_INITIAL_USERS_MESSAGE = @"Could not fetch initial users";
 NSString * const PERFORM_SEARCH_ERROR_MESSAGE = @"Could not perform the given search";
 NSString * const REGISTER_ERROR_MESSAGE = @"Could not register the provided user";
-NSString * const REGISTRATION_SUCCESS_MESSAGE = @"User registered successfully";
 NSString * const LOGIN_ERROR_MESSAGE = @"Could not login the provided user";
 NSString * const LOGOUT_ERROR_MESSAGE = @"Could not logout the current user";
 NSString * const LOGOUT_SUCCESS_MESSAGE = @"Logout Successful";
@@ -126,6 +132,7 @@ NSString * const LOCATION_PLACE_ID_KEY = @"placeID";
 NSString * const LOCATION_OBJECT_ID_KEY = @"objectId";
 NSString * const LOCATION_COORDINATE_KEY = @"coordinate";
 NSString * const LOCATION_NUM_POSTS_KEY = @"numPosts";
+NSString * const LOCATION_USERS_WITH_POSTS_KEY = @"usersWithPosts";
 
 // Comment Properties
 NSString * const COMMENT_PARSE_CLASS_NAME = @"Comment";
@@ -194,11 +201,6 @@ NSString * const IMAGE_PICKER_CELL_IDENTIFIER = @"ImagePickerCell";
 NSString * const TAB_BAR_CONTROLLER_IDENTIFIER = @"TabBarController";
 NSString * const FRIEND_REQUEST_CELL_IDENTIFIER = @"RequestCell";
 NSString * const STORYBOARD_NAME = @"Main";
-
-// AutocompleteCell Properties
-NSString * const AUTOCOMPLETE_RESULT_DESCRIPTION_KEY = @"description";
-NSString * const AUTOCOMPLETE_RESULT_NAME_KEY = @"name";
-NSString * const AUTOCOMPLETE_RESULT_PLACE_ID_KEY = @"place_id";
 
 // ImagePicker Selection Limits
 NSInteger const MAX_NUM_PROFILE_PHOTO_SELECTION = 1;

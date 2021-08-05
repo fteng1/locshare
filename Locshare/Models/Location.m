@@ -8,6 +8,7 @@
 #import "Location.h"
 #import <Parse/Parse.h>
 #import "LocationManager.h"
+#import "Constants.h"
 
 @implementation Location
 
@@ -24,17 +25,17 @@
 
 // Function to update Location object in Parse to reflect new post
 + (void)tagLocation:(NSString *)placeId newPost:(Post *)post completion:(void (^)(NSError *))completion{
-    PFQuery *query = [PFQuery queryWithClassName:@"Location"];
-    [query whereKey:@"placeID" equalTo:placeId];
+    PFQuery *query = [PFQuery queryWithClassName:LOCATION_PARSE_CLASS_NAME];
+    [query whereKey:LOCATION_PLACE_ID_KEY equalTo:placeId];
     
     [query findObjectsInBackgroundWithBlock:^(NSArray *place, NSError *error) {
         if (place != nil) {
             // Check if Location with given placeID already exists in Parse
             if ([place count] != 0) {
                 // If already exists, increase number of posts by 1
-                Location *loc = place[0];
-                [loc incrementKey:@"numPosts"];
-                [loc addObject:post.objectId forKey:@"usersWithPosts"];
+                Location *loc = [place firstObject];
+                [loc incrementKey:LOCATION_NUM_POSTS_KEY];
+                [loc addObject:post.objectId forKey:LOCATION_USERS_WITH_POSTS_KEY];
                 if (!post.private) {
                     loc.hasPublicPosts = true;
                 }
@@ -56,11 +57,11 @@
     // Get details about location from place ID
     [[LocationManager shared] getPlaceDetails:placeId completion:^(NSDictionary * _Nonnull locInfo, NSError * _Nonnull error) {
         Location *newLoc = [Location new];
-        newLoc.name = locInfo[@"name"];
-        NSNumber *latitude = locInfo[@"geometry"][@"location"][@"lat"];
-        NSNumber *longitude = locInfo[@"geometry"][@"location"][@"lng"];
+        newLoc.name = locInfo[PLACE_DETAILS_NAME_KEY];
+        NSNumber *latitude = locInfo[PLACE_DETAILS_GEOMETRY_KEY][PLACE_DETAILS_LOCATION_KEY][PLACE_DETAILS_LATITUDE_KEY];
+        NSNumber *longitude = locInfo[PLACE_DETAILS_GEOMETRY_KEY][PLACE_DETAILS_LOCATION_KEY][PLACE_DETAILS_LONGITUDE_KEY];
         newLoc.coordinate = [PFGeoPoint geoPointWithLatitude:[latitude floatValue] longitude:[longitude floatValue]];
-        newLoc.numPosts = @(1);
+        newLoc.numPosts = [ProjectNumbers one];
         newLoc.placeID = placeId;
         newLoc.usersWithPosts = [[NSMutableArray alloc] init];
         [newLoc.usersWithPosts addObject:post.objectId];

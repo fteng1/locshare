@@ -36,8 +36,6 @@
         if (error != nil) {
             [AlertManager displayAlertWithTitle:REGISTER_ERROR_TITLE text:REGISTER_ERROR_MESSAGE presenter:self];
         } else {
-            [AlertManager displayAlertWithTitle:REGISTRATION_SUCCESS_TITLE text:REGISTRATION_SUCCESS_MESSAGE presenter:self];
-            
             // manually segue to logged in view
             [self performSegueWithIdentifier:LOGGED_IN_SEGUE sender:nil];
         }

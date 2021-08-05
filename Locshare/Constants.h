@@ -27,6 +27,14 @@ extern NSString * const PLACES_NEARBY_URL;
 extern NSString * const PLACES_NEARBY_RETURNED_DATA_KEY;
 extern NSString * const PLACES_DETAILS_URL;
 extern NSString * const PLACES_DETAILS_RETURNED_DATA_KEY;
+extern NSString * const AUTOCOMPLETE_RESULT_DESCRIPTION_KEY;
+extern NSString * const AUTOCOMPLETE_RESULT_NAME_KEY;
+extern NSString * const AUTOCOMPLETE_RESULT_PLACE_ID_KEY;
+extern NSString * const PLACE_DETAILS_NAME_KEY;
+extern NSString * const PLACE_DETAILS_GEOMETRY_KEY;
+extern NSString * const PLACE_DETAILS_LOCATION_KEY;
+extern NSString * const PLACE_DETAILS_LATITUDE_KEY;
+extern NSString * const PLACE_DETAILS_LONGITUDE_KEY;
 
 // UIAlert Titles
 extern NSString * const OK_ACTION_TITLE;
@@ -44,13 +52,11 @@ extern NSString * const PROFILE_ERROR_TITLE;
 extern NSString * const SEARCH_ERROR_INITIAL_USERS_TITLE;
 extern NSString * const PERFORM_SEARCH_ERROR_TITLE;
 extern NSString * const REGISTER_ERROR_TITLE;
-extern NSString * const REGISTRATION_SUCCESS_TITLE;
 extern NSString * const LOGIN_ERROR_TITLE;
 extern NSString * const LOGOUT_ERROR_TITLE;
 extern NSString * const LOGOUT_SUCCESS_TITLE;
 extern NSString * const CAMERA_UNAVAILABLE_TITLE;
 extern NSString * const FRIEND_REQUESTS_ERROR_TITLE;
-
 
 // UIAlert Messages
 extern NSString * const URL_REQUEST_ERROR_MESSAGE;
@@ -67,13 +73,11 @@ extern NSString * const PROFILE_ERROR_MESSAGE;
 extern NSString * const SEARCH_ERROR_INITIAL_USERS_MESSAGE;
 extern NSString * const PERFORM_SEARCH_ERROR_MESSAGE;
 extern NSString * const REGISTER_ERROR_MESSAGE;
-extern NSString * const REGISTRATION_SUCCESS_MESSAGE;
 extern NSString * const LOGIN_ERROR_MESSAGE;
 extern NSString * const LOGOUT_ERROR_MESSAGE;
 extern NSString * const LOGOUT_SUCCESS_MESSAGE;
 extern NSString * const CAMERA_UNAVAILABLE_MESSAGE;
 extern NSString * const FRIEND_REQUESTS_ERROR_MESSAGE;
-
 
 // Button UI Properties
 extern CGFloat const BUTTON_CORNER_RADIUS;
@@ -130,6 +134,7 @@ extern NSString * const LOCATION_PLACE_ID_KEY;
 extern NSString * const LOCATION_OBJECT_ID_KEY;
 extern NSString * const LOCATION_COORDINATE_KEY;
 extern NSString * const LOCATION_NUM_POSTS_KEY;
+extern NSString * const LOCATION_USERS_WITH_POSTS_KEY;
 
 // Comment Properties
 extern NSString * const COMMENT_PARSE_CLASS_NAME;
@@ -198,11 +203,6 @@ extern NSString * const IMAGE_PICKER_CELL_IDENTIFIER;
 extern NSString * const TAB_BAR_CONTROLLER_IDENTIFIER;
 extern NSString * const FRIEND_REQUEST_CELL_IDENTIFIER;
 extern NSString * const STORYBOARD_NAME;
-
-// AutocompleteCell Properties
-extern NSString * const AUTOCOMPLETE_RESULT_DESCRIPTION_KEY;
-extern NSString * const AUTOCOMPLETE_RESULT_NAME_KEY;
-extern NSString * const AUTOCOMPLETE_RESULT_PLACE_ID_KEY;
 
 // ImagePicker Selection Limits
 extern NSInteger const MAX_NUM_POST_PHOTO_SELECTION;
