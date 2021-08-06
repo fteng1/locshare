@@ -35,6 +35,7 @@
 		7075DFB426A5D9790073CB5A /* LocationMarker.m in Sources */ = {isa = PBXBuildFile; fileRef = 7075DFB326A5D9790073CB5A /* LocationMarker.m */; };
 		708793FE26AA064400AB45BA /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 708793FD26AA064400AB45BA /* SearchViewController.m */; };
 		7087940126AA071A00AB45BA /* UserSearchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7087940026AA071A00AB45BA /* UserSearchCell.m */; };
+		709A2F2726BCA3F000F50B11 /* CachedData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 709A2F2526BCA3F000F50B11 /* CachedData.xcdatamodeld */; };
 		70B30743269CFD4500ADFE9E /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 70B30742269CFD4500ADFE9E /* Keys.plist */; };
 		70DBE10226B893A700571DD2 /* AlertManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DBE10126B893A700571DD2 /* AlertManager.m */; };
 		70DD72B9269F93D600D2ACC9 /* PhotoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DD72B8269F93D600D2ACC9 /* PhotoViewCell.m */; };
@@ -122,6 +123,7 @@
 		708793FD26AA064400AB45BA /* SearchViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		708793FF26AA071A00AB45BA /* UserSearchCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserSearchCell.h; sourceTree = "<group>"; };
 		7087940026AA071A00AB45BA /* UserSearchCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserSearchCell.m; sourceTree = "<group>"; };
+		709A2F2626BCA3F000F50B11 /* CachedData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CachedData.xcdatamodel; sourceTree = "<group>"; };
 		70B30742269CFD4500ADFE9E /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		70DBE10026B893A700571DD2 /* AlertManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlertManager.h; sourceTree = "<group>"; };
 		70DBE10126B893A700571DD2 /* AlertManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlertManager.m; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 		70571E0C269CA9AE00CE1842 /* Locshare */ = {
 			isa = PBXGroup;
 			children = (
+				707C764B26BCAEF100B4D7A2 /* CoreDataModels */,
 				704F136526A1E980009A71C8 /* API */,
 				70571E44269CAA3600CE1842 /* Views */,
 				70571E43269CAA3000CE1842 /* View Controllers */,
@@ -243,6 +246,7 @@
 				70B30742269CFD4500ADFE9E /* Keys.plist */,
 				7018A72B26B8B6FB00DCC1C0 /* Constants.m */,
 				7018A72F26B8B9C800DCC1C0 /* Constants.h */,
+				709A2F2526BCA3F000F50B11 /* CachedData.xcdatamodeld */,
 			);
 			path = Locshare;
 			sourceTree = "<group>";
@@ -320,6 +324,13 @@
 				701B1CE326AF1A48002CD8F3 /* ImagePickerCell.m */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		707C764B26BCAEF100B4D7A2 /* CoreDataModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = CoreDataModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -609,6 +620,7 @@
 				70571E0F269CA9AE00CE1842 /* AppDelegate.m in Sources */,
 				704F136D26A1EABA009A71C8 /* LocationManager.m in Sources */,
 				70DD72B9269F93D600D2ACC9 /* PhotoViewCell.m in Sources */,
+				709A2F2726BCA3F000F50B11 /* CachedData.xcdatamodeld in Sources */,
 				7075DFB426A5D9790073CB5A /* LocationMarker.m in Sources */,
 				70571E62269CE67F00CE1842 /* LocationViewController.m in Sources */,
 				701B1CE426AF1A48002CD8F3 /* ImagePickerCell.m in Sources */,
@@ -946,6 +958,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		709A2F2526BCA3F000F50B11 /* CachedData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				709A2F2626BCA3F000F50B11 /* CachedData.xcdatamodel */,
+			);
+			currentVersion = 709A2F2626BCA3F000F50B11 /* CachedData.xcdatamodel */;
+			path = CachedData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 70571E02269CA9AE00CE1842 /* Project object */;
 }

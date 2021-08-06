@@ -102,7 +102,6 @@ GMSPlacesClient *placesClient;
                     [visibleLocations addObject:loc];
                 };
             }
-            
         }
         [[LocationManager shared] displayLocationsOnMap:self.homeMapView locations:visibleLocations userFiltering:false];
     }];
