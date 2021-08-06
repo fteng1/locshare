@@ -227,6 +227,13 @@ extern CGFloat const IMAGE_THUMBNAIL_HEIGHT;
 extern NSString * const LOCATION_STRING;
 extern NSString * const OBJECT_STRING;
 
+// Core Data
+extern NSString * const CACHED_USER_CLASS_NAME;
+extern NSString * const CACHED_LOCATION_CLASS_NAME;
+extern NSString * const CACHED_POST_CLASS_NAME;
+extern NSString * const CACHED_COMMENT_CLASS_NAME;
+extern NSString * const CACHED_OBJECT_ID_FILTER_PREDICATE;
+
 // Misc. Constants
 extern NSString * const EMPTY_STRING;
 extern CGFloat const KEYBOARD_DISTANCE_FROM_TEXT_FIELD;

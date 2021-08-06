@@ -71,4 +71,29 @@
         [newLoc saveInBackground];
     }];
 }
+
++ (Location *)initFromCachedLocation: (CachedLocation *)loc {
+    Location *newLoc = [Location new];
+    newLoc.name = loc.name;
+    newLoc.coordinate = [PFGeoPoint geoPointWithLatitude:loc.latitude longitude:loc.longitude];
+    newLoc.numPosts = @(loc.numPosts);
+    newLoc.placeID = loc.placeID;
+    newLoc.usersWithPosts = [NSMutableArray arrayWithArray:loc.usersWithPosts];
+    newLoc.hasPublicPosts = loc.hasPublicPosts;
+    return newLoc;
+}
+
+- (CachedLocation *)cachedLocation {
+    CachedLocation *newLoc = [CachedLocation new];
+    newLoc.usersWithPosts = self.usersWithPosts;
+    newLoc.hasPublicPosts = self.hasPublicPosts;
+    newLoc.name = self.name;
+    newLoc.placeID = self.placeID;
+    newLoc.latitude = self.coordinate.latitude;
+    newLoc.longitude = self.coordinate.longitude;
+    newLoc.numPosts = [self.numPosts intValue];
+    return newLoc;
+}
+
+
 @end

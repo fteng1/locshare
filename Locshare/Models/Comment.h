@@ -8,6 +8,7 @@
 #import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
 #import "Post.h"
+#import "CachedComment+CoreDataProperties.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *postID;
 
 + (instancetype)initWithText:(NSString *)text author:(PFUser *)author post:(Post *)post;
++ (Comment *) initFromCachedComment: (CachedComment *)comment;
+- (CachedComment *)cachedComment;
 
 @end
 

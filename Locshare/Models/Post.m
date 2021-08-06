@@ -7,6 +7,9 @@
 
 #import "Post.h"
 #import "Constants.h"
+#import <Parse/Parse.h>
+#import "AppDelegate.h"
+#import "CachedUserManager.h"
 
 @implementation Post
 
@@ -70,4 +73,40 @@
     return [PFFileObject fileObjectWithName:POST_IMAGE_DEFAULT_NAME data:imageData];
 }
 
++ (Post *)initFromCachedPost: (CachedPost *)post {
+    Post *newPost = [Post new];
+    // Get author of post from stored data
+    NSFetchRequest *request = CachedUser.fetchRequest;
+    [request setPredicate:[NSPredicate predicateWithFormat:CACHED_OBJECT_ID_FILTER_PREDICATE, post.authorId]];
+    NSManagedObjectContext *context = ((AppDelegate *) UIApplication.sharedApplication.delegate).persistentContainer.viewContext;
+    NSError *error = nil;
+    NSArray *results = [context executeFetchRequest:request error:&error];
+    if (error != nil && results.count > 0) {
+        newPost.author = [CachedUserManager getPFUserFromCachedUser:[results firstObject]];
+    }
+    newPost.caption = post.caption;
+    newPost.photos = [NSMutableArray arrayWithArray:post.photos];
+    newPost.numLikes = @(post.numLikes);
+    newPost.numComments = @(post.numComments);
+    newPost.authorUsername = post.authorUsername;
+    newPost.location = post.location;
+    newPost.comments = [NSMutableArray arrayWithArray:post.comments];
+    newPost.private = post.private;
+    return newPost;
+}
+
+- (CachedPost *)cachedPost {
+    CachedPost *newPost = [CachedPost new];
+    newPost.authorId = self.author.objectId;
+    newPost.authorUsername = self.authorUsername;
+    newPost.caption = self.caption;
+    newPost.comments = self.comments;
+    newPost.createdAt = self.createdAt;
+    newPost.location = self.location;
+    newPost.numComments = [self.numComments integerValue];
+    newPost.numLikes = [self.numLikes integerValue];
+    newPost.photos = self.photos;
+    newPost.private = self.private;
+    return newPost;
+}
 @end

@@ -7,6 +7,8 @@
 
 #import <Foundation/Foundation.h>
 #import "Parse/Parse.h"
+#import "CachedPost+CoreDataProperties.h"
+#import "CachedUser+CoreDataProperties.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -25,6 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (Post *) initPost: ( NSArray * _Nullable )images withCaption: ( NSString * _Nullable )caption withLocation: (NSString * _Nullable)locID private:(BOOL)isPrivate;
 + (void) makePost: (Post *)post completion:(void (^)(NSString *, NSError *))completion;
 + (PFFileObject *)getPFFileFromImage: (UIImage * _Nullable)image;
++ (Post *) initFromCachedPost: (CachedPost *)post;
+- (CachedPost *)cachedPost;
 
 @end
 

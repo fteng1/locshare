@@ -8,6 +8,7 @@
 #import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
 #import "Post.h"
+#import "CachedLocation+CoreDataProperties.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -21,6 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL hasPublicPosts;
 
 + (void)tagLocation:(NSString *)placeId newPost:(Post *)post completion:(void (^)(NSError *))completion;
++ (Location *)initFromCachedLocation: (CachedLocation *)loc;
+- (CachedLocation *)cachedLocation;
 
 @end
 

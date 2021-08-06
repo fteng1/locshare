@@ -225,6 +225,13 @@ CGFloat const IMAGE_THUMBNAIL_HEIGHT = 128;
 NSString * const LOCATION_STRING = @"%f,%f";
 NSString * const OBJECT_STRING = @"%@";
 
+// Core Data
+NSString * const CACHED_USER_CLASS_NAME = @"CachedUser";
+NSString * const CACHED_LOCATION_CLASS_NAME = @"CachedLocation";
+NSString * const CACHED_POST_CLASS_NAME = @"CachedPost";
+NSString * const CACHED_COMMENT_CLASS_NAME = @"CachedComment";
+NSString * const CACHED_OBJECT_ID_FILTER_PREDICATE = @"objectId == %@";
+
 // Misc. Constants
 NSString * const EMPTY_STRING = @"";
 CGFloat const KEYBOARD_DISTANCE_FROM_TEXT_FIELD = 10;

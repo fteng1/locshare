@@ -1,48 +1,49 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20F71" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
-    <entity name="Comment" representedClassName="Comment" syncable="YES" codeGenerationType="class">
+    <entity name="CachedComment" representedClassName="CachedComment" syncable="YES" codeGenerationType="class">
         <attribute name="authorId" optional="YES" attributeType="String"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="postID" optional="YES" attributeType="String"/>
         <attribute name="text" optional="YES" attributeType="String"/>
         <attribute name="username" optional="YES" attributeType="String"/>
     </entity>
-    <entity name="Location" representedClassName="Location" syncable="YES" codeGenerationType="class">
+    <entity name="CachedLocation" representedClassName="CachedLocation" syncable="YES" codeGenerationType="class">
         <attribute name="hasPublicPosts" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="latitude" optional="YES" attributeType="Float" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Float" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="numPosts" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="usersWithPosts" optional="YES" attributeType="Transformable"/>
+        <attribute name="placeID" optional="YES" attributeType="String"/>
+        <attribute name="usersWithPosts" optional="YES" attributeType="Transformable" customClassName="NSArray"/>
     </entity>
-    <entity name="Post" representedClassName="Post" syncable="YES" codeGenerationType="class">
-        <attribute name="authorId" optional="YES" attributeType="String"/>
+    <entity name="CachedPost" representedClassName="CachedPost" syncable="YES" codeGenerationType="class">
+        <attribute name="authorId" optional="YES" attributeType="String" customClassName="PFUser"/>
         <attribute name="authorUsername" optional="YES" attributeType="String"/>
         <attribute name="caption" optional="YES" attributeType="String"/>
-        <attribute name="comments" optional="YES" attributeType="Transformable"/>
+        <attribute name="comments" optional="YES" attributeType="Transformable" customClassName="NSArray"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="location" optional="YES" attributeType="String"/>
         <attribute name="numComments" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="numLikes" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="photos" optional="YES" attributeType="Transformable"/>
+        <attribute name="photos" optional="YES" attributeType="Transformable" customClassName="NSArray"/>
         <attribute name="private" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
     </entity>
-    <entity name="User" representedClassName="User" syncable="YES" codeGenerationType="class">
-        <attribute name="friends" optional="YES" attributeType="Transformable"/>
-        <attribute name="likedPosts" optional="YES" attributeType="Transformable"/>
+    <entity name="CachedUser" representedClassName="CachedUser" syncable="YES" codeGenerationType="class">
+        <attribute name="friends" optional="YES" attributeType="Transformable" customClassName="NSArray"/>
+        <attribute name="likedPosts" optional="YES" attributeType="Transformable" customClassName="NSArray"/>
         <attribute name="numFriends" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="numPosts" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="objectId" optional="YES" attributeType="String"/>
-        <attribute name="pendingFriends" optional="YES" attributeType="Transformable"/>
+        <attribute name="pendingFriends" optional="YES" attributeType="Transformable" customClassName="NSArray"/>
         <attribute name="profilePicture" optional="YES" attributeType="Binary"/>
-        <attribute name="requestsSent" optional="YES" attributeType="Transformable"/>
+        <attribute name="requestsSent" optional="YES" attributeType="Transformable" customClassName="NSArray"/>
         <attribute name="tagline" optional="YES" attributeType="String"/>
         <attribute name="username" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="Comment" positionX="-45" positionY="72" width="128" height="104"/>
-        <element name="Location" positionX="-54" positionY="18" width="128" height="119"/>
-        <element name="Post" positionX="-54" positionY="-9" width="128" height="179"/>
-        <element name="User" positionX="-27" positionY="81" width="128" height="179"/>
+        <element name="CachedComment" positionX="-45" positionY="72" width="128" height="104"/>
+        <element name="CachedLocation" positionX="-54" positionY="18" width="128" height="134"/>
+        <element name="CachedPost" positionX="-54" positionY="-9" width="128" height="179"/>
+        <element name="CachedUser" positionX="-27" positionY="81" width="128" height="179"/>
     </elements>
 </model>
