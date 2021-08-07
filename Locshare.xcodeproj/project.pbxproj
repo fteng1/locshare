@@ -41,6 +41,7 @@
 		70DD72B9269F93D600D2ACC9 /* PhotoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DD72B8269F93D600D2ACC9 /* PhotoViewCell.m */; };
 		70E26A2226AB667600B702D5 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 70E26A2126AB667600B702D5 /* CommentCell.m */; };
 		70EBFD1526BDF251001A20F8 /* CachedUserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 70EBFD1426BDF251001A20F8 /* CachedUserManager.m */; };
+		70EBFD1826BE0027001A20F8 /* NetworkStatusManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 70EBFD1726BE0027001A20F8 /* NetworkStatusManager.m */; };
 		A7C37B87B1356CCD753A958E /* Pods_LocshareTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB72C41EE9DADFD0AC0170F5 /* Pods_LocshareTests.framework */; };
 		C00D74ED1B04D45B2F772B3A /* Pods_Locshare_LocshareUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF243CCBA4B7B20A0370E822 /* Pods_Locshare_LocshareUITests.framework */; };
 		FBA41A05342A76C5688C32EE /* Pods_Locshare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD266C79FDA7AE06089B6621 /* Pods_Locshare.framework */; };
@@ -134,6 +135,8 @@
 		70E26A2126AB667600B702D5 /* CommentCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommentCell.m; sourceTree = "<group>"; };
 		70EBFD1326BDF251001A20F8 /* CachedUserManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CachedUserManager.h; sourceTree = "<group>"; };
 		70EBFD1426BDF251001A20F8 /* CachedUserManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CachedUserManager.m; sourceTree = "<group>"; };
+		70EBFD1626BE0027001A20F8 /* NetworkStatusManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkStatusManager.h; sourceTree = "<group>"; };
+		70EBFD1726BE0027001A20F8 /* NetworkStatusManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NetworkStatusManager.m; sourceTree = "<group>"; };
 		7E8A0C260B8E046507FC86BA /* Pods-Locshare-LocshareUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Locshare-LocshareUITests.release.xcconfig"; path = "Target Support Files/Pods-Locshare-LocshareUITests/Pods-Locshare-LocshareUITests.release.xcconfig"; sourceTree = "<group>"; };
 		D92930AF93ECC1F7A2525ACC /* Pods-LocshareTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocshareTests.debug.xcconfig"; path = "Target Support Files/Pods-LocshareTests/Pods-LocshareTests.debug.xcconfig"; sourceTree = "<group>"; };
 		DD266C79FDA7AE06089B6621 /* Pods_Locshare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Locshare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -203,6 +206,8 @@
 				7063F67126A77CEC00DE8196 /* ImageManager.m */,
 				70DBE10026B893A700571DD2 /* AlertManager.h */,
 				70DBE10126B893A700571DD2 /* AlertManager.m */,
+				70EBFD1626BE0027001A20F8 /* NetworkStatusManager.h */,
+				70EBFD1726BE0027001A20F8 /* NetworkStatusManager.m */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -627,6 +632,7 @@
 				704F136D26A1EABA009A71C8 /* LocationManager.m in Sources */,
 				70DD72B9269F93D600D2ACC9 /* PhotoViewCell.m in Sources */,
 				709A2F2726BCA3F000F50B11 /* CachedData.xcdatamodeld in Sources */,
+				70EBFD1826BE0027001A20F8 /* NetworkStatusManager.m in Sources */,
 				7075DFB426A5D9790073CB5A /* LocationMarker.m in Sources */,
 				70571E62269CE67F00CE1842 /* LocationViewController.m in Sources */,
 				701B1CE426AF1A48002CD8F3 /* ImagePickerCell.m in Sources */,

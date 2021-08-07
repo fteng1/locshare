@@ -13,6 +13,7 @@ target 'Locshare' do
   pod 'UITextView+Placeholder'
   pod 'Parse/UI'
   pod 'IQKeyboardManager'
+  pod 'AFNetworking'
 
   target 'LocshareTests' do
     inherit! :search_paths

@@ -17,6 +17,7 @@
 #import "LoginViewController.h"
 #import "AlertManager.h"
 #import "Constants.h"
+#import "NetworkStatusManager.h"
 
 @interface HomeFeedViewController () <CLLocationManagerDelegate, GMSMapViewDelegate>
 @property (weak, nonatomic) IBOutlet GMSMapView *homeMapView;
@@ -33,15 +34,19 @@ GMSPlacesClient *placesClient;
     // Set up for Places API
     placesClient = [GMSPlacesClient sharedClient];
     
+    self.homeMapView.delegate = self;
+
     // Set initial camera position of the MapView
     [self updateDefaultPosition];
-    [self displayVisibleLocations];
-    
-    self.homeMapView.delegate = self;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [self displayVisibleLocations];
+- (void)viewDidAppear:(BOOL)animated {
+    if ([NetworkStatusManager isConnectedToInternet]) {
+        [self displayVisibleLocations];
+    }
+    else {
+        // Get Location data from cache
+    }
 }
 
 - (void)updateDefaultPosition {
@@ -78,7 +83,6 @@ GMSPlacesClient *placesClient;
     GMSCoordinateBounds *currentlyVisible = [self getVisibleRegion];
     PFGeoPoint *southWest = [PFGeoPoint geoPointWithLatitude:currentlyVisible.southWest.latitude longitude:currentlyVisible.southWest.longitude];
     PFGeoPoint *northEast = [PFGeoPoint geoPointWithLatitude:currentlyVisible.northEast.latitude longitude:currentlyVisible.northEast.longitude];
-    
     // Set query to find locations that fall within the visible region on the map and have posts
     PFQuery *geoQuery = [PFQuery queryWithClassName:LOCATION_PARSE_CLASS_NAME];
     [geoQuery whereKey:LOCATION_COORDINATE_KEY withinGeoBoxFromSouthwest:southWest toNortheast:northEast];

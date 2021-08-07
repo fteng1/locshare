@@ -12,6 +12,7 @@
 #import <IQKeyboardManager/IQKeyboardManager.h>
 #import "Constants.h"
 #import <CoreData/CoreData.h>
+#import <AFNetworking/AFNetworking.h>
 
 @interface AppDelegate ()
 
@@ -21,6 +22,8 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+    
     // Read keys from Keys.plist
     NSString *path = [[NSBundle mainBundle] pathForResource: KEYS_FILE_NAME ofType: KEYS_FILE_EXTENSION];
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: path];
