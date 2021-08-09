@@ -14,6 +14,7 @@
 #import "CommentCell.h"
 #import "AlertManager.h"
 #import "Constants.h"
+#import "NetworkStatusManager.h"
 
 @interface DetailsViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UITableViewDelegate, UITableViewDelegate, UITableViewDataSource>
 
@@ -51,8 +52,10 @@
     
     [self initializeUI];
 
-    [self getAuthorInfoInBackground];
-    [self fetchComments];
+    if ([NetworkStatusManager isConnectedToInternet]) {
+        [self getAuthorInfoInBackground];
+        [self fetchComments];
+    }
 }
 
 - (void)initializeUI {

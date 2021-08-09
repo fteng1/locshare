@@ -318,7 +318,6 @@
         LocationMarker *marker = sender;
         LocationViewController *locationViewController = [segue destinationViewController];
         locationViewController.location = marker.location;
-        locationViewController.postsToDisplay = self.postsByLocationId[marker.location.placeID];
         locationViewController.userToFilter = self.user;
         locationViewController.isUserFiltered = marker.userFiltered;
     }

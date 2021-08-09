@@ -47,7 +47,8 @@
 }
 
 - (CachedComment *)cachedComment {
-    CachedComment *toStore = [CachedComment new];
+    NSManagedObjectContext *context = ((AppDelegate *) UIApplication.sharedApplication.delegate).persistentContainer.viewContext;
+    CachedComment *toStore = [NSEntityDescription insertNewObjectForEntityForName:CACHED_COMMENT_CLASS_NAME inManagedObjectContext:context];
     toStore.authorId = self.author.objectId;
     toStore.username = self.username;
     toStore.text = self.text;

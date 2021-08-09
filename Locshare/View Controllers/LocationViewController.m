@@ -13,6 +13,8 @@
 #import <GoogleMaps/GoogleMaps.h>
 #import "AlertManager.h"
 #import "Constants.h"
+#import "NetworkStatusManager.h"
+#import "AppDelegate.h"
 
 @interface LocationViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UITabBarControllerDelegate>
 
@@ -20,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet GMSMapView *mapView;
 
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
+@property (strong, nonatomic) NSManagedObjectContext *context;
 
 @end
 
@@ -32,8 +35,14 @@
     self.postCollectionView.delegate = self;
     self.postCollectionView.dataSource = self;
     self.tabBarController.delegate = self;
+    self.context = ((AppDelegate *) UIApplication.sharedApplication.delegate).persistentContainer.viewContext;
     
-    [self loadPosts];
+    if ([NetworkStatusManager isConnectedToInternet]) {
+        [self loadPosts];
+    }
+    else {
+        [self fetchPostsFromMemory];
+    }
     
     [self setCollectionViewLayout];
     
@@ -69,19 +78,63 @@
 }
 
 - (void)refreshPage {
-    // Get new array of posts for current location
-    PFQuery *query = [PFQuery queryWithClassName:LOCATION_PARSE_CLASS_NAME];
-    [query whereKey:LOCATION_OBJECT_ID_KEY equalTo:self.location.objectId];
-    query.limit = 1;
-    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
-        if (error != nil) {
-            [AlertManager displayAlertWithTitle:UPDATE_LOCATION_ERROR_TITLE text:UPDATE_LOCATION_ERROR_MESSAGE presenter:self];
+    if ([NetworkStatusManager isConnectedToInternet]) {
+        [self loadPosts];
+    }
+    else {
+        [AlertManager displayAlertWithTitle:NETWORK_ERROR_TITLE text:NETWORK_ERROR_MESSAGE presenter:self];
+        [self fetchPostsFromMemory];
+    }
+}
+
+// Get Posts stored in Core Data
+- (void)fetchPostsFromMemory {
+    NSFetchRequest *request = CachedPost.fetchRequest;
+    [request setPredicate:[NSPredicate predicateWithFormat:CACHED_LOCATION_FILTER_PREDICATE, self.location.placeID]];
+    [request setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:CACHED_POST_CREATED_AT_KEY ascending:false]]];
+    NSError *error = nil;
+    NSArray *results = [self.context executeFetchRequest:request error:&error];
+    if (error == nil && results.count > 0) {
+        NSMutableArray *postsInCache = [NSMutableArray new];
+        for (CachedPost *post in results) {
+            [postsInCache addObject:[Post initFromCachedPost:post]];
         }
-        else {
-            self.location = [objects firstObject];
-            [self loadPosts];
+        self.postsToDisplay = [self getVisiblePosts:postsInCache];
+        [self.postCollectionView reloadData];
+    }
+}
+
+- (NSMutableArray *)getVisiblePosts:(NSArray *)allPosts {
+    NSMutableArray *visiblePosts = [NSMutableArray new];
+    
+    // Only retrieve posts from user's friends and user, or public posts
+    NSMutableArray *friendsWithSelf = [PFUser currentUser][USER_FRIENDS_KEY];
+    [friendsWithSelf addObject:[PFUser currentUser].objectId];
+    
+    for (Post *post in allPosts) {
+        CachedPost *inMem = [self getPostWithID:post.objectId];
+        if (inMem == nil) {
+            // Store post in cache if not already stored
+            inMem = [post cachedPost];
+            NSError *error = nil;
+            [self.context save:&error];
         }
-    }];
+        if (!post.private || [friendsWithSelf containsObject:post.author.objectId]) {
+            [visiblePosts addObject:post];
+        }
+    }
+    return visiblePosts;
+}
+
+- (CachedPost *)getPostWithID:(NSString *)postID {
+    NSFetchRequest *request = CachedPost.fetchRequest;
+    [request setPredicate:[NSPredicate predicateWithFormat:CACHED_OBJECT_ID_FILTER_PREDICATE, postID]];
+    NSError *error = nil;
+    NSArray *results = [self.context executeFetchRequest:request error:&error];
+    if (error == nil && results.count > 0) {
+        return [results firstObject];
+    }
+    return nil;
 }
 
 - (void)loadPosts {
@@ -96,18 +149,7 @@
     
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable postsAtLocation, NSError * _Nullable error) {
         if (error == nil) {
-            NSMutableArray *visiblePosts = [NSMutableArray new];
-            
-            // Only retrieve posts from user's friends and user, or public posts
-            NSMutableArray *friendsWithSelf = [PFUser currentUser][USER_FRIENDS_KEY];
-            [friendsWithSelf addObject:[PFUser currentUser].objectId];
-            
-            for (Post *post in postsAtLocation) {
-                if (!post.private || [friendsWithSelf containsObject:post.author.objectId]) {
-                    [visiblePosts addObject:post];
-                }
-            }
-            self.postsToDisplay = visiblePosts;
+            self.postsToDisplay = [self getVisiblePosts:postsAtLocation];
             [self.postCollectionView reloadData];
         }
         else {

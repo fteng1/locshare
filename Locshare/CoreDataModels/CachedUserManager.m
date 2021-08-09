@@ -28,7 +28,8 @@
 }
 
 + (CachedUser *)getCachedUserFromPFUser:(PFUser *)user {
-    CachedUser *toReturn = [CachedUser new];
+    NSManagedObjectContext *context = ((AppDelegate *) UIApplication.sharedApplication.delegate).persistentContainer.viewContext;
+    CachedUser *toReturn = [NSEntityDescription insertNewObjectForEntityForName:CACHED_USER_CLASS_NAME inManagedObjectContext:context];
     toReturn.friends = user[USER_FRIENDS_KEY];
     toReturn.likedPosts = user[USER_LIKED_POSTS_KEY];
     toReturn.pendingFriends = user[USER_PENDING_FRIENDS_KEY];

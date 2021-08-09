@@ -194,7 +194,12 @@ GMSPlacesClient *placesClient;
 }
 
 - (IBAction)onRefreshTap:(id)sender {
-    [self displayVisibleLocations];
+    if ([NetworkStatusManager isConnectedToInternet]) {
+        [self displayVisibleLocations];
+    }
+    else {
+        [AlertManager displayAlertWithTitle:NETWORK_ERROR_TITLE text:NETWORK_ERROR_MESSAGE presenter:self];
+    }
 }
 
 @end

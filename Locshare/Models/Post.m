@@ -85,18 +85,24 @@
         newPost.author = [CachedUserManager getPFUserFromCachedUser:[results firstObject]];
     }
     newPost.caption = post.caption;
-    newPost.photos = [NSMutableArray arrayWithArray:post.photos];
+    NSMutableArray *convertedPhotos = [NSMutableArray new];
+    for (NSData *obj in post.photos) {
+        [convertedPhotos addObject:[PFFileObject fileObjectWithData:obj]];
+    }
+    newPost.photos = convertedPhotos;
     newPost.numLikes = @(post.numLikes);
     newPost.numComments = @(post.numComments);
     newPost.authorUsername = post.authorUsername;
     newPost.location = post.location;
     newPost.comments = [NSMutableArray arrayWithArray:post.comments];
     newPost.private = post.private;
+    newPost.objectId = post.objectId;
     return newPost;
 }
 
 - (CachedPost *)cachedPost {
-    CachedPost *newPost = [CachedPost new];
+    NSManagedObjectContext *context = ((AppDelegate *) UIApplication.sharedApplication.delegate).persistentContainer.viewContext;
+    CachedPost *newPost = [NSEntityDescription insertNewObjectForEntityForName:CACHED_POST_CLASS_NAME inManagedObjectContext:context];
     newPost.authorId = self.author.objectId;
     newPost.authorUsername = self.authorUsername;
     newPost.caption = self.caption;
@@ -105,8 +111,13 @@
     newPost.location = self.location;
     newPost.numComments = [self.numComments integerValue];
     newPost.numLikes = [self.numLikes integerValue];
-    newPost.photos = self.photos;
+    NSMutableArray *convertedPhotos = [NSMutableArray new];
+    for (PFFileObject *obj in self.photos) {
+        [convertedPhotos addObject:obj.getData];
+    }
+    newPost.photos = convertedPhotos;
     newPost.private = self.private;
+    newPost.objectId = self.objectId;
     return newPost;
 }
 @end

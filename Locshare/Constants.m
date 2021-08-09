@@ -234,6 +234,8 @@ NSString * const CACHED_POST_CLASS_NAME = @"CachedPost";
 NSString * const CACHED_COMMENT_CLASS_NAME = @"CachedComment";
 NSString * const CACHED_OBJECT_ID_FILTER_PREDICATE = @"objectId == %@";
 NSString * const CACHED_PLACE_ID_FILTER_PREDICATE = @"placeID == %@";
+NSString * const CACHED_POST_CREATED_AT_KEY = @"createdAt";
+NSString * const CACHED_LOCATION_FILTER_PREDICATE = @"location == %@";
 
 // Misc. Constants
 NSString * const EMPTY_STRING = @"";

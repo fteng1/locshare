@@ -25,6 +25,7 @@
         <attribute name="location" optional="YES" attributeType="String"/>
         <attribute name="numComments" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="numLikes" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="objectId" optional="YES" attributeType="String"/>
         <attribute name="photos" optional="YES" attributeType="Transformable" customClassName="NSArray"/>
         <attribute name="private" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
     </entity>
@@ -43,7 +44,7 @@
     <elements>
         <element name="CachedComment" positionX="-45" positionY="72" width="128" height="104"/>
         <element name="CachedLocation" positionX="-54" positionY="18" width="128" height="134"/>
-        <element name="CachedPost" positionX="-54" positionY="-9" width="128" height="179"/>
+        <element name="CachedPost" positionX="-54" positionY="-9" width="128" height="194"/>
         <element name="CachedUser" positionX="-27" positionY="81" width="128" height="179"/>
     </elements>
 </model>
