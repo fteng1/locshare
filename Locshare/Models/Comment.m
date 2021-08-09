@@ -37,7 +37,7 @@
     NSManagedObjectContext *context = ((AppDelegate *) UIApplication.sharedApplication.delegate).persistentContainer.viewContext;
     NSError *error = nil;
     NSArray *results = [context executeFetchRequest:request error:&error];
-    if (error != nil && results.count > 0) {
+    if (error == nil && results.count > 0) {
         newComment.author = [CachedUserManager getPFUserFromCachedUser:[results firstObject]];
     }
     newComment.username = comment.username;

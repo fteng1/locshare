@@ -18,9 +18,11 @@
 #import "AlertManager.h"
 #import "Constants.h"
 #import "NetworkStatusManager.h"
+#import "AppDelegate.h"
 
 @interface HomeFeedViewController () <CLLocationManagerDelegate, GMSMapViewDelegate>
 @property (weak, nonatomic) IBOutlet GMSMapView *homeMapView;
+@property (strong, nonatomic) NSManagedObjectContext *context;
 
 @end
 
@@ -35,6 +37,7 @@ GMSPlacesClient *placesClient;
     placesClient = [GMSPlacesClient sharedClient];
     
     self.homeMapView.delegate = self;
+    self.context = ((AppDelegate *) UIApplication.sharedApplication.delegate).persistentContainer.viewContext;
 
     // Set initial camera position of the MapView
     [self updateDefaultPosition];
@@ -45,8 +48,45 @@ GMSPlacesClient *placesClient;
         [self displayVisibleLocations];
     }
     else {
+        [AlertManager displayAlertWithTitle:@"Network Error" text:@"User is not connected to the internet" presenter:self];
+        
         // Get Location data from cache
+        NSFetchRequest *request = CachedLocation.fetchRequest;
+        NSError *error = nil;
+        NSArray *results = [self.context executeFetchRequest:request error:&error];
+        NSMutableArray *arrOfLocations = [NSMutableArray new];
+        if (error == nil && results.count > 0) {
+            for (CachedLocation *loc in results) {
+                [arrOfLocations addObject:[Location initFromCachedLocation:loc]];
+            }
+        }
+        [[LocationManager shared] displayLocationsOnMap:self.homeMapView locations:arrOfLocations userFiltering:false];
     }
+}
+
+- (void)storeLocationInMemory:(Location *)loc {
+    NSError *error = nil;
+    CachedLocation *cachedLoc = [self retrieveExistingLocation:loc.placeID];
+    if (cachedLoc == nil) {
+        cachedLoc = [loc cachedLocation];
+    }
+    else {
+        cachedLoc.hasPublicPosts = loc.hasPublicPosts;
+        cachedLoc.usersWithPosts = loc.usersWithPosts;
+        cachedLoc.numPosts = [loc.numPosts intValue];
+    }
+    [self.context save:&error];
+}
+
+- (CachedLocation *)retrieveExistingLocation:(NSString *)placeID {
+    NSFetchRequest *request = CachedLocation.fetchRequest;
+    [request setPredicate:[NSPredicate predicateWithFormat:@"placeID == %@", placeID]];
+    NSError *error = nil;
+    NSArray *results = [self.context executeFetchRequest:request error:&error];
+    if (error == nil && results.count > 0) {
+        return [results firstObject];
+    }
+    return nil;
 }
 
 - (void)updateDefaultPosition {
@@ -96,6 +136,7 @@ GMSPlacesClient *placesClient;
         // Only show locations on the map with posts from friends/current user or have public posts
         NSMutableArray *visibleLocations = [NSMutableArray new];
         for (Location *loc in locations) {
+            [self storeLocationInMemory:loc];
             if (loc.hasPublicPosts) {
                 [visibleLocations addObject:loc];
             }
@@ -119,7 +160,9 @@ GMSPlacesClient *placesClient;
 
 // Show newly visible locations once map is moved
 - (void)mapView:(GMSMapView *)mapView willMove:(BOOL)gesture {
-    [self displayVisibleLocations];
+    if ([NetworkStatusManager isConnectedToInternet]) {
+        [self displayVisibleLocations];
+    }
 }
 
 - (IBAction)onLogoutTap:(id)sender {

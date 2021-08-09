@@ -8,6 +8,7 @@
 #import "CachedUserManager.h"
 #import "Constants.h"
 #import "Post.h"
+#import "AppDelegate.h"
 
 @implementation CachedUserManager
 

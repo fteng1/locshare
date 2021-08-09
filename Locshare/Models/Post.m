@@ -81,7 +81,7 @@
     NSManagedObjectContext *context = ((AppDelegate *) UIApplication.sharedApplication.delegate).persistentContainer.viewContext;
     NSError *error = nil;
     NSArray *results = [context executeFetchRequest:request error:&error];
-    if (error != nil && results.count > 0) {
+    if (error == nil && results.count > 0) {
         newPost.author = [CachedUserManager getPFUserFromCachedUser:[results firstObject]];
     }
     newPost.caption = post.caption;

@@ -9,6 +9,7 @@
 #import <Parse/Parse.h>
 #import "LocationManager.h"
 #import "Constants.h"
+#import "AppDelegate.h"
 
 @implementation Location
 
@@ -84,7 +85,8 @@
 }
 
 - (CachedLocation *)cachedLocation {
-    CachedLocation *newLoc = [CachedLocation new];
+    NSManagedObjectContext *context = ((AppDelegate *) UIApplication.sharedApplication.delegate).persistentContainer.viewContext;
+    CachedLocation *newLoc = [NSEntityDescription insertNewObjectForEntityForName:@"CachedLocation" inManagedObjectContext:context];
     newLoc.usersWithPosts = self.usersWithPosts;
     newLoc.hasPublicPosts = self.hasPublicPosts;
     newLoc.name = self.name;
