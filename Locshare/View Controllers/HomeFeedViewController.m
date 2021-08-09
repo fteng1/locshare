@@ -48,7 +48,7 @@ GMSPlacesClient *placesClient;
         [self displayVisibleLocations];
     }
     else {
-        [AlertManager displayAlertWithTitle:@"Network Error" text:@"User is not connected to the internet" presenter:self];
+        [AlertManager displayAlertWithTitle:NETWORK_ERROR_TITLE text:NETWORK_ERROR_MESSAGE presenter:self];
         
         // Get Location data from cache
         NSFetchRequest *request = CachedLocation.fetchRequest;
@@ -80,7 +80,7 @@ GMSPlacesClient *placesClient;
 
 - (CachedLocation *)retrieveExistingLocation:(NSString *)placeID {
     NSFetchRequest *request = CachedLocation.fetchRequest;
-    [request setPredicate:[NSPredicate predicateWithFormat:@"placeID == %@", placeID]];
+    [request setPredicate:[NSPredicate predicateWithFormat:CACHED_PLACE_ID_FILTER_PREDICATE, placeID]];
     NSError *error = nil;
     NSArray *results = [self.context executeFetchRequest:request error:&error];
     if (error == nil && results.count > 0) {

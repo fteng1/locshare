@@ -55,6 +55,7 @@ NSString * const LOGOUT_ERROR_TITLE = @"Logout Error";
 NSString * const LOGOUT_SUCCESS_TITLE = @"Logout Successful";
 NSString * const CAMERA_UNAVAILABLE_TITLE = @"Cannot Take Photo";
 NSString * const FRIEND_REQUESTS_ERROR_TITLE = @"Request Error";
+NSString * const NETWORK_ERROR_TITLE = @"Network Error";
 
 // UIAlert Messages
 NSString * const URL_REQUEST_ERROR_MESSAGE = @"Could not complete network request";
@@ -76,6 +77,7 @@ NSString * const LOGOUT_ERROR_MESSAGE = @"Could not logout the current user";
 NSString * const LOGOUT_SUCCESS_MESSAGE = @"Logout Successful";
 NSString * const CAMERA_UNAVAILABLE_MESSAGE = @"Camera is not available on this device";
 NSString * const FRIEND_REQUESTS_ERROR_MESSAGE = @"Error fetching the user's friend requests";
+NSString * const NETWORK_ERROR_MESSAGE = @"User is not connected to the internet";
 
 // Button UI Properties
 CGFloat const BUTTON_CORNER_RADIUS = 5;
@@ -231,6 +233,7 @@ NSString * const CACHED_LOCATION_CLASS_NAME = @"CachedLocation";
 NSString * const CACHED_POST_CLASS_NAME = @"CachedPost";
 NSString * const CACHED_COMMENT_CLASS_NAME = @"CachedComment";
 NSString * const CACHED_OBJECT_ID_FILTER_PREDICATE = @"objectId == %@";
+NSString * const CACHED_PLACE_ID_FILTER_PREDICATE = @"placeID == %@";
 
 // Misc. Constants
 NSString * const EMPTY_STRING = @"";

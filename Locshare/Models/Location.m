@@ -21,7 +21,7 @@
 @dynamic hasPublicPosts;
 
 + (nonnull NSString *)parseClassName {
-    return @"Location";
+    return LOCATION_PARSE_CLASS_NAME;
 }
 
 // Function to update Location object in Parse to reflect new post
@@ -86,7 +86,7 @@
 
 - (CachedLocation *)cachedLocation {
     NSManagedObjectContext *context = ((AppDelegate *) UIApplication.sharedApplication.delegate).persistentContainer.viewContext;
-    CachedLocation *newLoc = [NSEntityDescription insertNewObjectForEntityForName:@"CachedLocation" inManagedObjectContext:context];
+    CachedLocation *newLoc = [NSEntityDescription insertNewObjectForEntityForName:CACHED_LOCATION_CLASS_NAME inManagedObjectContext:context];
     newLoc.usersWithPosts = self.usersWithPosts;
     newLoc.hasPublicPosts = self.hasPublicPosts;
     newLoc.name = self.name;

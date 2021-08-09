@@ -57,6 +57,7 @@ extern NSString * const LOGOUT_ERROR_TITLE;
 extern NSString * const LOGOUT_SUCCESS_TITLE;
 extern NSString * const CAMERA_UNAVAILABLE_TITLE;
 extern NSString * const FRIEND_REQUESTS_ERROR_TITLE;
+extern NSString * const NETWORK_ERROR_TITLE;
 
 // UIAlert Messages
 extern NSString * const URL_REQUEST_ERROR_MESSAGE;
@@ -78,6 +79,7 @@ extern NSString * const LOGOUT_ERROR_MESSAGE;
 extern NSString * const LOGOUT_SUCCESS_MESSAGE;
 extern NSString * const CAMERA_UNAVAILABLE_MESSAGE;
 extern NSString * const FRIEND_REQUESTS_ERROR_MESSAGE;
+extern NSString * const NETWORK_ERROR_MESSAGE;
 
 // Button UI Properties
 extern CGFloat const BUTTON_CORNER_RADIUS;
@@ -233,6 +235,7 @@ extern NSString * const CACHED_LOCATION_CLASS_NAME;
 extern NSString * const CACHED_POST_CLASS_NAME;
 extern NSString * const CACHED_COMMENT_CLASS_NAME;
 extern NSString * const CACHED_OBJECT_ID_FILTER_PREDICATE;
+extern NSString * const CACHED_PLACE_ID_FILTER_PREDICATE;
 
 // Misc. Constants
 extern NSString * const EMPTY_STRING;
