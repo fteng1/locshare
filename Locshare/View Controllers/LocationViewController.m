@@ -90,7 +90,11 @@
 // Get Posts stored in Core Data
 - (void)fetchPostsFromMemory {
     NSFetchRequest *request = CachedPost.fetchRequest;
-    [request setPredicate:[NSPredicate predicateWithFormat:CACHED_LOCATION_FILTER_PREDICATE, self.location.placeID]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:CACHED_LOCATION_FILTER_PREDICATE, self.location.placeID];
+    if (self.isUserFiltered) {
+        predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, [NSPredicate predicateWithFormat:CACHED_AUTHOR_ID_FILTER_PREDICATE, self.userToFilter.objectId]]];
+    }
+    [request setPredicate:predicate];
     [request setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:CACHED_POST_CREATED_AT_KEY ascending:false]]];
     NSError *error = nil;
     NSArray *results = [self.context executeFetchRequest:request error:&error];

@@ -240,6 +240,9 @@ extern NSString * const CACHED_PLACE_ID_FILTER_PREDICATE;
 extern NSString * const CACHED_POST_CREATED_AT_KEY;
 extern NSString * const CACHED_LOCATION_FILTER_PREDICATE;
 extern NSString * const CACHED_POST_ID_FILTER_PREDICATE;
+extern NSString * const CACHED_AUTHOR_ID_FILTER_PREDICATE;
+extern NSString * const CACHED_PUBLIC_PREDICATE;
+extern NSString * const CACHED_CONTAINS_PLACE_ID_PREDICATE;
 
 // Misc. Constants
 extern NSString * const EMPTY_STRING;

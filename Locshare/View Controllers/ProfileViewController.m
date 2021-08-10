@@ -17,6 +17,8 @@
 #import "ImagePickerViewController.h"
 #import "AlertManager.h"
 #import "Constants.h"
+#import "NetworkStatusManager.h"
+#import "AppDelegate.h"
 
 @import Parse;
 
@@ -37,6 +39,7 @@
 @property (strong, nonatomic) NSDictionary *postsByLocationId;
 @property (strong, nonatomic) NSArray *postLocations;
 @property (assign, nonatomic) BOOL isEditable;
+@property (strong, nonatomic) NSArray *posts;
 
 @end
 
@@ -58,7 +61,12 @@
     [self initializeUI];
     [self changeEditability];
     [self updateFields];
-    [self fetchPosts];
+    if ([NetworkStatusManager isConnectedToInternet]) {
+        [self fetchPosts];
+    }
+    else {
+        [self fetchPostsFromMemory];
+    }
 }
 
 - (void)setDefaultMapLocation {
@@ -226,9 +234,19 @@
         }
         else {
             if ([posts count] >= 1) {
-                Post *mostRecentPost = [posts firstObject];
+                self.posts = posts;
                 NSMutableArray *locationIds = [[NSMutableArray alloc] init];
                 for (Post *post in posts) {
+                    // Save retrieved posts in cache
+                    NSFetchRequest *request = CachedPost.fetchRequest;
+                    [request setPredicate:[NSPredicate predicateWithFormat:CACHED_OBJECT_ID_FILTER_PREDICATE, post.objectId]];
+                    NSError *error = nil;
+                    NSManagedObjectContext *context = ((AppDelegate *) UIApplication.sharedApplication.delegate).persistentContainer.viewContext;
+                    NSArray *results = [context executeFetchRequest:request error:&error];
+                    if (error == nil && results.count == 0) {
+                        [post cachedPost];
+                        [context save:&error];
+                    }
                     if (![locationIds containsObject:post.location]) {
                         [locationIds addObject:post.location];
                     }
@@ -238,22 +256,86 @@
                 PFQuery *locQuery = [PFQuery queryWithClassName:LOCATION_PARSE_CLASS_NAME];
                 [locQuery whereKey:LOCATION_PLACE_ID_KEY containedIn:locationIds];
                 [locQuery findObjectsInBackgroundWithBlock:^(NSArray * _Nullable locations, NSError * _Nullable error) {
+                    // Save retrieved locations in cache
+                    for (Location *loc in locations) {
+                        NSFetchRequest *request = CachedLocation.fetchRequest;
+                        [request setPredicate:[NSPredicate predicateWithFormat:CACHED_PLACE_ID_FILTER_PREDICATE, loc.placeID]];
+                        NSError *error = nil;
+                        NSManagedObjectContext *context = ((AppDelegate *) UIApplication.sharedApplication.delegate).persistentContainer.viewContext;
+                        NSArray *results = [context executeFetchRequest:request error:&error];
+                        if (error == nil && results.count == 0) {
+                            [loc cachedLocation];
+                            [context save:&error];
+                        }
+                    }
                     self.postLocations = locations;
                     self.postsByLocationId = [self groupByLocation:posts];
                     [self.userMapView clear];
                     [[LocationManager shared] displayLocationsOnMap:self.userMapView locations:locations userFiltering:true];
                     
-                    // Set camera to be at location of most recent post
-                    NSArray *filteredLocation = [self.postLocations filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:MOST_RECENT_POST_PREDICATE, mostRecentPost.location]];
-                    if ([filteredLocation count] > 0) {
-                        Location *mostRecentLocation = [filteredLocation firstObject];
-                        GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:mostRecentLocation.coordinate.latitude longitude:mostRecentLocation.coordinate.longitude zoom:MAP_FEED_DEFAULT_ZOOM];
-                        [self.userMapView setCamera:camera];
-                    }
+                    [self setCameraPosition];
                 }];
             }
         }
     }];
+}
+
+- (void)setCameraPosition {
+    Post *mostRecentPost = [self.posts firstObject];
+    // Set camera to be at location of most recent post
+    NSArray *filteredLocation = [self.postLocations filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:MOST_RECENT_POST_PREDICATE, mostRecentPost.location]];
+    if ([filteredLocation count] > 0) {
+        Location *mostRecentLocation = [filteredLocation firstObject];
+        GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:mostRecentLocation.coordinate.latitude longitude:mostRecentLocation.coordinate.longitude zoom:MAP_FEED_DEFAULT_ZOOM];
+        [self.userMapView setCamera:camera];
+    }
+}
+
+- (void)fetchPostsFromMemory {
+    NSFetchRequest *request = CachedPost.fetchRequest;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:CACHED_AUTHOR_ID_FILTER_PREDICATE, self.user.objectId];
+    [request setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:CACHED_POST_CREATED_AT_KEY ascending:false]]];
+    NSMutableArray *friendsOfSelf = [PFUser currentUser][USER_FRIENDS_KEY];
+    [friendsOfSelf addObject:[PFUser currentUser].objectId];
+    if (![friendsOfSelf containsObject:self.user.objectId]) {
+        // If this profile's user is not friends with the current user, only display public posts
+        predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, [NSPredicate predicateWithFormat:CACHED_PUBLIC_PREDICATE]]];
+    }
+    [request setPredicate:predicate];
+    NSError *error = nil;
+    NSManagedObjectContext *context = ((AppDelegate *) UIApplication.sharedApplication.delegate).persistentContainer.viewContext;
+    NSArray *results = [context executeFetchRequest:request error:&error];
+    if (error == nil && results.count > 0) {
+        NSMutableArray *posts = [NSMutableArray new];
+        for (CachedPost *post in results) {
+            [posts addObject:[Post initFromCachedPost:post]];
+        }
+        self.posts = posts;
+        
+        NSMutableArray *locationIds = [[NSMutableArray alloc] init];
+        for (Post *post in posts) {
+            if (![locationIds containsObject:post.location]) {
+                [locationIds addObject:post.location];
+            }
+        }
+        
+        // Fetch relevant locations from database
+        NSFetchRequest *locRequest = CachedLocation.fetchRequest;
+        [locRequest setPredicate:[NSPredicate predicateWithFormat:CACHED_CONTAINS_PLACE_ID_PREDICATE, locationIds]];
+        NSArray *locResults = [context executeFetchRequest:locRequest error:&error];
+        if (error == nil && locResults.count > 0) {
+            NSMutableArray *locations = [NSMutableArray new];
+            for (CachedLocation *loc in locResults) {
+                [locations addObject:[Location initFromCachedLocation:loc]];
+            }
+            self.postLocations = locations;
+            self.postsByLocationId = [self groupByLocation:posts];
+            [self.userMapView clear];
+            [[LocationManager shared] displayLocationsOnMap:self.userMapView locations:locations userFiltering:true];
+            
+            [self setCameraPosition];
+        }
+    }
 }
 
 - (NSDictionary *)groupByLocation:(NSArray *)posts {
