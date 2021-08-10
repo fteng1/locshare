@@ -19,6 +19,7 @@
 #import "Constants.h"
 #import "NetworkStatusManager.h"
 #import "AppDelegate.h"
+#import "CachedUserManager.h"
 
 @interface HomeFeedViewController () <CLLocationManagerDelegate, GMSMapViewDelegate>
 @property (weak, nonatomic) IBOutlet GMSMapView *homeMapView;
@@ -38,6 +39,18 @@ GMSPlacesClient *placesClient;
     
     self.homeMapView.delegate = self;
     self.context = ((AppDelegate *) UIApplication.sharedApplication.delegate).persistentContainer.viewContext;
+    
+    NSFetchRequest *request = CachedUser.fetchRequest;
+    [request setPredicate:[NSPredicate predicateWithFormat:CACHED_OBJECT_ID_FILTER_PREDICATE, [PFUser currentUser].objectId]];
+    NSError *error = nil;
+    NSArray *results = [self.context executeFetchRequest:request error:&error];
+    if (error == nil && results.count > 0) {
+    }
+    else {
+        [CachedUserManager getCachedUserFromPFUser:[PFUser currentUser]];
+        [self.context save:&error];
+    }
+    
 
     // Set initial camera position of the MapView
     [self updateDefaultPosition];

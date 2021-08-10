@@ -26,8 +26,8 @@
         <attribute name="numComments" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="numLikes" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="objectId" optional="YES" attributeType="String"/>
-        <attribute name="photos" optional="YES" attributeType="Transformable" customClassName="NSArray"/>
         <attribute name="private" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <relationship name="photosInPost" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PostPhoto" inverseName="post" inverseEntity="PostPhoto"/>
     </entity>
     <entity name="CachedUser" representedClassName="CachedUser" syncable="YES" codeGenerationType="class">
         <attribute name="friends" optional="YES" attributeType="Transformable" customClassName="NSArray"/>
@@ -41,10 +41,15 @@
         <attribute name="tagline" optional="YES" attributeType="String"/>
         <attribute name="username" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="PostPhoto" representedClassName="PostPhoto" syncable="YES" codeGenerationType="class">
+        <attribute name="photo" optional="YES" attributeType="Binary"/>
+        <relationship name="post" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CachedPost" inverseName="photosInPost" inverseEntity="CachedPost"/>
+    </entity>
     <elements>
         <element name="CachedComment" positionX="-45" positionY="72" width="128" height="104"/>
         <element name="CachedLocation" positionX="-54" positionY="18" width="128" height="134"/>
         <element name="CachedPost" positionX="-54" positionY="-9" width="128" height="194"/>
         <element name="CachedUser" positionX="-27" positionY="81" width="128" height="179"/>
+        <element name="PostPhoto" positionX="-36" positionY="108" width="128" height="59"/>
     </elements>
 </model>

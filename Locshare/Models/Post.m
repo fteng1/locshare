@@ -10,6 +10,7 @@
 #import <Parse/Parse.h>
 #import "AppDelegate.h"
 #import "CachedUserManager.h"
+#import "PostPhoto+CoreDataProperties.h"
 
 @implementation Post
 
@@ -84,10 +85,15 @@
     if (error == nil && results.count > 0) {
         newPost.author = [CachedUserManager getPFUserFromCachedUser:[results firstObject]];
     }
+    else {
+        newPost.author = [PFUser new];
+        newPost.author.objectId = post.authorId;
+        newPost.author.username = post.authorUsername;
+    }
     newPost.caption = post.caption;
     NSMutableArray *convertedPhotos = [NSMutableArray new];
-    for (NSData *obj in post.photos) {
-        [convertedPhotos addObject:[PFFileObject fileObjectWithData:obj]];
+    for (PostPhoto *obj in post.photosInPost) {
+        [convertedPhotos addObject:[PFFileObject fileObjectWithData:obj.photo]];
     }
     newPost.photos = convertedPhotos;
     newPost.numLikes = @(post.numLikes);
@@ -111,11 +117,15 @@
     newPost.location = self.location;
     newPost.numComments = [self.numComments integerValue];
     newPost.numLikes = [self.numLikes integerValue];
+    
     NSMutableArray *convertedPhotos = [NSMutableArray new];
     for (PFFileObject *obj in self.photos) {
-        [convertedPhotos addObject:obj.getData];
+        [obj getDataInBackgroundWithBlock:^(NSData * _Nullable data, NSError * _Nullable error) {
+            PostPhoto *photo = [NSEntityDescription insertNewObjectForEntityForName:CACHED_PHOTO_CLASS_NAME inManagedObjectContext:context];
+            photo.photo = data;
+            [newPost addPhotosInPostObject:photo];
+        }];
     }
-    newPost.photos = convertedPhotos;
     newPost.private = self.private;
     newPost.objectId = self.objectId;
     return newPost;

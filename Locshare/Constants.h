@@ -234,6 +234,7 @@ extern NSString * const CACHED_USER_CLASS_NAME;
 extern NSString * const CACHED_LOCATION_CLASS_NAME;
 extern NSString * const CACHED_POST_CLASS_NAME;
 extern NSString * const CACHED_COMMENT_CLASS_NAME;
+extern NSString * const CACHED_PHOTO_CLASS_NAME;
 extern NSString * const CACHED_OBJECT_ID_FILTER_PREDICATE;
 extern NSString * const CACHED_PLACE_ID_FILTER_PREDICATE;
 extern NSString * const CACHED_POST_CREATED_AT_KEY;

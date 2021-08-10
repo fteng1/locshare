@@ -232,6 +232,7 @@ NSString * const CACHED_USER_CLASS_NAME = @"CachedUser";
 NSString * const CACHED_LOCATION_CLASS_NAME = @"CachedLocation";
 NSString * const CACHED_POST_CLASS_NAME = @"CachedPost";
 NSString * const CACHED_COMMENT_CLASS_NAME = @"CachedComment";
+NSString * const CACHED_PHOTO_CLASS_NAME = @"PostPhoto";
 NSString * const CACHED_OBJECT_ID_FILTER_PREDICATE = @"objectId == %@";
 NSString * const CACHED_PLACE_ID_FILTER_PREDICATE = @"placeID == %@";
 NSString * const CACHED_POST_CREATED_AT_KEY = @"createdAt";
