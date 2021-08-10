@@ -118,7 +118,6 @@
     newPost.numComments = [self.numComments integerValue];
     newPost.numLikes = [self.numLikes integerValue];
     
-    NSMutableArray *convertedPhotos = [NSMutableArray new];
     for (PFFileObject *obj in self.photos) {
         [obj getDataInBackgroundWithBlock:^(NSData * _Nullable data, NSError * _Nullable error) {
             PostPhoto *photo = [NSEntityDescription insertNewObjectForEntityForName:CACHED_PHOTO_CLASS_NAME inManagedObjectContext:context];

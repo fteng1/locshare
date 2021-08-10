@@ -15,6 +15,7 @@
 #import "AlertManager.h"
 #import "Constants.h"
 #import "NetworkStatusManager.h"
+#import "AppDelegate.h"
 
 @interface DetailsViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UITableViewDelegate, UITableViewDelegate, UITableViewDataSource>
 
@@ -34,6 +35,7 @@
 
 @property (strong, nonatomic) PFUser *postAuthor;
 @property (strong, nonatomic) NSMutableArray *comments;
+@property (strong, nonatomic) NSManagedObjectContext *context;
 
 @end
 
@@ -49,12 +51,13 @@
     self.photoCollectionView.delegate = self;
     self.commentTableView.dataSource = self;
     self.commentTableView.delegate = self;
+    self.context = ((AppDelegate *) UIApplication.sharedApplication.delegate).persistentContainer.viewContext;
     
     [self initializeUI];
 
+    [self fetchComments];
     if ([NetworkStatusManager isConnectedToInternet]) {
         [self getAuthorInfoInBackground];
-        [self fetchComments];
     }
 }
 
@@ -114,19 +117,52 @@
     [self.commentTableView reloadData];
 }
 
+- (CachedComment *)retrieveExistingComment:(NSString *)objectID {
+    NSFetchRequest *request = CachedComment.fetchRequest;
+    [request setPredicate:[NSPredicate predicateWithFormat:CACHED_OBJECT_ID_FILTER_PREDICATE, objectID]];
+    NSError *error = nil;
+    NSArray *results = [self.context executeFetchRequest:request error:&error];
+    if (error == nil && results.count > 0) {
+        return [results firstObject];
+    }
+    return nil;
+}
+
+- (void)storeComment:(Comment *)comment {
+    NSError *error = nil;
+    CachedComment *cachedComment = [self retrieveExistingComment:comment.objectId];
+    if (cachedComment == nil) {
+        cachedComment = [comment cachedComment];
+    }
+    [self.context save:&error];
+}
+
 - (void)fetchComments {
-    // Make query to retrieve comments on post from the database
-    PFQuery *query = [PFQuery queryWithClassName:COMMENT_PARSE_CLASS_NAME];
-    [query whereKey:COMMENT_POST_ID_KEY equalTo:self.post.objectId];
-    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable postComments, NSError * _Nullable error) {
-        if (error == nil) {
-            self.comments = [postComments mutableCopy];
-            [self.commentTableView reloadData];
-        }
-        else {
-            [AlertManager displayAlertWithTitle:FETCH_COMMENT_ERROR_TITLE text:FETCH_COMMENT_ERROR_MESSAGE presenter:self];
-        }
-    }];
+    if ([NetworkStatusManager isConnectedToInternet]) {
+        // Make query to retrieve comments on post from the database
+        PFQuery *query = [PFQuery queryWithClassName:COMMENT_PARSE_CLASS_NAME];
+        [query whereKey:COMMENT_POST_ID_KEY equalTo:self.post.objectId];
+        [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable postComments, NSError * _Nullable error) {
+            if (error == nil) {
+                for (Comment *comment in postComments) {
+                    [self storeComment:comment];
+                }
+                self.comments = [postComments mutableCopy];
+                [self.commentTableView reloadData];
+            }
+            else {
+                [AlertManager displayAlertWithTitle:FETCH_COMMENT_ERROR_TITLE text:FETCH_COMMENT_ERROR_MESSAGE presenter:self];
+            }
+        }];
+    }
+    else {
+        NSFetchRequest *request = CachedComment.fetchRequest;
+        [request setPredicate:[NSPredicate predicateWithFormat:CACHED_POST_ID_FILTER_PREDICATE, self.post.objectId]];
+        NSError *error = nil;
+        NSArray *results = [self.context executeFetchRequest:request error:&error];
+        self.comments = [results mutableCopy];
+        [self.commentTableView reloadData];
+    }
 }
 
 - (IBAction)makeComment:(id)sender {

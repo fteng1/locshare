@@ -43,6 +43,7 @@
     newComment.username = comment.username;
     newComment.text = comment.text;
     newComment.postID = comment.postID;
+    newComment.objectId = comment.objectId;
     return newComment;
 }
 
@@ -53,6 +54,7 @@
     toStore.username = self.username;
     toStore.text = self.text;
     toStore.postID = self.postID;
+    toStore.objectId = self.objectId;
     return toStore;
 }
 

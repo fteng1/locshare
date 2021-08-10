@@ -3,6 +3,7 @@
     <entity name="CachedComment" representedClassName="CachedComment" syncable="YES" codeGenerationType="class">
         <attribute name="authorId" optional="YES" attributeType="String"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="objectId" optional="YES" attributeType="String"/>
         <attribute name="postID" optional="YES" attributeType="String"/>
         <attribute name="text" optional="YES" attributeType="String"/>
         <attribute name="username" optional="YES" attributeType="String"/>
@@ -46,7 +47,7 @@
         <relationship name="post" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CachedPost" inverseName="photosInPost" inverseEntity="CachedPost"/>
     </entity>
     <elements>
-        <element name="CachedComment" positionX="-45" positionY="72" width="128" height="104"/>
+        <element name="CachedComment" positionX="-45" positionY="72" width="128" height="119"/>
         <element name="CachedLocation" positionX="-54" positionY="18" width="128" height="134"/>
         <element name="CachedPost" positionX="-54" positionY="-9" width="128" height="194"/>
         <element name="CachedUser" positionX="-27" positionY="81" width="128" height="179"/>
