@@ -210,10 +210,15 @@
     }
     
     // Load profile picture
-    PFFileObject *imageToDisplay = self.user[USER_PROFILE_PICTURE_KEY];
-    self.profilePictureView.image = [UIImage systemImageNamed:DEFAULT_PROFILE_PICTURE_NAME];
-    self.profilePictureView.file = imageToDisplay;
-    [self.profilePictureView loadInBackground];
+    if ([NetworkStatusManager isConnectedToInternet]) {
+        PFFileObject *imageToDisplay = self.user[USER_PROFILE_PICTURE_KEY];
+        self.profilePictureView.image = [UIImage systemImageNamed:DEFAULT_PROFILE_PICTURE_NAME];
+        self.profilePictureView.file = imageToDisplay;
+        [self.profilePictureView loadInBackground];
+    }
+    else {
+        self.profilePictureView.image = [UIImage imageWithData:((PFFileObject *) self.user[USER_PROFILE_PICTURE_KEY]).getData];
+    }
 }
 
 - (void)fetchPosts {
@@ -244,8 +249,10 @@
                     NSManagedObjectContext *context = ((AppDelegate *) UIApplication.sharedApplication.delegate).persistentContainer.viewContext;
                     NSArray *results = [context executeFetchRequest:request error:&error];
                     if (error == nil && results.count == 0) {
-                        [post cachedPost];
-                        [context save:&error];
+                        [post cachedPost:^(CachedPost * _Nonnull cPost, NSError * _Nonnull er) {
+                            NSError *err = nil;
+                            [context save:&err];
+                        }];
                     }
                     if (![locationIds containsObject:post.location]) {
                         [locationIds addObject:post.location];

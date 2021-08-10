@@ -119,9 +119,12 @@
         CachedPost *inMem = [self getPostWithID:post.objectId];
         if (inMem == nil) {
             // Store post in cache if not already stored
-            inMem = [post cachedPost];
-            NSError *error = nil;
-            [self.context save:&error];
+            [post cachedPost:^(CachedPost * _Nonnull cPost, NSError * _Nonnull err) {
+                if (err == nil) {
+                    NSError *error = nil;
+                    [self.context save:&error];
+                }
+            }];
         }
         if (!post.private || [friendsWithSelf containsObject:post.author.objectId]) {
             [visiblePosts addObject:post];
@@ -171,9 +174,15 @@
     PostLocationCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:POST_CELL_IDENTIFIER forIndexPath:indexPath];
     Post *post = self.postsToDisplay[indexPath.item];
     PFFileObject *imageToDisplay = [post.photos firstObject];
-    cell.postImageView.image = [UIImage systemImageNamed:DEFAULT_POST_PREVIEW_IMAGE_NAME];
-    cell.postImageView.file = imageToDisplay;
-    [cell.postImageView loadInBackground];
+    if ([NetworkStatusManager isConnectedToInternet]) {
+        cell.postImageView.image = [UIImage systemImageNamed:DEFAULT_POST_PREVIEW_IMAGE_NAME];
+        cell.postImageView.file = imageToDisplay;
+        [cell.postImageView loadInBackground];
+    }
+    else {
+        // when offline, set image directly using NSData
+        cell.postImageView.image = [UIImage imageWithData:imageToDisplay.getData];
+    }
     
     return cell;
 }

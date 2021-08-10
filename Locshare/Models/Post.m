@@ -93,7 +93,7 @@
     newPost.caption = post.caption;
     NSMutableArray *convertedPhotos = [NSMutableArray new];
     for (PostPhoto *obj in post.photosInPost) {
-        [convertedPhotos addObject:[PFFileObject fileObjectWithData:obj.photo]];
+        [convertedPhotos addObject:[PFFileObject fileObjectWithName:POST_IMAGE_DEFAULT_NAME data:obj.photo]];
     }
     newPost.photos = convertedPhotos;
     newPost.numLikes = @(post.numLikes);
@@ -106,7 +106,7 @@
     return newPost;
 }
 
-- (CachedPost *)cachedPost {
+- (void)cachedPost:(void (^)(CachedPost *, NSError *))completion {
     NSManagedObjectContext *context = ((AppDelegate *) UIApplication.sharedApplication.delegate).persistentContainer.viewContext;
     CachedPost *newPost = [NSEntityDescription insertNewObjectForEntityForName:CACHED_POST_CLASS_NAME inManagedObjectContext:context];
     newPost.authorId = self.author.objectId;
@@ -117,16 +117,20 @@
     newPost.location = self.location;
     newPost.numComments = [self.numComments integerValue];
     newPost.numLikes = [self.numLikes integerValue];
+    newPost.private = self.private;
+    newPost.objectId = self.objectId;
     
     for (PFFileObject *obj in self.photos) {
         [obj getDataInBackgroundWithBlock:^(NSData * _Nullable data, NSError * _Nullable error) {
             PostPhoto *photo = [NSEntityDescription insertNewObjectForEntityForName:CACHED_PHOTO_CLASS_NAME inManagedObjectContext:context];
             photo.photo = data;
             [newPost addPhotosInPostObject:photo];
+            NSError *err = nil;
+            [context save:&err];
+            if (newPost.photosInPost.count == self.photos.count) {
+                completion(newPost, nil);
+            }
         }];
     }
-    newPost.private = self.private;
-    newPost.objectId = self.objectId;
-    return newPost;
 }
 @end

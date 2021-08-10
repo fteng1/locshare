@@ -64,6 +64,7 @@
         CachedUser *user = [self fetchUserFromMemory:self.post.author.objectId];
         if (user != nil) {
             self.postAuthor = [CachedUserManager getPFUserFromCachedUser:user];
+            self.profileImageView.image = [UIImage imageWithData:((PFFileObject *) self.postAuthor[USER_PROFILE_PICTURE_KEY]).getData];
         }
     }
 }
@@ -186,14 +187,19 @@
 }
 
 - (IBAction)makeComment:(id)sender {
-    if ([self.commentTextField.text length] != 0) {
-        Comment *newComment = [Comment initWithText:self.commentTextField.text author:[PFUser currentUser] post:self.post];
-        [self.comments addObject:newComment];
-        [newComment saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-            [self.commentTableView reloadData];
-        }];
-        self.commentTextField.text = EMPTY_STRING;
-        [self.commentTextField resignFirstResponder];
+    if ([NetworkStatusManager isConnectedToInternet]) {
+        if ([self.commentTextField.text length] != 0) {
+            Comment *newComment = [Comment initWithText:self.commentTextField.text author:[PFUser currentUser] post:self.post];
+            [self.comments addObject:newComment];
+            [newComment saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                [self.commentTableView reloadData];
+            }];
+            self.commentTextField.text = EMPTY_STRING;
+            [self.commentTextField resignFirstResponder];
+        }
+    }
+    else {
+        [AlertManager displayAlertWithTitle:NETWORK_ERROR_TITLE text:NETWORK_ERROR_MESSAGE presenter:self];
     }
 }
 
@@ -204,9 +210,16 @@
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     PhotoViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:PHOTO_CELL_IDENTIFIER forIndexPath:indexPath];
     PFFileObject *photo = self.post.photos[indexPath.item];
-    cell.photoImageView.image = [UIImage systemImageNamed:DEFAULT_PROFILE_PICTURE_NAME];
-    cell.photoImageView.file = photo;
-    [cell.photoImageView loadInBackground];
+    if ([NetworkStatusManager isConnectedToInternet]) {
+        cell.photoImageView.image = [UIImage systemImageNamed:DEFAULT_PROFILE_PICTURE_NAME];
+        cell.photoImageView.file = photo;
+        [cell.photoImageView loadInBackground];
+    }
+    else {
+        // when offline, set image directly using NSData
+        cell.photoImageView.image = [UIImage imageWithData:photo.getData];
+    }
+    
     return cell;
 }
 
@@ -249,24 +262,29 @@
 }
 
 - (IBAction)onLikeTap:(id)sender {
-    NSNumber *amountToIncrementLikes = [ProjectNumbers one];
-    PFUser *currUser = [PFUser currentUser];
-    if (!self.likeButton.selected) {
-        // Occurs when the post is liked
-        [currUser addObject:self.post.objectId forKey:USER_LIKED_POSTS_KEY];
+    if ([NetworkStatusManager isConnectedToInternet]) {
+        NSNumber *amountToIncrementLikes = [ProjectNumbers one];
+        PFUser *currUser = [PFUser currentUser];
+        if (!self.likeButton.selected) {
+            // Occurs when the post is liked
+            [currUser addObject:self.post.objectId forKey:USER_LIKED_POSTS_KEY];
+        }
+        else {
+            // Occurs when the post is unliked
+            amountToIncrementLikes = [ProjectNumbers negativeOne];
+            [currUser removeObject:self.post.objectId forKey:USER_LIKED_POSTS_KEY];
+        }
+        [self.post incrementKey:POST_NUM_LIKES_KEY byAmount:amountToIncrementLikes];
+        self.likeButton.selected = !self.likeButton.selected;
+        [self updateFields];
+        
+        // Update database
+        [currUser saveInBackground];
+        [self.post saveInBackground];
     }
     else {
-        // Occurs when the post is unliked
-        amountToIncrementLikes = [ProjectNumbers negativeOne];
-        [currUser removeObject:self.post.objectId forKey:USER_LIKED_POSTS_KEY];
+        [AlertManager displayAlertWithTitle:NETWORK_ERROR_TITLE text:NETWORK_ERROR_MESSAGE presenter:self];
     }
-    [self.post incrementKey:POST_NUM_LIKES_KEY byAmount:amountToIncrementLikes];
-    self.likeButton.selected = !self.likeButton.selected;
-    [self updateFields];
-    
-    // Update database
-    [currUser saveInBackground];
-    [self.post saveInBackground];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

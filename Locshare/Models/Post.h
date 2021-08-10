@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void) makePost: (Post *)post completion:(void (^)(NSString *, NSError *))completion;
 + (PFFileObject *)getPFFileFromImage: (UIImage * _Nullable)image;
 + (Post *) initFromCachedPost: (CachedPost *)post;
-- (CachedPost *)cachedPost;
+- (void)cachedPost:(void (^)(CachedPost *, NSError *))completion;
 
 @end
 

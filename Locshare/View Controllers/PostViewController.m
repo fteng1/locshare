@@ -16,6 +16,7 @@
 #import "ImagePickerViewController.h"
 #import "AlertManager.h"
 #import "Constants.h"
+#import "NetworkStatusManager.h"
 
 @interface PostViewController () <ImagePickerControllerDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
 
@@ -97,29 +98,34 @@
 
 // Make post when share button is pressed
 - (IBAction)shareButton:(id)sender {
-    if (self.locationSearchBar.text.length != 0) {
-        Post *newPost = [Post initPost:self.photosToUpload withCaption:self.captionTextView.text withLocation:self.locationID private:self.privateSwitch.isOn];
-        // Make new post with the given location ID
-        [Post makePost:newPost completion:^(NSString * userPostID, NSError * _Nullable error) {
-            if (error != nil) {
-                [AlertManager displayAlertWithTitle:POST_ERROR_TITLE text:POST_ERROR_MESSAGE presenter:self];
-            }
-            else {
-                [Location tagLocation:self.locationID newPost:newPost completion:^(NSError * _Nonnull error) {
-                    if (error != nil) {
-                        [AlertManager displayAlertWithTitle:LOCATION_TAG_TITLE text:LOCATION_TAG_MESSAGE presenter:self];
-                    }
-                }];
-                PFUser *currentUser = [PFUser currentUser];
-                [currentUser incrementKey:USER_NUM_POSTS_KEY];
-                [currentUser saveInBackground];
-            }
-        }];
-        [self performSegueWithIdentifier:AFTER_POST_SEGUE sender:nil];
+    if ([NetworkStatusManager isConnectedToInternet]) {
+        if (self.locationSearchBar.text.length != 0) {
+            Post *newPost = [Post initPost:self.photosToUpload withCaption:self.captionTextView.text withLocation:self.locationID private:self.privateSwitch.isOn];
+            // Make new post with the given location ID
+            [Post makePost:newPost completion:^(NSString * userPostID, NSError * _Nullable error) {
+                if (error != nil) {
+                    [AlertManager displayAlertWithTitle:POST_ERROR_TITLE text:POST_ERROR_MESSAGE presenter:self];
+                }
+                else {
+                    [Location tagLocation:self.locationID newPost:newPost completion:^(NSError * _Nonnull error) {
+                        if (error != nil) {
+                            [AlertManager displayAlertWithTitle:LOCATION_TAG_TITLE text:LOCATION_TAG_MESSAGE presenter:self];
+                        }
+                    }];
+                    PFUser *currentUser = [PFUser currentUser];
+                    [currentUser incrementKey:USER_NUM_POSTS_KEY];
+                    [currentUser saveInBackground];
+                }
+            }];
+            [self performSegueWithIdentifier:AFTER_POST_SEGUE sender:nil];
+        }
+        else {
+            // Make alert for when no location is inputted
+            [AlertManager displayAlertWithTitle:POST_FAILED_TITLE text:POST_FAILED_MESSAGE presenter:self];
+        }
     }
     else {
-        // Make alert for when no location is inputted
-        [AlertManager displayAlertWithTitle:POST_FAILED_TITLE text:POST_FAILED_MESSAGE presenter:self];
+        [AlertManager displayAlertWithTitle:NETWORK_ERROR_TITLE text:NETWORK_ERROR_MESSAGE presenter:self];
     }
 }
 
