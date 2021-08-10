@@ -16,6 +16,7 @@
 #import "Constants.h"
 #import "NetworkStatusManager.h"
 #import "AppDelegate.h"
+#import "CachedUserManager.h"
 
 @interface DetailsViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UITableViewDelegate, UITableViewDelegate, UITableViewDataSource>
 
@@ -58,6 +59,12 @@
     [self fetchComments];
     if ([NetworkStatusManager isConnectedToInternet]) {
         [self getAuthorInfoInBackground];
+    }
+    else {
+        CachedUser *user = [self fetchUserFromMemory:self.post.author.objectId];
+        if (user != nil) {
+            self.postAuthor = [CachedUserManager getPFUserFromCachedUser:user];
+        }
     }
 }
 
@@ -165,6 +172,19 @@
     }
 }
 
+- (CachedUser *)fetchUserFromMemory:(NSString *)userID {
+    NSFetchRequest *request = CachedUser.fetchRequest;
+    [request setPredicate:[NSPredicate predicateWithFormat:CACHED_OBJECT_ID_FILTER_PREDICATE, userID]];
+    NSError *error = nil;
+    NSArray *results = [self.context executeFetchRequest:request error:&error];
+    if (error == nil && results.count > 0) {
+        return [results firstObject];
+    }
+    else {
+        return nil;
+    }
+}
+
 - (IBAction)makeComment:(id)sender {
     if ([self.commentTextField.text length] != 0) {
         Comment *newComment = [Comment initWithText:self.commentTextField.text author:[PFUser currentUser] post:self.post];
@@ -203,6 +223,22 @@
                 self.postAuthor = [objects firstObject];
                 self.profileImageView.file = self.postAuthor[USER_PROFILE_PICTURE_KEY];
                 [self.profileImageView loadInBackground];
+                
+                CachedUser *userToStore = [self fetchUserFromMemory:self.postAuthor.objectId];
+                if (userToStore == nil) {
+                    [CachedUserManager getCachedUserFromPFUser:self.postAuthor];
+                }
+                else {
+                    userToStore.friends = self.postAuthor[USER_FRIENDS_KEY];
+                    userToStore.likedPosts = self.postAuthor[USER_LIKED_POSTS_KEY];
+                    userToStore.numFriends = [(NSNumber *) self.postAuthor[USER_NUM_FRIENDS_KEY] intValue];
+                    userToStore.numPosts = [(NSNumber *) self.postAuthor[USER_NUM_POSTS_KEY] intValue];
+                    userToStore.profilePicture = [((PFFileObject *) self.postAuthor[USER_PROFILE_PICTURE_KEY]) getData];
+                    userToStore.pendingFriends = self.postAuthor[USER_PENDING_FRIENDS_KEY];
+                    userToStore.requestsSent = self.postAuthor[USER_REQUESTS_SENT_KEY];
+                }
+                NSError *error = nil;
+                [self.context save:&error];
             }
         }
     }];
